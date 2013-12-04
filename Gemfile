@@ -8,6 +8,7 @@ gem 'bcrypt-ruby'
 gem 'pg'
 
 group :development, :test do
+  gem 'pry-rails'
   gem 'rspec_api_documentation', :github => 'zipmark/rspec_api_documentation'
   gem 'rspec-rails'
   gem 'thin'
@@ -18,4 +19,5 @@ group :test do
   gem 'database_cleaner'
   gem 'faraday'
   gem 'json_spec'
+  gem 'uri_template'
 end

@@ -41,7 +41,7 @@ resource "Root" do
 
       let(:auth_header) do
         digest = OpenSSL::Digest::SHA256.new
-        signed_base64 = Base64.encode64(private_key.sign(digest, path))
+        signed_base64 = Base64.encode64(private_key.sign(digest, "http://example.org#{path}"))
         user_string = "eric@example.com:#{signed_base64}"
         "Basic #{Base64.encode64(user_string)}"
       end
@@ -54,6 +54,9 @@ resource "Root" do
               "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
               "templated" => true
             }],
+            "smartchat:friends" => {
+              "href" => friends_url(:host => host)
+            }
           }
         }.to_json)
 
@@ -78,7 +81,7 @@ resource "Root" do
 
       let(:auth_header) do
         digest = OpenSSL::Digest::SHA256.new
-        signed_base64 = Base64.encode64(private_key.sign(digest, "/another_path"))
+        signed_base64 = Base64.encode64(private_key.sign(digest, "http://example.com/another_path"))
         user_string = "eric@example.com:#{signed_base64}"
         "Basic #{Base64.encode64(user_string)}"
       end

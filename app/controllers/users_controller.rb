@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def create
     user = UserService.create(user_attributes)
-    render :json => user, :status => 201
+    render :json => user, :status => 201, :private_key => true
   end
 
   private

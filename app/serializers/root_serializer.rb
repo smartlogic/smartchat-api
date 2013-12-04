@@ -3,7 +3,11 @@ class RootSerializer < ActiveModel::Serializer
 
   def _links
     if current_user
-      super
+      super.merge({
+        "smartchat:friends" => {
+          :href => friends_url
+        }
+      })
     else
       super.merge({
         "smartchat:register-user" => {

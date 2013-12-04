@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 
     public_key = OpenSSL::PKey::RSA.new user.public_key
 
-    if public_key.verify OpenSSL::Digest::SHA256.new, signed_path, request.fullpath
+    if public_key.verify OpenSSL::Digest::SHA256.new, signed_path, request.original_url
       @current_user = user
     else
       render :text => "", :status => 401
