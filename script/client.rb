@@ -49,7 +49,19 @@ begin
 
   private_key = OpenSSL::PKey::RSA.new(response_body["private_key"], User.hash_password_for_private_key("password"))
 
+  def sign_path(private_key, path)
+    digest = OpenSSL::Digest::SHA256.new
+    Base64.encode64(private_key.sign(digest, path))
+  end
+
   puts "Registered"
+
+  client.basic_auth("eric@example.com", sign_path(private_key, "/"))
+
+  response = client.get("/")
+
+  raise "Not authorized" unless response.status < 400
+
 ensure
   DatabaseCleaner.clean
 end

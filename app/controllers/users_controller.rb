@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  skip_before_filter :check_authorization
+
   def create
     user = UserService.create(user_attributes)
     render :json => user, :status => 201
