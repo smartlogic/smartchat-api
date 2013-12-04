@@ -4,3 +4,13 @@
 require File.expand_path('../config/application', __FILE__)
 
 Smartchat::Application.load_tasks
+
+namespace :client do
+  task :test do
+    puts "Running client script."
+    puts "bundle exec ruby script/client.rb"
+    system 'bundle exec ruby script/client.rb'
+  end
+end
+
+task :default => "client:test"

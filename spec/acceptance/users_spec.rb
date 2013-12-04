@@ -27,7 +27,8 @@ resource "Users" do
             "templated" => true
           }]
         }
-      }.to_json)
+      }.to_json).excluding("private_key")
+      expect(response_body).to have_json_path("private_key")
       expect(status).to eq(201)
     end
   end
