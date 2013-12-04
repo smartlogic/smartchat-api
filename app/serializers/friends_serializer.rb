@@ -13,6 +13,10 @@ class FriendsSerializer < ActiveModel::ArraySerializer
         "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
         "templated" => true
       }],
+      "self" => {
+        "name" => "List of your friends",
+        "href" => friends_url
+      },
       "search" => {
         "name" => "Search for friends",
         "href" => search_friends_url() + "{?email}",

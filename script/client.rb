@@ -89,7 +89,30 @@ begin
 
   puts "Found the following friends:"
   response_body["_embedded"]["friends"].each do |friend|
-    puts friend["email"]
+    puts "* #{friend["email"]}"
+  end
+
+  raise "No friends to add" unless response_body["_embedded"]["friends"].count > 0
+
+  friend = response_body["_embedded"]["friends"].first
+  puts "Adding #{friend["email"]}"
+
+  add_friend_url = friend["_links"]["smartchat:add-friend"]["href"]
+  client.basic_auth("eric@example.com", sign_url(private_key, add_friend_url))
+  response = client.post(add_friend_url)
+
+  raise "Failed adding friend" unless response.status == 201
+
+  client.basic_auth("eric@example.com", sign_url(private_key, friends_url))
+  response = client.get(friends_url)
+
+  response_body = JSON.parse(response.body)
+
+  raise "No friends" unless response_body["_embedded"]["friends"].count > 0
+
+  puts "Your friends"
+  response_body["_embedded"]["friends"].each do |friend|
+    puts "* #{friend["email"]}"
   end
 ensure
   DatabaseCleaner.clean

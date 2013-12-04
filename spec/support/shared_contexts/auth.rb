@@ -14,9 +14,13 @@ shared_context :auth do
   end
 
   let(:auth_header) do
+    sign_header(private_key, "eric@example.com", "http://example.org#{path}")
+  end
+
+  def sign_header(private_key, email, url)
     digest = OpenSSL::Digest::SHA256.new
-    signed_base64 = Base64.encode64(private_key.sign(digest, "http://example.org#{path}"))
-    user_string = "eric@example.com:#{signed_base64}"
+    signed_base64 = Base64.encode64(private_key.sign(digest, url))
+    user_string = "#{email}:#{signed_base64}"
     "Basic #{Base64.encode64(user_string)}"
   end
 end

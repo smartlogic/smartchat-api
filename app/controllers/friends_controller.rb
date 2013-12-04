@@ -1,6 +1,11 @@
 class FriendsController < ApplicationController
   def index
-    render :json => [], :status => 200, :serializer => FriendsSerializer
+    render({
+      :json => FriendService.find_friends(current_user),
+      :status => 200,
+      :serializer => FriendsSerializer,
+      :each_serializer => FriendSerializer
+    })
   end
 
   def search
@@ -10,5 +15,11 @@ class FriendsController < ApplicationController
       :serializer => FriendSearchSerializer,
       :each_serializer => FriendSearchUserSerializer
     })
+  end
+
+  def add
+    friend_user = User.find(params[:id])
+    FriendService.create(current_user, friend_user)
+    render :json => {}, :status => 201, :serializer => AddFriendSerializer
   end
 end

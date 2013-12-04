@@ -17,6 +17,10 @@ resource "Friends" do
             "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
             "templated" => true
           }],
+          "self" => {
+            "name" => "List of your friends",
+            "href" => friends_url(:host => host)
+          },
           "search" => {
             "name" => "Search for friends",
             "href" => search_friends_url(:host => host) + "{?email}",
@@ -62,6 +66,66 @@ resource "Friends" do
             "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
             "templated" => true
           }],
+          "search" => {
+            "name" => "Search for friends",
+            "href" => search_friends_url(:host => host) + "{?email}",
+            "templated" => true
+          }
+        }
+      }.to_json)
+      expect(status).to eq(200)
+    end
+  end
+
+  post "/friends/:id/add" do
+    let(:id) { other_user.id }
+
+    let!(:other_user) do
+      UserService.create({
+        :email => "other@example.com",
+        :password => "password",
+        :phone => "123-123-1234"
+      })
+    end
+
+    example_request "Adding a user" do
+      expect(response_body).to be_json_eql({
+        "_links" => {
+          "curies" =>  [{
+            "name" =>  "smartchat",
+            "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+            "templated" => true
+          }],
+          "smartchat:friends" => {
+            "name" => "List of your friends",
+            "href" => friends_url(:host => host)
+          }
+        }
+      }.to_json)
+      expect(status).to eq(201)
+
+      client.get("/friends", "", headers.merge({
+        "Authorization" => sign_header(private_key, user.email, "http://example.org/friends")
+      }))
+
+      expect(response_body).to be_json_eql({
+        "_embedded" => {
+          "friends" => [
+            {
+              :email => "other@example.com"
+            }
+          ]
+        },
+        "_links" => {
+          "curies" =>  [{
+            "name" =>  "smartchat",
+            "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+            "templated" => true
+          }],
+          "self" => {
+            "name" => "List of your friends",
+            "href" => friends_url(:host => host)
+          },
           "search" => {
             "name" => "Search for friends",
             "href" => search_friends_url(:host => host) + "{?email}",
