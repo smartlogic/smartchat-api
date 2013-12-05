@@ -1,5 +1,5 @@
 class FriendSerializer < ActiveModel::Serializer
   root false
 
-  attributes :email
+  attributes :id, :email
 end
