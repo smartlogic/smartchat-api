@@ -111,9 +111,26 @@ begin
   raise "No friends" unless response_body["_embedded"]["friends"].count > 0
 
   puts "Your friends"
-  response_body["_embedded"]["friends"].each do |friend|
+  friends = response_body["_embedded"]["friends"].each do |friend|
     puts "* #{friend["email"]}"
   end
+
+  puts "Sending a smartchat"
+
+  client.basic_auth("eric@example.com", sign_url(private_key, "http://localhost:8888/"))
+  response = client.get("http://localhost:8888/")
+
+  smartchat_url = JSON.parse(response.body)["_links"]["smartchat:media"]["href"]
+  client.basic_auth("eric@example.com", sign_url(private_key, smartchat_url))
+  response = client.post(smartchat_url, {
+    :media => {
+      :friend_ids => friends.map { |f| f["id"] },
+      :file_name => "smartchat.png",
+      :file => Base64.encode64(File.read("spec/fixtures/file.png"))
+    }
+  }.to_json)
+
+  raise "Error creating media" unless response.status == 201
 ensure
   DatabaseCleaner.clean
 end

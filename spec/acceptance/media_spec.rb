@@ -16,6 +16,12 @@ resource "Media" do
     })
   end
 
+  before do
+    AppContainer.stub(:sqs_queue) do
+      double(:queue, :send_message => true)
+    end
+  end
+
   post "/media" do
     parameter :friend_ids, "Array of friend's ids to send this media to", :required => true, :scope => :media
     parameter :file_name, "File name", :required => true, :scope => :media
