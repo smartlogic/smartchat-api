@@ -9,6 +9,8 @@ Smartchat::Application.routes.draw do
     end
   end
 
+  resources :media, :only => [:create], :format => false
+
   resources :users, :only => [:create], :format => false
 
   root :to => "home#index"

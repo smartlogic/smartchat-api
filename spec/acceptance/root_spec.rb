@@ -56,6 +56,10 @@ resource "Root" do
             }],
             "smartchat:friends" => {
               "href" => friends_url(:host => host)
+            },
+            "smartchat:media" => {
+              "name" => "Create a smartchat",
+              "href" => media_index_url(:host => host)
             }
           }
         }.to_json)

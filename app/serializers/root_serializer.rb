@@ -6,6 +6,10 @@ class RootSerializer < ActiveModel::Serializer
       super.merge({
         "smartchat:friends" => {
           :href => friends_url
+        },
+        "smartchat:media" => {
+          "name" => "Create a smartchat",
+          "href" => media_index_url
         }
       })
     else

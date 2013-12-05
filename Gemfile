@@ -5,7 +5,10 @@ gem 'rails', '4.0.1'
 
 gem 'active_model_serializers', '~> 0.8.0'
 gem 'bcrypt-ruby'
+gem 'carrierwave'
+gem 'fog'
 gem 'pg'
+gem 'unf'
 
 group :development, :test do
   gem 'pry-rails'
