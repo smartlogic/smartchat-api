@@ -1,4 +1,6 @@
 Smartchat::Application.routes.draw do
+  resource :device, :only => [:create], :format => false
+
   resources :friends, :only => [:index], :format => false do
     collection do
       post :search

@@ -60,6 +60,10 @@ resource "Root" do
             "smartchat:media" => {
               "name" => "Create a smartchat",
               "href" => media_index_url(:host => host)
+            },
+            "smartchat:devices" => {
+              "name" => "Register a new device",
+              "href" => device_url(:host => host)
             }
           }
         }.to_json)

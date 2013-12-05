@@ -10,6 +10,10 @@ class RootSerializer < ActiveModel::Serializer
         "smartchat:media" => {
           "name" => "Create a smartchat",
           "href" => media_index_url
+        },
+        "smartchat:devices" => {
+          "name" => "Register a new device",
+          "href" => device_url
         }
       })
     else
