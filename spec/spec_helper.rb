@@ -44,5 +44,9 @@ RSpec.configure do |config|
     AppContainer.stub(:sqs_queue) do
       raise "Shouldn't be calling me!!"
     end
+
+    AppContainer.stub(:s3_bucket) do
+      raise "Shouldn't be calling me!!"
+    end
   end
 end
