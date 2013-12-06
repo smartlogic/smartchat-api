@@ -12,6 +12,10 @@ gem 'fog'
 gem 'pg'
 gem 'unf'
 
+group :development do
+  gem 'foreman'
+end
+
 group :development, :test do
   gem 'pry-rails'
   gem 'rspec_api_documentation', :github => 'zipmark/rspec_api_documentation'
