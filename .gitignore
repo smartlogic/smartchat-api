@@ -17,3 +17,4 @@
 
 /.env
 /chef-repo/.vagrant
+/.ruby-version

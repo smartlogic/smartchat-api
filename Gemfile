@@ -12,6 +12,10 @@ gem 'fog'
 gem 'pg'
 gem 'unf'
 
+group :development do
+  gem 'capistrano', '~> 2.13.5'
+end
+
 group :development, :test do
   gem 'pry-rails'
   gem 'rspec_api_documentation', :github => 'zipmark/rspec_api_documentation'
