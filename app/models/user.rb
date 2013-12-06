@@ -3,6 +3,10 @@ require 'bcrypt'
 class User < ActiveRecord::Base
   include BCrypt
 
+  has_one :device
+
+  delegate :device_id, :device_type, :to => :device
+
   def self.hash_password_for_private_key(password, sha_klass = OpenSSL::Digest::SHA256)
     sha256 = sha_klass.new
 

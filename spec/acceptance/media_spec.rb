@@ -17,6 +17,7 @@ resource "Media" do
   end
 
   before do
+    other_user.create_device(:device_id => "123", :device_type => "android")
     AppContainer.stub(:sqs_queue) do
       double(:queue, :send_message => true)
     end

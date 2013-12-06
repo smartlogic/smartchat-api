@@ -32,11 +32,13 @@ begin
     end
   end
 
-  UserService.create({
+  other = UserService.create({
     :email => "other@example.com",
     :password => "password",
     :phone => "123-123-1234"
   })
+
+  other.create_device(:device_id => "123", :device_type => "android")
 
   client = Faraday.new(:url => "http://localhost:8888") do |f|
     f.use Middleware

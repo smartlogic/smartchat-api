@@ -6,11 +6,16 @@ describe NotificationService do
 
     media = double(:media, {
       :id => 3,
-      :user => double(:user, :id => 1, :email => "eric@example.com"),
+      :user_id => 1,
+      :user_email => "eric@example.com",
       :created_at => created_at,
       :file => double(:uploader, :path => "/path/to/file.png")
     })
-    friend = double(:friend, :public_key => "public_key")
+    friend = double(:friend, {
+      :public_key => "public_key",
+      :device_type => "android",
+      :device_id => "a device id"
+    })
 
     user_klass = double(:User)
     expect(user_klass).to receive(:find).with(2).and_return(friend)
@@ -24,6 +29,10 @@ describe NotificationService do
       "public_key" => "public_key",
       "created_at" => created_at,
       "file_path" => "/path/to/file.png",
+      "devices" => [{
+        "id" => "a device id",
+        "type" => "android"
+      }],
       "creator" => {
         "id" => 1,
         "email" => "eric@example.com"

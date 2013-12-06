@@ -8,9 +8,15 @@ module NotificationService
       "public_key" => user.public_key,
       "created_at" => media.created_at,
       "file_path" => media.file.path,
+      "devices" => [
+        {
+          "id" => user.device_id,
+          "type" => user.device_type
+        }
+      ],
       "creator" => {
-        "id" => media.user.id,
-        "email" => media.user.email
+        "id" => media.user_id,
+        "email" => media.user_email
       }
     }.to_json)
   end
