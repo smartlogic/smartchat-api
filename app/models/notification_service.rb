@@ -22,7 +22,7 @@ module NotificationService
   end
   module_function :notify
 
-  def send_notification_to_devices(device_notification_attrs, container)
+  def send_notification_to_devices(device_notification_attrs, container = AppContainer)
     device_notification_attrs["devices"].each do |device|
       if device["device_type"] == "android"
         s3_file_url = "#{container.s3_host}#{device_notification_attrs["s3_file_path"]}"
