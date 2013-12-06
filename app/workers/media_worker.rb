@@ -13,11 +13,11 @@ class MediaWorker
     object = container.s3_bucket.objects[s3_file_path]
     object.write(encrypted_data)
 
-    notification_service_klass.create({
-      :user_id => user_id,
-      :creator_id => media_attributes["creator"]["id"],
-      :s3_file_path => s3_file_path,
-      :created_at => media_attributes["created_at"]
+    notification_service_klass.send_notification_to_devices({
+      "creator" => media_attributes["creator"],
+      "devices" => media_attributes["devices"],
+      "s3_file_path" => s3_file_path,
+      "created_at" => media_attributes["created_at"]
     })
   end
 end

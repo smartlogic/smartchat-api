@@ -9,6 +9,10 @@ describe MediaWorker do
     "public_key" => "public_key",
     "created_at" => created_at,
     "file_path" => "/path/to/file.png",
+    "devices" => [{
+      "id" => "a device id",
+      "type" => "android"
+    }],
     "creator" => {
       "id" => 1,
       "email" => "eric@example.com"
@@ -16,9 +20,6 @@ describe MediaWorker do
   } }
 
   it "encrypt and upload the media to the user's s3 folder" do
-    # create notification with s3 url
-    # send push notification of new notification
-
     file_klass = double(:File, :read => "file data")
     expect(file_klass).to receive(:basename).with("/path/to/file.png").and_return("file.png")
 
@@ -35,12 +36,19 @@ describe MediaWorker do
     expect(s3_object).to receive(:write).with("encrypted data")
 
     notification_service_klass = double(:NotificationService)
-    expect(notification_service_klass).to receive(:create).with({
-      :s3_file_path => "users/2/media/3/file.png",
-      :created_at => created_at,
-      :user_id => 2,
-      :creator_id => 1
-    })
+    expect(notification_service_klass).to receive(:send_notification_to_devices).
+      with({
+        "s3_file_path" => "users/2/media/3/file.png",
+        "created_at" => created_at,
+        "devices" => [{
+          "id" => "a device id",
+          "type" => "android"
+        }],
+        "creator" => {
+          "id" => 1,
+          "email" => "eric@example.com"
+        }
+      })
 
     MediaWorker.new.perform(media_attributes, file_klass, rsa_klass, notification_service_klass, container)
   end

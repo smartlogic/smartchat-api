@@ -41,12 +41,10 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.before do
-    AppContainer.stub(:sqs_queue) do
-      raise "Shouldn't be calling me!!"
-    end
-
-    AppContainer.stub(:s3_bucket) do
-      raise "Shouldn't be calling me!!"
+    [:sqs_queue, :s3_bucket, :android_notifier].each do |container_method|
+      AppContainer.stub(container_method) do
+        raise "Shouldn't be calling me!!"
+      end
     end
   end
 end
