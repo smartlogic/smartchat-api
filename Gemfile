@@ -7,6 +7,7 @@ gem 'active_model_serializers', '~> 0.8.0'
 gem 'aws-sdk', '~> 1.0'
 gem 'bcrypt-ruby'
 gem 'carrierwave'
+gem 'faraday'
 gem 'fog'
 gem 'pg'
 gem 'unf'
@@ -21,7 +22,6 @@ end
 group :test do
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'faraday'
   gem 'json_spec'
   gem 'uri_template'
 end
