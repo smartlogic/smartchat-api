@@ -22,5 +22,9 @@ class AppContainer
     let(:s3_bucket) do
       AWS::S3.new.buckets[s3_bucket_name]
     end
+
+    let(:s3_host) do
+      "http://s3.amazon.com/#{s3_bucket_name}/"
+    end
   end
 end
