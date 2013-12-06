@@ -10,6 +10,7 @@
     "sudo" : {
       "groups" : [
         "admin",
+        "vagrant",
         "sudo"
       ],
       "passwordless" : true
@@ -26,12 +27,16 @@
       "vagrant"
     ]
   },
+  "nginx" : {
+    "version" : "1.4.4-1~precise",
+    "worker_processes" : 1
+  },
   "monit": {
     "poll_period" : 30,
     "poll_start_delay" : 60
   },
   "ruby_build" : {
-    "version" : "20130923"
+    "git_version": "f758900a28e2ed695ad051dbf982e286014b076f"
   },
   "run_list": [
     "build-essential",
@@ -45,6 +50,7 @@
     "nginx",
     "monit",
     "rbenv",
-    "rbenv::ruby_build"
+    "rbenv::ruby_build",
+    "smartchat"
   ]
 }
