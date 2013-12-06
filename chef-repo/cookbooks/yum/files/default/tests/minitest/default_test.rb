@@ -1,10 +1,9 @@
 # Encoding: utf-8
 #
 # Cookbook Name:: yum
-# Recipe:: yum
+# Recipe:: default
 #
-# Copyright 2011, Eric G. Wolfe
-# Copyright 2011, Opscode, Inc.
+# Copyright 2013, Opscode, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,6 +18,12 @@
 # limitations under the License.
 #
 
-template '/etc/yum.conf' do
-  source "yum-rhel#{node['platform_version'].to_i}.conf.erb"
+require File.expand_path('../support/helpers', __FILE__)
+
+describe 'yum::default' do
+  include Helpers::YumTest
+
+  it 'Default recipe does nothing, so default_test does nothing' do
+    skip 'Default recipe does nothing so default test does nothing'
+  end
 end
