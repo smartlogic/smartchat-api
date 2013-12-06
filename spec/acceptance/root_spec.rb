@@ -15,7 +15,7 @@ resource "Root" do
             "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
             "templated" => true
           }],
-          "smartchat:register-user" => {
+          "smartchat:user" => {
             :href => users_url(:host => host)
           }
         }

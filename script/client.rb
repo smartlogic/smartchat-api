@@ -46,7 +46,7 @@ begin
   end
 
   response_body = JSON.parse(client.get("/").body)
-  registration_link = response_body["_links"]["smartchat:register-user"]["href"]
+  registration_link = response_body["_links"]["smartchat:user"]["href"]
 
   response = client.post(registration_link, {
     :user => {

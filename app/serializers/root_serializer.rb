@@ -18,7 +18,7 @@ class RootSerializer < ActiveModel::Serializer
       })
     else
       super.merge({
-        "smartchat:register-user" => {
+        "smartchat:user" => {
           :href => users_url
         }
       })
