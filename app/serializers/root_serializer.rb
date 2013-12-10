@@ -24,7 +24,7 @@ class RootSerializer < ActiveModel::Serializer
       })
     else
       base_links.merge({
-        "smartchat:user" => {
+        "smartchat:users" => {
           :href => users_url
         }
       })

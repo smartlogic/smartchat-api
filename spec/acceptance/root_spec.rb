@@ -18,7 +18,7 @@ resource "Root" do
           "self" => {
             "href" => root_url(:host => host),
           },
-          "smartchat:user" => {
+          "smartchat:users" => {
             :href => users_url(:host => host)
           }
         }
