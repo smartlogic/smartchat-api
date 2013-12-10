@@ -15,6 +15,9 @@ resource "Root" do
             "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
             "templated" => true
           }],
+          "self" => {
+            "href" => root_url(:host => host),
+          },
           "smartchat:user" => {
             :href => users_url(:host => host)
           }
@@ -54,6 +57,9 @@ resource "Root" do
               "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
               "templated" => true
             }],
+            "self" => {
+              "href" => root_url(:host => host),
+            },
             "smartchat:friends" => {
               "href" => friends_url(:host => host)
             },

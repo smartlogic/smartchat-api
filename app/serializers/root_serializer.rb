@@ -2,8 +2,14 @@ class RootSerializer < ActiveModel::Serializer
   include ApplicationSerializer
 
   def _links
+    base_links = super.merge({
+      "self" => {
+        "href" => root_url
+      }
+    })
+
     if current_user
-      super.merge({
+      base_links.merge({
         "smartchat:friends" => {
           :href => friends_url
         },
@@ -17,7 +23,7 @@ class RootSerializer < ActiveModel::Serializer
         }
       })
     else
-      super.merge({
+      base_links.merge({
         "smartchat:user" => {
           :href => users_url
         }
