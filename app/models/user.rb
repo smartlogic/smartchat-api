@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.with_hashed_phone_numbers(phone_numbers)
+    where("md5(phone) in (?)", phone_numbers)
+  end
+
   def password
     @password ||= Password.new(password_hash)
   end

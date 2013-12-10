@@ -11,6 +11,7 @@ module UserService
     user = user_klass.new(user_attributes)
     user.private_key = key.export(cipher, hashed_password)
     user.public_key = key.public_key.to_pem
+    user.phone = user_attributes[:phone].gsub(/[^\d]/, "")
     user.save!
 
     user

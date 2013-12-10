@@ -33,15 +33,19 @@ resource "Friends" do
   end
 
   post "/friends/search" do
-    parameter :email, "User's email to search for"
+    header "Content-Type", "application/json"
 
-    let(:email) { "other@example.com" }
+    parameter :phone_numbers, "User phone numbers to search for"
+
+    let(:phone_numbers) { [Digest::MD5.hexdigest(other_user.phone)] }
+
+    let(:raw_post) { params.to_json }
 
     let!(:other_user) do
       UserService.create({
         :email => "other@example.com",
         :password => "password",
-        :phone => "123-123-1234"
+        :phone => "123-123-1235"
       })
     end
 
