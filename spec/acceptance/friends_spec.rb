@@ -72,7 +72,7 @@ resource "Friends" do
           }],
           "search" => {
             "name" => "Search for friends",
-            "href" => search_friends_url(:host => host) + "{?email}",
+            "href" => search_friends_url(:host => host) + "{?phone_numbers}",
             "templated" => true
           }
         }
