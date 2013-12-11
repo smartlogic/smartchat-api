@@ -55,6 +55,7 @@ resource "Friends" do
           "friends" => [
             {
               "email" => "other@example.com",
+              "phone_number" => Digest::MD5.hexdigest("1231231235"),
               "_links" => {
                 "smartchat:add-friend" => {
                   "name" => "Add as a friend",
