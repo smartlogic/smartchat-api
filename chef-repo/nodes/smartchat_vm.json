@@ -1,11 +1,4 @@
 {
-  "build_essential" : {
-    "compiletime" : true
-  },
-  "openssh" : {
-    "permit_root_login" : "no",
-    "password_authentication": "no"
-  },
   "authorization" : {
     "sudo" : {
       "groups" : [
@@ -15,6 +8,10 @@
       ],
       "passwordless" : true
     }
+  },
+  "nginx" : {
+    "version" : "1.4.4-1~precise",
+    "worker_processes" : 1
   },
   "postgresql" : {
     "password" : {
@@ -27,10 +24,6 @@
       "vagrant"
     ]
   },
-  "nginx" : {
-    "version" : "1.4.4-1~precise",
-    "worker_processes" : 1
-  },
   "monit": {
     "poll_period" : 30,
     "poll_start_delay" : 60
@@ -39,18 +32,15 @@
     "git_version": "f758900a28e2ed695ad051dbf982e286014b076f"
   },
   "run_list": [
-    "build-essential",
-    "annoyances",
-    "openssl",
-    "openssh",
+    "users_solo::admins",
     "sudo",
     "postgresql::server",
-    "users_solo::admins",
-    "nginx::repo",
-    "nginx",
-    "monit",
+    "postgresql::ruby",
     "rbenv",
     "rbenv::ruby_build",
-    "smartchat"
+    "smartchat",
+    "nginx::repo",
+    "nginx",
+    "monit"
   ]
 }
