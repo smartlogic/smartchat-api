@@ -12,6 +12,10 @@ gem 'fog'
 gem 'pg'
 gem 'unf'
 
+group :staging, :production do
+  gem 'unicorn'
+end
+
 group :development do
   gem 'foreman'
   gem 'capistrano', '~> 2.13.5'
