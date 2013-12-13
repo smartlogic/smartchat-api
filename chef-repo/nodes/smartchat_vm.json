@@ -39,6 +39,7 @@
     "rbenv",
     "rbenv::ruby_build",
     "smartchat",
+    "smartchat::database",
     "nginx::repo",
     "nginx",
     "monit"
