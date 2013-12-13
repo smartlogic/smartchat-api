@@ -18,7 +18,7 @@ end
 
 group :development do
   gem 'foreman'
-  gem 'capistrano', '~> 2.13.5'
+  gem 'capistrano', '~> 2.15.5'
 end
 
 group :development, :test do
