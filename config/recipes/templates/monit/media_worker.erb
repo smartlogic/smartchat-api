@@ -1,5 +1,5 @@
 check process media_worker
-  with pidfile /home/deploy/apps/smartchat/shared/pids/media_worker.pid
-  start program = "/bin/sh -l -c 'cd <%= current_path %> && PATH=/opt/rbenv/shims:/opt/rbenv/bin:$PATH RBENV_ROOT=/opt/rbenv DAEMON_ENV=<%= rails_env %> bundle exec ./worker/bin/smartchat start --pidfile=tmp/pids/media_worker.pid'" as uid deploy and gid deploy
-  stop program = "/bin/sh -c 'cd /home/deploy/apps/media_manager/current && DAEMON_ENV=<%= rails_env %> bundle exec ./worker/bin/smartchat stop --pidfile=tmp/pids/media_worker.pid; exit 0;'" as uid deploy and gid deploy
-  group workers
+  with pidfile <%= media_worker_pid %>
+  start program = "/bin/sh -l -c 'source /home/deploy/smartchat_env && cd <%= current_path %>/worker && PATH=/opt/rbenv/shims:/opt/rbenv/bin:$PATH RBENV_ROOT=/opt/rbenv DAEMON_ENV=<%= rails_env %> bundle exec ./bin/smartchat start --pidfile <%= media_worker_pid %>'" as uid deploy and gid deploy
+  stop program = "/bin/sh -c 'cd <%= current_path %>/worker && DAEMON_ENV=<%= rails_env %> bundle exec ./bin/smartchat stop --pidfile <%= media_worker_pid %>'" as uid deploy and gid deploy
+  group worker

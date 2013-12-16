@@ -5,6 +5,7 @@ load 'config/recipes/base'
 load 'config/recipes/nginx'
 load 'config/recipes/unicorn'
 load 'config/recipes/monit'
+load 'config/recipes/media_worker'
 
 set :default_environment, {
   'PATH' => "/opt/rbenv/shims:/opt/rbenv/bin:$PATH",
