@@ -31,6 +31,14 @@
   "ruby_build" : {
     "git_version": "f758900a28e2ed695ad051dbf982e286014b076f"
   },
+  "smartchat" : {
+    "smartchat_env" : "/home/deploy",
+    "env" : {
+      "AWS_ACCESS_KEY_ID": "AKIAJTG5C7I7TLPBNALQ",
+      "AWS_SECRET_ACCESS_KEY": "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",
+      "AWS_REGION": "us-east-1"
+    }
+  },
   "run_list": [
     "users_solo::admins",
     "sudo",
@@ -40,6 +48,7 @@
     "rbenv::ruby_build",
     "smartchat",
     "smartchat::database",
+    "smartchat::smartchat_env",
     "nginx::repo",
     "nginx",
     "monit"
