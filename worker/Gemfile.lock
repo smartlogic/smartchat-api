@@ -42,6 +42,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk
   daemon-kit
+  json
   rake
   rspec
   safely
