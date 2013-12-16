@@ -31,7 +31,7 @@ set :target_os, :ubuntu
 
 set :user, "deploy"
 
-set :application_settings, "/home/deploy/spotcrime_env"
+set :application_settings, "/home/deploy/smartchat_env"
 
 namespace :custom do
   desc "set up database.yml"
