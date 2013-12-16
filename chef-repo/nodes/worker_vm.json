@@ -1,0 +1,33 @@
+{
+  "authorization" : {
+    "sudo" : {
+      "groups" : [
+        "admin",
+        "vagrant",
+        "sudo"
+      ],
+      "passwordless" : true
+    }
+  },
+  "rbenv" : {
+    "group_users" : [
+      "deploy",
+      "vagrant"
+    ]
+  },
+  "monit": {
+    "poll_period" : 30,
+    "poll_start_delay" : 60
+  },
+  "ruby_build" : {
+    "git_version": "f758900a28e2ed695ad051dbf982e286014b076f"
+  },
+  "run_list": [
+    "users_solo::admins",
+    "sudo",
+    "rbenv",
+    "rbenv::ruby_build",
+    "smartchat",
+    "monit"
+  ]
+}
