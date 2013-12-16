@@ -56,6 +56,11 @@ namespace :workers do
   task :bundle, :roles => :worker do
     run "cd #{release_path}/worker && bundle #{bundle_flags} --without development test --path /home/deploy/apps/smartchat/shared/bundle"
   end
+
+  desc "restart workers"
+  task :restart, :roles => :worker do
+    sudo "monit restart media_worker"
+  end
 end
 
 after "deploy:setup", "custom:setup"
@@ -63,3 +68,4 @@ before 'bundle:install', 'custom:rbenv_version'
 after 'bundle:install', 'workers:bundle'
 after "deploy:update_code", "custom:symlink"
 after "deploy:update", "deploy:cleanup"
+after "deploy:restart", "workers:restart"
