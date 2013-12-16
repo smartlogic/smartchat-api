@@ -26,14 +26,9 @@ end
 # this configuration.
 
 # Run an event-loop for processing
-DaemonKit::SQS.run do |sqs|
-  # Inside this block you have access to an AWS::SQS
-
-  queue = sqs.queues[sqs.queues.url_for('test')]
-  queue.poll do |msg|
-    # msg may be nil if long-polling is disabled or the poll expires -
-    # in either case, this is an indication that the queue is (almost)
-    # empty
-    DaemonKit.logger.debug "Received message: #{msg.inspect}"
-  end
+AppContainer.sqs_queue.poll do |msg|
+  DaemonKit.logger.debug "Message received"
+  body = JSON.parse(msg.body)
+  MediaWorker.new.perform(body)
+  msg.delete
 end

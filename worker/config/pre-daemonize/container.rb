@@ -7,6 +7,14 @@ class AppContainer
       end
     end
 
+    let(:sqs_queue_name) do
+      "smartchat-#{DAEMON_ENV}"
+    end
+
+    let(:sqs_queue) do
+      AWS::SQS.new.queues.named(sqs_queue_name)
+    end
+
     let(:s3_bucket_name) do
       "smartchat-#{DAEMON_ENV}"
     end
