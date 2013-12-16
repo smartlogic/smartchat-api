@@ -9,7 +9,7 @@ set_default(:unicorn_timeout, 30)
 
 namespace :unicorn do
   desc "Setup Unicorn initializer and app configuration"
-  task :setup, roles: :app do
+  task :setup, roles: :web do
     run "mkdir -p #{shared_path}/config"
     template "unicorn.rb.erb", unicorn_config
     template "unicorn_init.erb", "/tmp/unicorn_init"
@@ -21,7 +21,7 @@ namespace :unicorn do
 
   %w[start stop restart].each do |command|
     desc "#{command} unicorn"
-    task command, roles: :app do
+    task command, roles: :web do
       sudo "service unicorn_#{application} #{command}"
     end
     after "deploy:#{command}", "unicorn:#{command}"
