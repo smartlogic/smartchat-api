@@ -9,10 +9,6 @@
       "passwordless" : true
     }
   },
-  "nginx" : {
-    "version" : "1.4.4-1~precise",
-    "worker_processes" : 1
-  },
   "rbenv" : {
     "group_users" : [
       "deploy",
@@ -41,8 +37,6 @@
     "rbenv::ruby_build",
     "smartchat",
     "smartchat::smartchat_env",
-    "nginx::repo",
-    "nginx",
     "monit"
   ]
 }
