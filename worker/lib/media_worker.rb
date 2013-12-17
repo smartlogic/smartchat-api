@@ -2,8 +2,10 @@ require 'openssl'
 
 class MediaWorker
   def perform(media_attributes, file_klass = File, rsa_klass = OpenSSL::PKey::RSA, notification_service_klass = NotificationService, container = AppContainer)
+    private_object = container.s3_private_bucket.objects[media_attributes["file_path"]]
+
     public_key = rsa_klass.new media_attributes["public_key"]
-    encrypted_data = public_key.public_encrypt(file_klass.read(media_attributes["file_path"]))
+    encrypted_data = public_key.public_encrypt(private_object.read)
 
     id = media_attributes["id"]
     user_id = media_attributes["user_id"]

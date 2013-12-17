@@ -8,7 +8,7 @@ describe MediaWorker do
     "user_id" => 2,
     "public_key" => "public_key",
     "created_at" => created_at,
-    "file_path" => "/path/to/file.png",
+    "file_path" => "uploads/media/3/file.png",
     "devices" => [{
       "id" => "a device id",
       "type" => "android"
@@ -20,8 +20,8 @@ describe MediaWorker do
   } }
 
   it "encrypt and upload the media to the user's s3 folder" do
-    file_klass = double(:File, :read => "file data")
-    expect(file_klass).to receive(:basename).with("/path/to/file.png").and_return("file.png")
+    file_klass = double(:File)
+    expect(file_klass).to receive(:basename).with("uploads/media/3/file.png").and_return("file.png")
 
     rsa = double(:rsa)
     rsa_klass = double(:RSA)
@@ -30,10 +30,17 @@ describe MediaWorker do
 
     bucket = double(:bucket)
     s3_object = double(:S3Object)
-    container = double(:container, :s3_bucket => bucket)
+
+    private_bucket = double(:private_bucket)
+    s3_private_object = double(:S3Object_private)
+
+    container = double(:container, :s3_bucket => bucket, :s3_private_bucket => private_bucket)
 
     expect(bucket).to receive(:objects).and_return({ "users/2/media/3/file.png" => s3_object })
     expect(s3_object).to receive(:write).with("encrypted data")
+
+    expect(private_bucket).to receive(:objects).and_return({ "uploads/media/3/file.png" => s3_private_object })
+    expect(s3_private_object).to receive(:read).and_return("file data")
 
     notification_service_klass = double(:NotificationService)
     expect(notification_service_klass).to receive(:send_notification_to_devices).

@@ -23,6 +23,14 @@ class AppContainer
       AWS::S3.new.buckets[s3_bucket_name]
     end
 
+    let(:s3_private_bucket_name) do
+      "smartchat-private-#{DAEMON_ENV}"
+    end
+
+    let(:s3_private_bucket) do
+      AWS::S3.new.buckets[s3_private_bucket_name]
+    end
+
     let(:s3_host) do
       "http://s3.amazon.com/#{s3_bucket_name}/"
     end

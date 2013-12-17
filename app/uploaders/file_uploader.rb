@@ -1,11 +1,11 @@
 class FileUploader < CarrierWave::Uploader::Base
-  storage :file
+  @fog_public = false
 
   def extension_white_list
     %w(jpg jpeg gif png)
   end
 
   def store_dir
-    Rails.root.join("tmp", "uploads", model.class.to_s.underscore, model.id.to_s)
+    File.join("uploads", model.class.to_s.underscore, model.id.to_s)
   end
 end
