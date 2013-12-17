@@ -13,6 +13,7 @@ describe NotificationService do
     })
     friend = double(:friend, {
       :public_key => "public_key",
+      :device => true,
       :device_type => "android",
       :device_id => "a device id"
     })
