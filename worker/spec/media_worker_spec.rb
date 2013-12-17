@@ -23,10 +23,18 @@ describe MediaWorker do
     file_klass = double(:File)
     expect(file_klass).to receive(:basename).with("uploads/media/3/file.png").and_return("file.png")
 
+    aes = double(:aes, :random_key => "aes key", :random_iv => "aes iv")
+    cipher_klass = double(:Cipher)
+    expect(cipher_klass).to receive(:new).with("AES-128-CBC").and_return(aes)
+    expect(aes).to receive(:encrypt)
+    expect(aes).to receive(:update).with("file data").and_return("encrypted data")
+    expect(aes).to receive(:final).and_return("")
+
     rsa = double(:rsa)
     rsa_klass = double(:RSA)
     expect(rsa_klass).to receive(:new).with("public_key").and_return(rsa)
-    expect(rsa).to receive(:public_encrypt).with("file data").and_return("encrypted data")
+    expect(rsa).to receive(:public_encrypt).with("aes key").and_return("encrypted aes key")
+    expect(rsa).to receive(:public_encrypt).with("aes iv").and_return("encrypted aes iv")
 
     bucket = double(:bucket)
     s3_object = double(:S3Object)
@@ -54,9 +62,11 @@ describe MediaWorker do
         "creator" => {
           "id" => 1,
           "email" => "eric@example.com"
-        }
+        },
+        "encrypted_aes_key" => "encrypted aes key",
+        "encrypted_aes_iv" => "encrypted aes iv"
       })
 
-    MediaWorker.new.perform(media_attributes, file_klass, rsa_klass, notification_service_klass, container)
+    MediaWorker.new.perform(media_attributes, file_klass, rsa_klass, cipher_klass, notification_service_klass, container)
   end
 end

@@ -1,11 +1,20 @@
 require 'openssl'
 
 class MediaWorker
-  def perform(media_attributes, file_klass = File, rsa_klass = OpenSSL::PKey::RSA, notification_service_klass = NotificationService, container = AppContainer)
+  def perform(media_attributes, file_klass = File, rsa_klass = OpenSSL::PKey::RSA, cipher_klass = OpenSSL::Cipher, notification_service_klass = NotificationService, container = AppContainer)
     private_object = container.s3_private_bucket.objects[media_attributes["file_path"]]
 
+    cipher = cipher_klass.new("AES-128-CBC")
+    cipher.encrypt
+
+    aes_key = cipher.random_key
+    aes_iv = cipher.random_iv
+
     public_key = rsa_klass.new media_attributes["public_key"]
-    encrypted_data = public_key.public_encrypt(private_object.read)
+    encrypted_aes_key = public_key.public_encrypt(aes_key)
+    encrypted_aes_iv = public_key.public_encrypt(aes_iv)
+
+    encrypted_data = cipher.update(private_object.read) + cipher.final
 
     id = media_attributes["id"]
     user_id = media_attributes["user_id"]
@@ -19,7 +28,9 @@ class MediaWorker
       "creator" => media_attributes["creator"],
       "devices" => media_attributes["devices"],
       "s3_file_path" => s3_file_path,
-      "created_at" => media_attributes["created_at"]
+      "created_at" => media_attributes["created_at"],
+      "encrypted_aes_key" => encrypted_aes_key,
+      "encrypted_aes_iv" => encrypted_aes_iv
     })
   end
 end
