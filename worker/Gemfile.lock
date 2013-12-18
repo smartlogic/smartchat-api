@@ -15,10 +15,13 @@ GEM
       thor
     diff-lcs (1.2.5)
     eventmachine (1.0.3)
+    faraday (0.8.8)
+      multipart-post (~> 1.2.0)
     i18n (0.6.9)
     json (1.8.1)
     mini_portile (0.5.2)
     multi_json (1.8.2)
+    multipart-post (1.2.0)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     rake (10.1.0)
@@ -42,6 +45,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk
   daemon-kit
+  faraday
   json
   rake
   rspec

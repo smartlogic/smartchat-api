@@ -8,7 +8,9 @@ module NotificationService
           "message" => {
             "s3_file_url" => s3_file_url,
             "created_at" => device_notification_attrs["created_at"],
-            "creator" => device_notification_attrs["creator"]
+            "creator" => device_notification_attrs["creator"],
+            "encrypted_aes_key" => device_notification_attrs["encrypted_aes_key"],
+            "encrypted_aes_iv" => device_notification_attrs["encrypted_aes_iv"]
           }
         })
       end

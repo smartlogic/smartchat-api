@@ -46,6 +46,7 @@ describe MediaWorker do
 
     expect(bucket).to receive(:objects).and_return({ "users/2/media/3/file.png" => s3_object })
     expect(s3_object).to receive(:write).with("encrypted data")
+    expect(s3_object).to receive(:acl=).with(:public_read)
 
     expect(private_bucket).to receive(:objects).and_return({ "uploads/media/3/file.png" => s3_private_object })
     expect(s3_private_object).to receive(:read).and_return("file data")
@@ -63,8 +64,8 @@ describe MediaWorker do
           "id" => 1,
           "email" => "eric@example.com"
         },
-        "encrypted_aes_key" => "encrypted aes key",
-        "encrypted_aes_iv" => "encrypted aes iv"
+        "encrypted_aes_key" => Base64.strict_encode64("encrypted aes key"),
+        "encrypted_aes_iv" => Base64.strict_encode64("encrypted aes iv")
       })
 
     MediaWorker.new.perform(media_attributes, file_klass, rsa_klass, cipher_klass, notification_service_klass, container)

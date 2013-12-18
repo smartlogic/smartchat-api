@@ -32,7 +32,7 @@ class AppContainer
     end
 
     let(:s3_host) do
-      "http://s3.amazon.com/#{s3_bucket_name}/"
+      "https://s3.amazonaws.com/#{s3_bucket_name}/"
     end
 
     let(:android_notifier) do

@@ -13,7 +13,9 @@ describe NotificationService do
       "device_type" => "android"
     }],
     "s3_file_path" => "path/to/file.png",
-    "created_at" => created_at
+    "created_at" => created_at,
+    "encrypted_aes_key" => "encrypted aes key",
+    "encrypted_aes_iv" => "encrypted aes iv"
   } }
 
   it "should send device notifications" do
@@ -31,7 +33,9 @@ describe NotificationService do
         "creator" => {
           "id" => 1,
           "email" => "eric@example.com"
-        }
+        },
+        "encrypted_aes_key" => "encrypted aes key",
+        "encrypted_aes_iv" => "encrypted aes iv"
       }
     })
 

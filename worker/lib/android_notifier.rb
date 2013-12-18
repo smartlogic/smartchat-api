@@ -4,6 +4,8 @@ module AndroidNotifier
       :url => "https://android.googleapis.com/"
     })
 
+    DaemonKit.logger.debug "Sending message"
+
     connection.post("/gcm/send") do |conn|
       conn.headers["Content-Type"] = "application/json"
       conn.headers["Authorization"] = "key=#{container.gcm_api_key}"
