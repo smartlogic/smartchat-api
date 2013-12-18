@@ -13,7 +13,11 @@ Smartchat::Application.routes.draw do
 
   resources :media, :only => [:create], :format => false
 
-  resources :users, :only => [:create], :format => false
+  resources :users, :only => [:create], :format => false do
+    collection do
+      post :sign_in
+    end
+  end
 
   root :to => "home#index"
 end

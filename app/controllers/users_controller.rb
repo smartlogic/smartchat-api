@@ -6,6 +6,16 @@ class UsersController < ApplicationController
     render :json => user, :status => 201, :private_key => true
   end
 
+  def sign_in
+    email, password = Base64.decode64(request.headers["Authorization"].gsub("Basic ", "")).split(":")
+    user = User.where(:email => email).first
+    if user.password == password
+      render :json => user, :status => 200, :private_key => true
+    else
+      render :json => {}, :status => 401
+    end
+  end
+
   private
 
   def user_attributes

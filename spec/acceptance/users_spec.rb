@@ -32,4 +32,39 @@ resource "Users" do
       expect(status).to eq(201)
     end
   end
+
+  post "/users/sign_in" do
+    header "Authorization", :auth
+
+    let(:auth) do
+      user_string = "#{email}:#{password}"
+      "Basic #{Base64.encode64(user_string)}"
+    end
+
+    let!(:user) do
+      UserService.create({
+        :email => "eric@example.com",
+        :password => "password",
+        :phone => "123-123-1234"
+      })
+    end
+
+    let(:email) { user.email }
+    let(:password) { "password" }
+
+    example_request "Signing in" do
+      expect(response_body).to be_json_eql({
+        :email => "eric@example.com",
+        :_links => {
+          "curies" =>  [{
+            "name" =>  "smartchat",
+            "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+            "templated" => true
+          }]
+        }
+      }.to_json).excluding("private_key")
+      expect(response_body).to have_json_path("private_key")
+      expect(status).to eq(200)
+    end
+  end
 end

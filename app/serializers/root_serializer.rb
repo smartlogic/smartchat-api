@@ -24,8 +24,13 @@ class RootSerializer < ActiveModel::Serializer
       })
     else
       base_links.merge({
+        "smartchat:user-sign-in" => {
+          "name" => "Sign in",
+          "href" => sign_in_users_url
+        },
         "smartchat:users" => {
-          :href => users_url
+          "name" => "Register a user",
+          "href" => users_url
         }
       })
     end

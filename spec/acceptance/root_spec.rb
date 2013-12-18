@@ -18,8 +18,13 @@ resource "Root" do
           "self" => {
             "href" => root_url(:host => host),
           },
+          "smartchat:user-sign-in" => {
+            "name" => "Sign in",
+            "href" => sign_in_users_url(:host => host)
+          },
           "smartchat:users" => {
-            :href => users_url(:host => host)
+            "name" => "Register a user",
+            "href" => users_url(:host => host)
           }
         }
       }.to_json)
