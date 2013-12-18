@@ -8,6 +8,7 @@ describe DeviceService do
 
   it "should create a device" do
     user = double(:user, :id => 1)
+    expect(user).to receive(:device_destroy)
 
     device_klass_double = double(:Device)
     expect(device_klass_double).to receive(:create).with(device_attributes.merge(:user_id => user.id))

@@ -27,4 +27,11 @@ class User < ActiveRecord::Base
     @password = Password.create(new_password)
     self.password_hash = @password
   end
+
+  def device_destroy
+    if device
+      device.destroy
+      self.device = nil
+    end
+  end
 end

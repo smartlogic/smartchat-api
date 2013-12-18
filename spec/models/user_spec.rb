@@ -15,4 +15,23 @@ describe User do
     expect(subject.password_hash).to_not be_empty
     expect(subject.password).to eq("hi")
   end
+
+  context "it should destroy the current device" do
+    it "exists" do
+      user = User.new
+      user.device = Device.new
+
+      user.device_destroy
+
+      expect(user.device).to be_nil
+    end
+
+    it "does not exist" do
+      user = User.new
+
+      user.device_destroy
+
+      expect(user.device).to be_nil
+    end
+  end
 end
