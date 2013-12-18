@@ -5,7 +5,7 @@ module NotificationService
     devices = []
 
     if user.device
-      devices << { "id" => user.device_id, "type" => user.device_type }
+      devices << { "device_id" => user.device_id, "device_type" => user.device_type }
     end
 
     container.sqs_queue.send_message({

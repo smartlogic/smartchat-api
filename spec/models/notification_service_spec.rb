@@ -31,8 +31,8 @@ describe NotificationService do
       "created_at" => created_at,
       "file_path" => "/path/to/file.png",
       "devices" => [{
-        "id" => "a device id",
-        "type" => "android"
+        "device_id" => "a device id",
+        "device_type" => "android"
       }],
       "creator" => {
         "id" => 1,
