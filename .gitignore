@@ -19,3 +19,4 @@
 /.env
 /chef-repo/.vagrant
 /.ruby-version
+/public/uploads
