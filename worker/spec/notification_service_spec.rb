@@ -30,10 +30,8 @@ describe NotificationService do
       "message" => {
         "s3_file_url" => "http://s3.amazon.com/path/to/file.png",
         "created_at" => created_at,
-        "creator" => {
-          "id" => 1,
-          "email" => "eric@example.com"
-        },
+        "creator_id" => 1,
+        "creator_email" => "eric@example.com",
         "encrypted_aes_key" => "encrypted aes key",
         "encrypted_aes_iv" => "encrypted aes iv"
       }
