@@ -20,6 +20,10 @@ class RootSerializer < ActiveModel::Serializer
         "smartchat:devices" => {
           "name" => "Register a new device",
           "href" => device_url
+        },
+        "smartchat:invitations" => {
+          "name" => "Invite a user to SmartChat",
+          "href" => invite_users_url
         }
       })
     else

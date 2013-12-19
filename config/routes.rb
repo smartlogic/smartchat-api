@@ -15,6 +15,7 @@ Smartchat::Application.routes.draw do
 
   resources :users, :only => [:create], :format => false do
     collection do
+      post :invite
       post :sign_in
     end
   end

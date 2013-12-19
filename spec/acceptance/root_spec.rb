@@ -75,6 +75,10 @@ resource "Root" do
             "smartchat:devices" => {
               "name" => "Register a new device",
               "href" => device_url(:host => host)
+            },
+            "smartchat:invitations" => {
+              "name" => "Invite a user to SmartChat",
+              "href" => invite_users_url(:host => host)
             }
           }
         }.to_json)

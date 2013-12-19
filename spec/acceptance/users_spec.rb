@@ -67,4 +67,25 @@ resource "Users" do
       expect(status).to eq(200)
     end
   end
+
+  post "/users/invite" do
+    parameter :email, "User email to invite", :required => true
+    parameter :message, "Custom message from user to include", :required => true
+
+    let(:email) { "eric@example.com" }
+    let(:message) { "Check this out!" }
+
+    let(:raw_post) { params.to_json }
+
+    before do
+      AppContainer.stub(:sqs_queue) do
+        double(:queue, :send_message => true)
+      end
+    end
+
+    example_request "Sending an invite" do
+      expect(response_body).to be_empty
+      expect(status).to eq(204)
+    end
+  end
 end

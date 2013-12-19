@@ -16,6 +16,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def invite
+    InvitationService.invite(params[:email], params[:message])
+
+    head 204
+  end
+
   private
 
   def user_attributes
