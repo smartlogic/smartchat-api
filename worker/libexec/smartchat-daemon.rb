@@ -31,5 +31,4 @@ AppContainer.sqs_queue.poll do |msg|
   DaemonKit.logger.debug msg.body
   body = JSON.parse(msg.body)
   MediaWorker.new.perform(body)
-  msg.delete
 end
