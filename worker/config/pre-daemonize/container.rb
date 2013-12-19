@@ -44,7 +44,7 @@ class AppContainer
     end
 
     let(:from_address) do
-      "no-reply@smartchat.smartlogic.io"
+      "dev@smartlogic.io"
     end
   end
 end
