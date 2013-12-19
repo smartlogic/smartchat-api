@@ -29,6 +29,13 @@ end
 AppContainer.sqs_queue.poll do |msg|
   DaemonKit.logger.debug "Message received"
   DaemonKit.logger.debug msg.body
+
   body = JSON.parse(msg.body)
-  MediaWorker.new.perform(body)
+
+  case body["queue"]
+  when "media"
+    MediaWorker.new.perform(body)
+  else
+    DaemonKit.logger.warn "Got a message for an unknown queue"
+  end
 end
