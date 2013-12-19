@@ -69,6 +69,8 @@ resource "Users" do
   end
 
   post "/users/invite" do
+    include_context :auth
+
     parameter :email, "User email to invite", :required => true
     parameter :message, "Custom message from user to include", :required => true
 

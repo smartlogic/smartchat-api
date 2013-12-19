@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_filter :check_authorization
+  skip_before_filter :check_authorization, :only => [:create, :sign_in]
 
   def create
     user = UserService.create(user_attributes)
@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   end
 
   def invite
-    InvitationService.invite(params[:email], params[:message])
+    InvitationService.invite(current_user.email, params[:email], params[:message])
 
     head 204
   end

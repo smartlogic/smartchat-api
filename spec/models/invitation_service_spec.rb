@@ -16,11 +16,12 @@ describe InvitationService do
   it "should send a message via SQS" do
     container = Struct.new(:sqs_queue).new(TestQueue.new)
 
-    InvitationService.invite("eric@example.com", "hi", container)
+    InvitationService.invite("sam@example.com", "eric@example.com", "hi", container)
 
     expect(container.sqs_queue.messages.first).to eq({
       "queue" => "invitation",
-      "email" => "eric@example.com",
+      "invitee_email" => "eric@example.com",
+      "inviter_email" => "sam@example.com",
       "message" => "hi"
     }.to_json)
   end
