@@ -18,14 +18,25 @@ describe NotificationService do
     "encrypted_aes_iv" => "encrypted aes iv"
   } }
 
+  class TestAndroidNotifier
+    class << self
+      attr_reader :message_params
+
+      def notify(args)
+        @message_params = args
+      end
+    end
+  end
+
   it "should send device notifications" do
-    android_notifier = double(:AndroidNotifier)
     container = double(:container, {
-      :android_notifier => android_notifier,
+      :android_notifier => TestAndroidNotifier,
       :s3_host => "http://s3.amazon.com/"
     })
 
-    expect(android_notifier).to receive(:notify).with({
+    NotificationService.send_notification_to_devices(device_notification_attrs, container)
+
+    expect(TestAndroidNotifier.message_params).to eq({
       "device_id" => "device id",
       "message" => {
         "s3_file_url" => "http://s3.amazon.com/path/to/file.png",
@@ -36,10 +47,5 @@ describe NotificationService do
         "encrypted_aes_iv" => "encrypted aes iv"
       }
     })
-
-    NotificationService.send_notification_to_devices(
-      device_notification_attrs,
-      container
-    )
   end
 end
