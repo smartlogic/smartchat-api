@@ -9,6 +9,7 @@ module NotificationService
     end
 
     container.sqs_queue.send_message({
+      "queue" => "media",
       "id" => media.id,
       "user_id" => friend_id,
       "public_key" => user.public_key,

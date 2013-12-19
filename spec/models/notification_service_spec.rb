@@ -25,6 +25,7 @@ describe NotificationService do
     container = double(:container, :sqs_queue => queue)
 
     expect(queue).to receive(:send_message).with({
+      "queue" => "media",
       "id" => 3,
       "user_id" => 2,
       "public_key" => "public_key",
