@@ -29,10 +29,8 @@ describe NotificationService do
   end
 
   it "should send device notifications" do
-    container = double(:container, {
-      :android_notifier => TestAndroidNotifier,
-      :s3_host => "http://s3.amazon.com/"
-    })
+    container = Struct.new(:android_notifier, :s3_host).
+      new(TestAndroidNotifier, "http://s3.amazon.com/")
 
     NotificationService.send_notification_to_devices(device_notification_attrs, container)
 
