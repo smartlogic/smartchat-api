@@ -3,3 +3,6 @@
 
 # Change the production log level to debug
 #config.log_level = :debug
+
+require 'syslog/logger'
+DaemonKit.logger = Syslog::Logger.new("worker")
