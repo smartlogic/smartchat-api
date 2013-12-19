@@ -1,3 +1,5 @@
+require 'syslog/logger'
+
 Smartchat::Application.configure do
   config.action_controller.default_url_options = { :host => "smartchat.smartlogic.io" }
 
@@ -80,5 +82,5 @@ Smartchat::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.logger = SyslogLogger.new
+  config.logger = Syslog::Logger.new
 end
