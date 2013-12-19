@@ -12,7 +12,7 @@ set :default_environment, {
   'RBENV_ROOT' => "/opt/rbenv"
 }
 
-set :bundle_flags, "--deployment --quiet --binstubs --shebang ruby-local-exec"
+set :bundle_flags, "--deployment --quiet --shebang ruby-local-exec"
 
 set :use_sudo, false
 
