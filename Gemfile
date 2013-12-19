@@ -10,6 +10,7 @@ gem 'carrierwave'
 gem 'faraday'
 gem 'fog'
 gem 'pg'
+gem 'syslog_logger'
 gem 'unf'
 
 group :staging, :production do
