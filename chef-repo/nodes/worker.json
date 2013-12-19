@@ -28,7 +28,9 @@
       "AWS_ACCESS_KEY_ID": "AKIAJTG5C7I7TLPBNALQ",
       "AWS_SECRET_ACCESS_KEY": "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",
       "AWS_REGION": "us-east-1",
-      "GCM_API_KEY": "AIzaSyAAk418cx5f1jChp1yaEIwouUDMXVAwiiM"
+      "GCM_API_KEY": "AIzaSyAAk418cx5f1jChp1yaEIwouUDMXVAwiiM",
+      "AWS_SMTP_USERNAME" : "AKIAJ2VZMTKVDIQDWQOQ",
+      "AWS_SMTP_PASSWORD" : "Agxt0JZh7OPWJZgNIoh7TvvGmNoiOfegHuQ7hoHhRR5P"
     }
   },
   "run_list": [
