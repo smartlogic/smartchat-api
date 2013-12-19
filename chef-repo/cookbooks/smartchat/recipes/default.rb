@@ -1,3 +1,5 @@
+package "htop"
+
 rbenv_ruby "2.0.0-p247" do
   global true
 end
