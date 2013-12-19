@@ -14,6 +14,7 @@ gem 'daemon-kit'
 gem 'aws-sdk'
 gem 'faraday'
 gem 'json'
+gem 'mail'
 gem 'safely'
 
 group :development, :test do

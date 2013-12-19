@@ -19,11 +19,16 @@ GEM
       multipart-post (~> 1.2.0)
     i18n (0.6.9)
     json (1.8.1)
+    mail (2.5.4)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
+    mime-types (1.25.1)
     mini_portile (0.5.2)
     multi_json (1.8.2)
     multipart-post (1.2.0)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
+    polyglot (0.3.3)
     rake (10.1.0)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
@@ -37,6 +42,9 @@ GEM
       activesupport (>= 2.3.5, < 3.2.0)
     safely (0.3.2)
     thor (0.18.1)
+    treetop (1.4.15)
+      polyglot
+      polyglot (>= 0.3.1)
     uuidtools (2.1.4)
 
 PLATFORMS
@@ -47,6 +55,7 @@ DEPENDENCIES
   daemon-kit
   faraday
   json
+  mail
   rake
   rspec
   safely

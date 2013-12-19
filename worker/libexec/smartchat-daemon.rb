@@ -35,6 +35,8 @@ AppContainer.sqs_queue.poll do |msg|
   case body["queue"]
   when "media"
     MediaWorker.new.perform(body)
+  when "invitation"
+    InvitationWorker.new.perform(body)
   else
     DaemonKit.logger.warn "Got a message for an unknown queue"
   end

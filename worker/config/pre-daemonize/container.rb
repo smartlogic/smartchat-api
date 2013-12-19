@@ -42,5 +42,9 @@ class AppContainer
     let(:gcm_api_key) do
       ENV["GCM_API_KEY"]
     end
+
+    let(:from_address) do
+      "no-reply@smartchat.smartlogic.io"
+    end
   end
 end
