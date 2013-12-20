@@ -37,21 +37,24 @@ describe MediaWorker do
     end
   end
 
-  it "encrypt and upload the media to the user's s3 folder" do
-    file_klass = double(:File)
-    expect(file_klass).to receive(:basename).with("uploads/media/3/file.png").and_return("file.png")
+  class TestNotificationService
+    attr_accessor :notifications
 
+    def initialize
+      @notifications = []
+    end
+
+    def send_notification_to_devices(notification)
+      @notifications << notification
+    end
+  end
+
+  it "encrypt and upload the media to the user's s3 folder" do
     bucket = double(:bucket)
     s3_object = double(:S3Object)
 
     private_bucket = double(:private_bucket)
     s3_private_object = double(:S3Object_private)
-
-    container = double(:container, {
-      :s3_bucket => bucket,
-      :s3_private_bucket => private_bucket,
-      :smartchat_encryptor => TestEncryptor
-    })
 
     expect(bucket).to receive(:objects).and_return({ "users/2/media/3/file.png" => s3_object })
     expect(s3_object).to receive(:write).with("encrypted data")
@@ -60,25 +63,31 @@ describe MediaWorker do
     expect(private_bucket).to receive(:objects).and_return({ "uploads/media/3/file.png" => s3_private_object })
     expect(s3_private_object).to receive(:read).and_return("file data")
 
-    notification_service_klass = double(:NotificationService)
-    expect(notification_service_klass).to receive(:send_notification_to_devices).
-      with({
-        "s3_file_path" => "users/2/media/3/file.png",
-        "created_at" => created_at,
-        "devices" => [{
-          "id" => "a device id",
-          "type" => "android"
-        }],
-        "creator" => {
-          "id" => 1,
-          "email" => "eric@example.com"
-        },
-        "encrypted_aes_key" => Base64.strict_encode64("encrypted aes key"),
-        "encrypted_aes_iv" => Base64.strict_encode64("encrypted aes iv")
-      })
+    notification = TestNotificationService.new
 
-    MediaWorker.new.perform(media_attributes, file_klass, notification_service_klass, container)
+    container = double(:container, {
+      :s3_bucket => bucket,
+      :s3_private_bucket => private_bucket,
+      :smartchat_encryptor => TestEncryptor,
+      :notification_service => notification
+    })
+
+    MediaWorker.new.perform(media_attributes, container)
 
     expect(TestEncryptor.instance.data).to eq("file data")
+    expect(notification.notifications.first).to eq({
+      "s3_file_path" => "users/2/media/3/file.png",
+      "created_at" => created_at,
+      "devices" => [{
+        "id" => "a device id",
+        "type" => "android"
+      }],
+      "creator" => {
+        "id" => 1,
+        "email" => "eric@example.com"
+      },
+      "encrypted_aes_key" => Base64.strict_encode64("encrypted aes key"),
+      "encrypted_aes_iv" => Base64.strict_encode64("encrypted aes iv")
+    })
   end
 end

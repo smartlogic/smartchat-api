@@ -2,7 +2,7 @@ require 'openssl'
 require 'base64'
 
 class MediaWorker
-  def perform(media_attributes, file_klass = File, notification_service_klass = NotificationService, container = AppContainer)
+  def perform(media_attributes, container = AppContainer)
     private_object = container.s3_private_bucket.objects[media_attributes["file_path"]]
 
     encryptor = container.smartchat_encryptor.new(media_attributes["public_key"])
@@ -11,14 +11,14 @@ class MediaWorker
 
     id = media_attributes["id"]
     user_id = media_attributes["user_id"]
-    file_name = file_klass.basename(media_attributes["file_path"])
+    file_name = File.basename(media_attributes["file_path"])
     s3_file_path = "users/#{user_id}/media/#{id}/#{file_name}"
 
     object = container.s3_bucket.objects[s3_file_path]
     object.write(encrypted_data)
     object.acl = :public_read
 
-    notification_service_klass.send_notification_to_devices({
+    container.notification_service.send_notification_to_devices({
       "creator" => media_attributes["creator"],
       "devices" => media_attributes["devices"],
       "s3_file_path" => s3_file_path,
