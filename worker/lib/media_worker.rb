@@ -2,20 +2,12 @@ require 'openssl'
 require 'base64'
 
 class MediaWorker
-  def perform(media_attributes, file_klass = File, rsa_klass = OpenSSL::PKey::RSA, cipher_klass = OpenSSL::Cipher, notification_service_klass = NotificationService, container = AppContainer)
+  def perform(media_attributes, file_klass = File, notification_service_klass = NotificationService, container = AppContainer)
     private_object = container.s3_private_bucket.objects[media_attributes["file_path"]]
 
-    cipher = cipher_klass.new("AES-128-CBC")
-    cipher.encrypt
-
-    aes_key = cipher.random_key
-    aes_iv = cipher.random_iv
-
-    public_key = rsa_klass.new media_attributes["public_key"]
-    encrypted_aes_key = public_key.public_encrypt(aes_key)
-    encrypted_aes_iv = public_key.public_encrypt(aes_iv)
-
-    encrypted_data = cipher.update(private_object.read) + cipher.final
+    encryptor = container.smartchat_encryptor.new(media_attributes["public_key"])
+    encrypted_aes_key, encrypted_aes_iv, encrypted_data =
+      encryptor.encrypt(private_object.read)
 
     id = media_attributes["id"]
     user_id = media_attributes["user_id"]

@@ -39,6 +39,10 @@ class AppContainer
       AndroidNotifier
     end
 
+    let(:smartchat_encryptor) do
+      SmartchatEncryptor
+    end
+
     let(:gcm_api_key) do
       ENV["GCM_API_KEY"]
     end

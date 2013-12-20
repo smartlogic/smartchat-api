@@ -19,22 +19,27 @@ describe MediaWorker do
     }
   } }
 
+  class TestEncryptor
+    attr_reader :data
+
+    def self.new(public_key)
+      @@instance = allocate.tap { |e| e.send(:initialize) }
+    end
+
+    def self.instance
+      @@instance
+    end
+
+    def encrypt(data)
+      @data = data
+
+      ["encrypted aes key", "encrypted aes iv", "encrypted data"]
+    end
+  end
+
   it "encrypt and upload the media to the user's s3 folder" do
     file_klass = double(:File)
     expect(file_klass).to receive(:basename).with("uploads/media/3/file.png").and_return("file.png")
-
-    aes = double(:aes, :random_key => "aes key", :random_iv => "aes iv")
-    cipher_klass = double(:Cipher)
-    expect(cipher_klass).to receive(:new).with("AES-128-CBC").and_return(aes)
-    expect(aes).to receive(:encrypt)
-    expect(aes).to receive(:update).with("file data").and_return("encrypted data")
-    expect(aes).to receive(:final).and_return("")
-
-    rsa = double(:rsa)
-    rsa_klass = double(:RSA)
-    expect(rsa_klass).to receive(:new).with("public_key").and_return(rsa)
-    expect(rsa).to receive(:public_encrypt).with("aes key").and_return("encrypted aes key")
-    expect(rsa).to receive(:public_encrypt).with("aes iv").and_return("encrypted aes iv")
 
     bucket = double(:bucket)
     s3_object = double(:S3Object)
@@ -42,7 +47,11 @@ describe MediaWorker do
     private_bucket = double(:private_bucket)
     s3_private_object = double(:S3Object_private)
 
-    container = double(:container, :s3_bucket => bucket, :s3_private_bucket => private_bucket)
+    container = double(:container, {
+      :s3_bucket => bucket,
+      :s3_private_bucket => private_bucket,
+      :smartchat_encryptor => TestEncryptor
+    })
 
     expect(bucket).to receive(:objects).and_return({ "users/2/media/3/file.png" => s3_object })
     expect(s3_object).to receive(:write).with("encrypted data")
@@ -68,6 +77,8 @@ describe MediaWorker do
         "encrypted_aes_iv" => Base64.strict_encode64("encrypted aes iv")
       })
 
-    MediaWorker.new.perform(media_attributes, file_klass, rsa_klass, cipher_klass, notification_service_klass, container)
+    MediaWorker.new.perform(media_attributes, file_klass, notification_service_klass, container)
+
+    expect(TestEncryptor.instance.data).to eq("file data")
   end
 end
