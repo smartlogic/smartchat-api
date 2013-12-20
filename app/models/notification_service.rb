@@ -15,6 +15,7 @@ module NotificationService
       "public_key" => user.public_key,
       "created_at" => media.created_at,
       "file_path" => media.file.path,
+      "drawing_path" => media.drawing.path,
       "devices" => devices,
       "creator" => {
         "id" => media.user_id,
