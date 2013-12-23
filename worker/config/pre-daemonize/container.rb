@@ -50,5 +50,9 @@ class AppContainer
     let(:from_address) do
       "dev@smartlogic.io"
     end
+
+    let(:notification_service) do
+      NotificationService
+    end
   end
 end
