@@ -31,7 +31,7 @@ class MediaController < ApplicationController
   end
 
   def parse_drawing_tempfile
-    if params[:media].has_key?(:drawing)
+    if params[:media].has_key?(:drawing) && params[:media][:drawing].present?
       @drawing_tempfile = Tempfile.new(["drawing", ".png"])
       File.open(@drawing_tempfile.path, 'wb') do |file|
         file.write(Base64.decode64(params[:media][:drawing]))
