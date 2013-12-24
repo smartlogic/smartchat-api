@@ -5,6 +5,8 @@ require 'rspec'
 require File.dirname(__FILE__) + '/../config/environment'
 DaemonKit::Application.running!
 
+Dir["spec/support/**/*.rb"].each { |f| require File.join(File.dirname(__FILE__), "..", f) }
+
 RSpec.configure do |config|
   # == Mock Framework
   #
