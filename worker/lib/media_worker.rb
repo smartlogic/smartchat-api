@@ -3,9 +3,9 @@ require 'base64'
 
 class MediaWorker
   def perform(media_attributes, container = AppContainer)
-    notification_hash = {
-      "creator" => media_attributes["creator"],
-      "devices" => media_attributes["devices"],
+    notification = {
+      "creator_id" => media_attributes["creator"]["id"],
+      "creator_email" => media_attributes["creator"]["email"],
       "created_at" => media_attributes["created_at"],
     }
 
@@ -18,8 +18,8 @@ class MediaWorker
     file_path, encrypted_aes_key, encrypted_aes_iv =
       publish(file_path, user_id, id, encryptor, media_store)
 
-    notification_hash = notification_hash.merge({
-      "file_path" => file_path,
+    notification.merge!({
+      "file_url" => "#{container.s3_host}#{file_path}",
       "encrypted_aes_key" => encrypted_aes_key,
       "encrypted_aes_iv" => encrypted_aes_iv
     })
@@ -30,14 +30,15 @@ class MediaWorker
       drawing_file_path, drawing_encrypted_aes_key, drawing_encrypted_aes_iv =
         publish(drawing_file_path, user_id, id, encryptor, media_store)
 
-      notification_hash = notification_hash.merge({
-        "drawing_file_path" => drawing_file_path,
+      notification.merge!({
+        "drawing_file_url" => "#{container.s3_host}#{drawing_file_path}",
         "drawing_encrypted_aes_key" => drawing_encrypted_aes_key,
         "drawing_encrypted_aes_iv" => drawing_encrypted_aes_iv
       })
     end
 
-    container.notification_service.send_notification_to_devices(notification_hash)
+    devices = media_attributes["devices"]
+    container.notification_service.send_notification_to_devices(devices, notification)
   end
 
   private

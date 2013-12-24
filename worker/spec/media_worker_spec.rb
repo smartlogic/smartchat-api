@@ -11,8 +11,8 @@ describe MediaWorker do
     "file_path" => "file_path",
     "drawing_path" => "drawing_path",
     "devices" => [{
-      "id" => "a device id",
-      "type" => "android"
+      "device_id" => "a device id",
+      "device_type" => "android"
     }],
     "creator" => {
       "id" => 1,
@@ -29,23 +29,18 @@ describe MediaWorker do
     container = double(:container, {
       :media_store => media_store,
       :smartchat_encryptor => TestEncryptorFactory.new(encryptor),
-      :notification_service => notification
+      :notification_service => notification,
+      :s3_host => "http://s3.amazonaws.com/"
     })
 
     MediaWorker.new.perform(media_attributes, container)
 
-    expect(notification.notifications.first).to eq({
-      "file_path" => "file_path",
-      "drawing_file_path" => "drawing_path",
+    expect(notification.lookup("android", "a device id")).to eq({
+      "file_url" => "http://s3.amazonaws.com/file_path",
+      "drawing_file_url" => "http://s3.amazonaws.com/drawing_path",
       "created_at" => created_at,
-      "devices" => [{
-        "id" => "a device id",
-        "type" => "android"
-      }],
-      "creator" => {
-        "id" => 1,
-        "email" => "eric@example.com"
-      },
+      "creator_id" => 1,
+      "creator_email" => "eric@example.com",
       "encrypted_aes_key" => Base64.strict_encode64("encrypted aes key"),
       "encrypted_aes_iv" => Base64.strict_encode64("encrypted aes iv"),
       "drawing_encrypted_aes_key" => Base64.strict_encode64("encrypted aes key"),
@@ -62,23 +57,18 @@ describe MediaWorker do
     container = double(:container, {
       :media_store => media_store,
       :smartchat_encryptor => TestEncryptorFactory.new(encryptor),
-      :notification_service => notification
+      :notification_service => notification,
+      :s3_host => "http://s3.amazonaws.com/"
     })
 
     media_attributes.delete("drawing_path")
     MediaWorker.new.perform(media_attributes, container)
 
-    expect(notification.notifications.first).to eq({
-      "file_path" => "file_path",
+    expect(notification.lookup("android", "a device id")).to eq({
+      "file_url" => "http://s3.amazonaws.com/file_path",
       "created_at" => created_at,
-      "devices" => [{
-        "id" => "a device id",
-        "type" => "android"
-      }],
-      "creator" => {
-        "id" => 1,
-        "email" => "eric@example.com"
-      },
+      "creator_id" => 1,
+      "creator_email" => "eric@example.com",
       "encrypted_aes_key" => Base64.strict_encode64("encrypted aes key"),
       "encrypted_aes_iv" => Base64.strict_encode64("encrypted aes iv"),
     })

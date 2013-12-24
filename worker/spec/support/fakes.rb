@@ -5,14 +5,18 @@ class TestEncryptor
 end
 
 class TestNotificationService
-  attr_accessor :notifications
-
   def initialize
-    @notifications = []
+    @notifications = {}
   end
 
-  def send_notification_to_devices(notification)
-    @notifications << notification
+  def send_notification_to_devices(devices, notification)
+    devices.each do |device|
+      @notifications[[device["device_type"], device["device_id"]]] = notification
+    end
+  end
+
+  def lookup(type, id)
+    @notifications[[type, id]]
   end
 end
 
