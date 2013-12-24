@@ -11,23 +11,20 @@ class MediaWorker
     devices = media_attributes.fetch("devices")
     file_path = media_attributes.fetch("file_path")
 
-    notification = {
-      "creator_id" => creator.fetch("id"),
-      "creator_email" => creator.fetch("email"),
-      "created_at" => created_at,
-    }
-
     encryptor = container.smartchat_encryptor.new(public_key)
     media_store = container.media_store
 
     file_url, encrypted_aes_key, encrypted_aes_iv =
       publish(file_path, user_id, id, encryptor, media_store)
 
-    notification.merge!({
+    notification = {
+      "creator_id" => creator.fetch("id"),
+      "creator_email" => creator.fetch("email"),
+      "created_at" => created_at,
       "file_url" => file_url,
       "encrypted_aes_key" => encrypted_aes_key,
       "encrypted_aes_iv" => encrypted_aes_iv
-    })
+    }
 
     if media_attributes["drawing_path"]
       drawing_file_path = media_attributes["drawing_path"]
