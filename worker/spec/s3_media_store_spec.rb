@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'open-uri'
 
 describe S3MediaStore do
   let(:public_bucket) { AppContainer.s3_bucket }
@@ -11,8 +12,8 @@ describe S3MediaStore do
     store = S3MediaStore.new(private_bucket, public_bucket)
     encryptor = TestEncryptor.new
 
-    public_path, key, iv = store.publish(path, "user_id", "media_id", encryptor)
+    public_url, key, iv = store.publish(path, "user_id", "media_id", encryptor)
 
-    expect(public_bucket.objects[public_path].read).to eq("atad")
+    expect(open(public_url).read).to eq("atad")
   end
 end

@@ -29,15 +29,14 @@ describe MediaWorker do
     container = double(:container, {
       :media_store => media_store,
       :smartchat_encryptor => TestEncryptorFactory.new(encryptor),
-      :notification_service => notification,
-      :s3_host => "http://s3.amazonaws.com/"
+      :notification_service => notification
     })
 
     MediaWorker.new.perform(media_attributes, container)
 
     expect(notification.lookup("android", "a device id")).to eq({
-      "file_url" => "http://s3.amazonaws.com/file_path",
-      "drawing_file_url" => "http://s3.amazonaws.com/drawing_path",
+      "file_url" => "file_url",
+      "drawing_file_url" => "drawing_url",
       "created_at" => created_at,
       "creator_id" => 1,
       "creator_email" => "eric@example.com",
@@ -57,15 +56,14 @@ describe MediaWorker do
     container = double(:container, {
       :media_store => media_store,
       :smartchat_encryptor => TestEncryptorFactory.new(encryptor),
-      :notification_service => notification,
-      :s3_host => "http://s3.amazonaws.com/"
+      :notification_service => notification
     })
 
     media_attributes.delete("drawing_path")
     MediaWorker.new.perform(media_attributes, container)
 
     expect(notification.lookup("android", "a device id")).to eq({
-      "file_url" => "http://s3.amazonaws.com/file_path",
+      "file_url" => "file_url",
       "created_at" => created_at,
       "creator_id" => 1,
       "creator_email" => "eric@example.com",
