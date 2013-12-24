@@ -3,18 +3,23 @@ require 'base64'
 
 class MediaWorker
   def perform(media_attributes, container = AppContainer)
+    id = media_attributes.fetch("id")
+    user_id = media_attributes.fetch("user_id")
+    created_at = media_attributes.fetch("created_at")
+    creator = media_attributes.fetch("creator")
+    public_key = media_attributes.fetch("public_key")
+    devices = media_attributes.fetch("devices")
+    file_path = media_attributes.fetch("file_path")
+
     notification = {
-      "creator_id" => media_attributes["creator"]["id"],
-      "creator_email" => media_attributes["creator"]["email"],
-      "created_at" => media_attributes["created_at"],
+      "creator_id" => creator.fetch("id"),
+      "creator_email" => creator.fetch("email"),
+      "created_at" => created_at,
     }
 
-    id = media_attributes["id"]
-    user_id = media_attributes["user_id"]
-    encryptor = container.smartchat_encryptor.new(media_attributes["public_key"])
+    encryptor = container.smartchat_encryptor.new(public_key)
     media_store = container.media_store
 
-    file_path = media_attributes["file_path"]
     file_url, encrypted_aes_key, encrypted_aes_iv =
       publish(file_path, user_id, id, encryptor, media_store)
 
@@ -37,7 +42,6 @@ class MediaWorker
       })
     end
 
-    devices = media_attributes["devices"]
     container.notification_service.send_notification_to_devices(devices, notification)
   end
 
