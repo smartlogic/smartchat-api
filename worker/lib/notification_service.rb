@@ -5,14 +5,14 @@ module NotificationService
       "creator_id" => device_notification_attrs["creator"]["id"],
       "creator_email" => device_notification_attrs["creator"]["email"],
 
-      "s3_file_url" => "#{container.s3_host}#{device_notification_attrs["s3_file_path"]}",
+      "file_url" => "#{container.s3_host}#{device_notification_attrs["file_path"]}",
       "encrypted_aes_key" => device_notification_attrs["encrypted_aes_key"],
       "encrypted_aes_iv" => device_notification_attrs["encrypted_aes_iv"],
     }
 
-    if device_notification_attrs.has_key?("drawing_s3_file_path")
+    if device_notification_attrs.has_key?("drawing_file_path")
       notification_message = notification_message.merge({
-        "drawing_s3_file_url" => "#{container.s3_host}#{device_notification_attrs["drawing_s3_file_path"]}",
+        "drawing_file_url" => "#{container.s3_host}#{device_notification_attrs["drawing_file_path"]}",
         "drawing_encrypted_aes_key" => device_notification_attrs["drawing_encrypted_aes_key"],
         "drawing_encrypted_aes_iv" => device_notification_attrs["drawing_encrypted_aes_iv"]
       })

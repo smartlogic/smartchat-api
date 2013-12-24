@@ -15,11 +15,11 @@ class MediaWorker
     media_store = container.media_store
 
     file_path = media_attributes["file_path"]
-    s3_file_path, encrypted_aes_key, encrypted_aes_iv =
+    file_path, encrypted_aes_key, encrypted_aes_iv =
       publish(file_path, user_id, id, encryptor, media_store)
 
     notification_hash = notification_hash.merge({
-      "s3_file_path" => s3_file_path,
+      "file_path" => file_path,
       "encrypted_aes_key" => encrypted_aes_key,
       "encrypted_aes_iv" => encrypted_aes_iv
     })
@@ -27,11 +27,11 @@ class MediaWorker
     if media_attributes["drawing_path"]
       drawing_file_path = media_attributes["drawing_path"]
 
-      drawing_s3_file_path, drawing_encrypted_aes_key, drawing_encrypted_aes_iv =
+      drawing_file_path, drawing_encrypted_aes_key, drawing_encrypted_aes_iv =
         publish(drawing_file_path, user_id, id, encryptor, media_store)
 
       notification_hash = notification_hash.merge({
-        "drawing_s3_file_path" => drawing_s3_file_path,
+        "drawing_file_path" => drawing_file_path,
         "drawing_encrypted_aes_key" => drawing_encrypted_aes_key,
         "drawing_encrypted_aes_iv" => drawing_encrypted_aes_iv
       })

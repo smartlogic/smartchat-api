@@ -35,8 +35,8 @@ describe MediaWorker do
     MediaWorker.new.perform(media_attributes, container)
 
     expect(notification.notifications.first).to eq({
-      "s3_file_path" => "file_path",
-      "drawing_s3_file_path" => "drawing_path",
+      "file_path" => "file_path",
+      "drawing_file_path" => "drawing_path",
       "created_at" => created_at,
       "devices" => [{
         "id" => "a device id",
@@ -69,7 +69,7 @@ describe MediaWorker do
     MediaWorker.new.perform(media_attributes, container)
 
     expect(notification.notifications.first).to eq({
-      "s3_file_path" => "file_path",
+      "file_path" => "file_path",
       "created_at" => created_at,
       "devices" => [{
         "id" => "a device id",
