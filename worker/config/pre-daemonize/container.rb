@@ -7,6 +7,10 @@ class AppContainer
       end
     end
 
+    let(:media_store) do
+      S3MediaStore.new(s3_private_bucket, s3_bucket)
+    end
+
     let(:sqs_queue_name) do
       "smartchat-#{DAEMON_ENV}"
     end
