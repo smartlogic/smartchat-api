@@ -23,14 +23,6 @@ describe MediaWorker do
   class TestEncryptor
     attr_reader :data
 
-    def self.new(public_key)
-      @@instance ||= allocate.tap { |e| e.send(:initialize) }
-    end
-
-    def self.instance
-      @@instance
-    end
-
     def initialize
       @data = []
     end
@@ -54,11 +46,19 @@ describe MediaWorker do
     end
   end
 
+  TestEncryptorFactory = Struct.new(:instance) do
+    def new(public_key)
+      instance
+    end
+  end
+
   let(:bucket) { double(:bucket) }
   let(:s3_object) { double(:S3Object) }
 
   let(:private_bucket) { double(:private_bucket) }
   let(:s3_private_object) { double(:S3Object_private) }
+
+  let(:encryptor) { TestEncryptor.new }
 
   it "encrypt and upload the media to the user's s3 folder" do
     drawing_s3_object = double(:S3Object)
@@ -83,17 +83,18 @@ describe MediaWorker do
 
     notification = TestNotificationService.new
 
+
     container = double(:container, {
       :s3_bucket => bucket,
       :s3_private_bucket => private_bucket,
-      :smartchat_encryptor => TestEncryptor,
+      :smartchat_encryptor => TestEncryptorFactory.new(encryptor),
       :notification_service => notification
     })
 
     MediaWorker.new.perform(media_attributes, container)
 
-    expect(TestEncryptor.instance.data.first).to eq("file data")
-    expect(TestEncryptor.instance.data.last).to eq("drawing data")
+    expect(encryptor.data.first).to eq("file data")
+    expect(encryptor.data.last).to eq("drawing data")
     expect(notification.notifications.first).to eq({
       "s3_file_path" => "users/2/media/3/file.png",
       "drawing_s3_file_path" => "users/2/media/3/drawing.png",
@@ -130,7 +131,7 @@ describe MediaWorker do
     container = double(:container, {
       :s3_bucket => bucket,
       :s3_private_bucket => private_bucket,
-      :smartchat_encryptor => TestEncryptor,
+      :smartchat_encryptor => TestEncryptorFactory.new(encryptor),
       :notification_service => notification
     })
 
