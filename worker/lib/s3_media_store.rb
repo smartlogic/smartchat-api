@@ -14,4 +14,11 @@ class S3MediaStore
 
     [object.public_url, encrypted_aes_key, encrypted_aes_iv]
   end
+
+  def read_once(path)
+    object = @public_bucket.objects[path]
+    data = object.read
+    object.delete
+    data
+  end
 end

@@ -16,4 +16,15 @@ describe S3MediaStore do
 
     expect(open(public_url).read).to eq("atad")
   end
+
+  it "should read once and delete the file" do
+    path = SecureRandom.hex
+    public_bucket.objects[path].write("data")
+
+    store = S3MediaStore.new(private_bucket, public_bucket)
+    data = store.read_once(path)
+
+    expect(data).to eq("data")
+    expect(public_bucket.objects[path].exists?).to be_false
+  end
 end
