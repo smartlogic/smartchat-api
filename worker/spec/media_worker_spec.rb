@@ -50,11 +50,10 @@ describe MediaWorker do
     expect(drawing_s3_private_object).to receive(:read).and_return("drawing data")
 
     notification = TestNotificationService.new
-
+    s3_media_store = S3MediaStore.new(private_bucket, bucket)
 
     container = double(:container, {
-      :s3_bucket => bucket,
-      :s3_private_bucket => private_bucket,
+      :media_store => s3_media_store,
       :smartchat_encryptor => TestEncryptorFactory.new(encryptor),
       :notification_service => notification
     })
@@ -93,10 +92,10 @@ describe MediaWorker do
     expect(s3_private_object).to receive(:read).and_return("file data")
 
     notification = TestNotificationService.new
+    s3_media_store = S3MediaStore.new(private_bucket, bucket)
 
     container = double(:container, {
-      :s3_bucket => bucket,
-      :s3_private_bucket => private_bucket,
+      :media_store => s3_media_store,
       :smartchat_encryptor => TestEncryptorFactory.new(encryptor),
       :notification_service => notification
     })

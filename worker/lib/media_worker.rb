@@ -11,14 +11,11 @@ class MediaWorker
 
     id = media_attributes["id"]
     user_id = media_attributes["user_id"]
+    file_path = media_attributes["file_path"]
 
-    private_object = container.s3_private_bucket.objects[media_attributes["file_path"]]
     encryptor = container.smartchat_encryptor.new(media_attributes["public_key"])
-    encrypted_aes_key, encrypted_aes_iv, encrypted_data =
-      encryptor.encrypt(private_object.read)
-
-    s3_file_path = "users/#{user_id}/media/#{id}/#{File.basename(media_attributes["file_path"])}"
-    upload(container, s3_file_path, encrypted_data)
+    s3_file_path, encrypted_aes_key, encrypted_aes_iv =
+      container.media_store.publish(file_path, user_id, id, encryptor)
 
     notification_hash = notification_hash.merge({
       "s3_file_path" => s3_file_path,
@@ -27,13 +24,10 @@ class MediaWorker
     })
 
     if media_attributes["drawing_path"]
-      drawing_private_object = container.s3_private_bucket.objects[media_attributes["drawing_path"]]
-      encryptor = container.smartchat_encryptor.new(media_attributes["public_key"])
-      drawing_encrypted_aes_key, drawing_encrypted_aes_iv, drawing_encrypted_data =
-        encryptor.encrypt(drawing_private_object.read)
+      drawing_file_path = media_attributes["drawing_path"]
 
-      drawing_s3_file_path = "users/#{user_id}/media/#{id}/drawing.png"
-      upload(container, drawing_s3_file_path, drawing_encrypted_data)
+      drawing_s3_file_path, drawing_encrypted_aes_key, drawing_encrypted_aes_iv =
+        container.media_store.publish(drawing_file_path, user_id, id, encryptor)
 
       notification_hash = notification_hash.merge({
         "drawing_s3_file_path" => drawing_s3_file_path,
