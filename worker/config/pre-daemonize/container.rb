@@ -8,7 +8,7 @@ class AppContainer
     end
 
     let(:media_store) do
-      S3MediaStore.new(s3_private_bucket, s3_bucket)
+      S3MediaStore.new(s3_private_bucket, s3_published_bucket)
     end
 
     let(:sqs_queue_name) do
@@ -19,12 +19,12 @@ class AppContainer
       AWS::SQS.new.queues.named(sqs_queue_name)
     end
 
-    let(:s3_bucket_name) do
+    let(:s3_published_bucket_name) do
       "smartchat-#{DAEMON_ENV}"
     end
 
-    let(:s3_bucket) do
-      AWS::S3.new.buckets[s3_bucket_name]
+    let(:s3_published_bucket) do
+      AWS::S3.new.buckets[s3_published_bucket_name]
     end
 
     let(:s3_private_bucket_name) do
@@ -36,7 +36,7 @@ class AppContainer
     end
 
     let(:s3_host) do
-      "https://s3.amazonaws.com/#{s3_bucket_name}/"
+      "https://s3.amazonaws.com/#{s3_published_bucket_name}/"
     end
 
     let(:android_notifier) do
