@@ -38,12 +38,4 @@ class MediaWorker
 
     container.notification_service.send_notification_to_devices(notification_hash)
   end
-
-  private
-
-  def upload(container, s3_file_path, data)
-    object = container.s3_bucket.objects[s3_file_path]
-    object.write(data)
-    object.acl = :public_read
-  end
 end
