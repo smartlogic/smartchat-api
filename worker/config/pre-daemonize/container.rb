@@ -8,7 +8,8 @@ class AppContainer
     end
 
     let(:media_store) do
-      S3MediaStore.new(s3_private_bucket, s3_published_bucket)
+      base_uri = URI::HTTP.build(:scheme => "https", :host => "s3.amazonaws.com", :path => "/#{s3_published_bucket_name}/")
+      S3MediaStore.new(s3_private_bucket, s3_published_bucket, base_uri)
     end
 
     let(:sqs_queue_name) do
