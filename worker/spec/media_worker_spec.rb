@@ -36,10 +36,10 @@ describe MediaWorker do
       "users/2/media/3/file.png" => s3_object,
       "users/2/media/3/drawing.png" => drawing_s3_object
     }).exactly(2).times
-    expect(s3_object).to receive(:write).with("encrypted data")
+    expect(s3_object).to receive(:write).with("atad elif")
     expect(s3_object).to receive(:acl=).with(:public_read)
 
-    expect(drawing_s3_object).to receive(:write).with("encrypted data")
+    expect(drawing_s3_object).to receive(:write).with("atad gniward")
     expect(drawing_s3_object).to receive(:acl=).with(:public_read)
 
     expect(private_bucket).to receive(:objects).and_return({
@@ -61,8 +61,6 @@ describe MediaWorker do
 
     MediaWorker.new.perform(media_attributes, container)
 
-    expect(encryptor.data.first).to eq("file data")
-    expect(encryptor.data.last).to eq("drawing data")
     expect(notification.notifications.first).to eq({
       "s3_file_path" => "users/2/media/3/file.png",
       "drawing_s3_file_path" => "users/2/media/3/drawing.png",
@@ -86,7 +84,7 @@ describe MediaWorker do
     expect(bucket).to receive(:objects).and_return({
       "users/2/media/3/file.png" => s3_object,
     })
-    expect(s3_object).to receive(:write).with("encrypted data")
+    expect(s3_object).to receive(:write).with("atad elif")
     expect(s3_object).to receive(:acl=).with(:public_read)
 
     expect(private_bucket).to receive(:objects).and_return({

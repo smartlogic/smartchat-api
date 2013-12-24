@@ -1,14 +1,6 @@
 class TestEncryptor
-  attr_reader :data
-
-  def initialize
-    @data = []
-  end
-
   def encrypt(data)
-    @data << data
-
-    ["encrypted aes key", "encrypted aes iv", "encrypted data"]
+    ["encrypted aes key", "encrypted aes iv", data.reverse]
   end
 end
 
