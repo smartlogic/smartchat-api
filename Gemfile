@@ -10,6 +10,8 @@ gem 'carrierwave'
 gem 'faraday'
 gem 'fog'
 gem 'pg'
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'unf'
 
 group :staging, :production do
