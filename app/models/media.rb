@@ -4,5 +4,5 @@ class Media < ActiveRecord::Base
   mount_uploader :file, FileUploader
   mount_uploader :drawing, FileUploader
 
-  delegate :id, :email, :to => :user, :prefix => true
+  delegate :email, :to => :user, :prefix => true
 end

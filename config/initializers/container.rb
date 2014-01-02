@@ -48,5 +48,9 @@ class AppContainer
     let(:sqs_queue) do
       AWS::SQS.new.queues.named(sqs_queue_name)
     end
+
+    let(:notification_service) do
+      NotificationService
+    end
   end
 end

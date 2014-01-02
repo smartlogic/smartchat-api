@@ -48,7 +48,7 @@ resource "Media" do
           }],
         }
       }.to_json)
-      expect(status).to eq(201)
+      expect(status).to eq(202)
     end
 
     context "Sending a drawing", :document => false do
@@ -67,7 +67,7 @@ resource "Media" do
             }],
           }
         }.to_json)
-        expect(status).to eq(201)
+        expect(status).to eq(202)
       end
     end
   end

@@ -1,11 +1,26 @@
 module MediaService
-  def create(user, params, media_klass = Media, notification_service_klass = NotificationService)
-    friend_ids = params.delete(:friend_ids)
-    media = media_klass.create(params.merge(:user_id => user.id))
-
-    friend_ids.each do |friend_id|
-      notification_service_klass.notify(friend_id, media)
-    end
+  def create(user, friend_ids, file_path, drawing_path)
+    Worker.perform_async(user.id, friend_ids, file_path, drawing_path)
   end
   module_function :create
+
+  class Worker
+    include Sidekiq::Worker
+
+    def perform(user_id, friend_ids, file_path, drawing_path)
+      file = File.open(file_path)
+
+      if drawing_path
+        drawing = File.open(drawing_path)
+      end
+
+      friend_ids.each do |friend_id|
+        media = Media.create!("user_id" => user_id, "file" => file, "drawing" => drawing)
+        AppContainer.notification_service.notify(friend_id, media)
+      end
+
+      File.unlink(file_path)
+      File.unlink(drawing_path) if drawing_path
+    end
+  end
 end
