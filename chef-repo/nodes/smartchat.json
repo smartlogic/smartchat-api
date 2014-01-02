@@ -31,7 +31,8 @@
     "env" : {
       "AWS_ACCESS_KEY_ID": "AKIAJTG5C7I7TLPBNALQ",
       "AWS_SECRET_ACCESS_KEY": "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",
-      "AWS_REGION": "us-east-1"
+      "AWS_REGION": "us-east-1",
+      "SIDEKIQ_WEB_PASSWORD": ">,C0f'O'hVlrVU"
     }
   },
   "run_list": [
