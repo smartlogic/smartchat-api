@@ -12,6 +12,8 @@ class S3MediaStore
     object.write(encrypted_data)
     object.acl = :public_read
 
+    private_object.delete
+
     [@base_uri + published_file_path, encrypted_aes_key, encrypted_aes_iv]
   end
 

@@ -7,7 +7,8 @@ describe S3MediaStore do
 
   it "encrypts before publishing" do
     path = SecureRandom.hex
-    private_bucket.objects[path].write("data")
+    private_object = private_bucket.objects[path]
+    private_object.write("data")
 
     store = S3MediaStore.new(private_bucket, published_bucket, base_uri)
     encryptor = TestEncryptor.new
@@ -18,6 +19,7 @@ describe S3MediaStore do
     published_object = published_bucket.objects[published_path]
 
     expect(published_object.read).to eq("atad")
+    expect(private_object.exists?).to be_false
   end
 
   it "should read once and delete the file" do
