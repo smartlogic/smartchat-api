@@ -17,8 +17,14 @@ class S3MediaStore
 
   def read_once(path)
     object = @published_bucket.objects[path]
-    data = object.read
-    object.delete
+
+    if object.exists?
+      data = object.read
+      object.delete
+    else
+      data = nil
+    end
+
     data
   end
 end

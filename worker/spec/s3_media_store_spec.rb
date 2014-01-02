@@ -30,4 +30,13 @@ describe S3MediaStore do
     expect(data).to eq("data")
     expect(published_bucket.objects[path].exists?).to be_false
   end
+
+  it "should return nil if the path is not in the published bucket" do
+    path = SecureRandom.hex
+
+    store = S3MediaStore.new(private_bucket, published_bucket, base_uri)
+    data = store.read_once(path)
+
+    expect(data).to be_nil
+  end
 end

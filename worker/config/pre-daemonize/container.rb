@@ -7,9 +7,19 @@ class AppContainer
       end
     end
 
+    let(:media_uri) do
+      case DAEMON_ENV
+      when "development"
+        URI::HTTP.build(:scheme => "http", :host => ENV["SMARTCHAT_API_HOST"], :port => 3000, :path => "/files/")
+      when "test"
+        URI::HTTP.build(:scheme => "http", :host => "example.com", :path => "/files/")
+      when "production"
+        URI::HTTP.build(:scheme => "http", :host => "smartchat.smartlogic.io", :path => "/files/")
+      end
+    end
+
     let(:media_store) do
-      base_uri = URI::HTTP.build(:scheme => "https", :host => "s3.amazonaws.com", :path => "/#{s3_published_bucket_name}/")
-      S3MediaStore.new(s3_private_bucket, s3_published_bucket, base_uri)
+      S3MediaStore.new(s3_private_bucket, s3_published_bucket, media_uri)
     end
 
     let(:sqs_queue_name) do
