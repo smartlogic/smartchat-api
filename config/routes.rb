@@ -22,7 +22,6 @@ Smartchat::Application.routes.draw do
     end
   end
 
-  require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
 
   root :to => "home#index"
