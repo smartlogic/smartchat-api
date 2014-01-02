@@ -44,6 +44,8 @@
     "sudo",
     "postgresql::server",
     "postgresql::ruby",
+    "redisio::install",
+    "redisio::enable",
     "rbenv",
     "rbenv::ruby_build",
     "smartchat",
