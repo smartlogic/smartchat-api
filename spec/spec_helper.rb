@@ -41,7 +41,7 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.before do
-    [:sqs_queue, :s3_bucket, :android_notifier].each do |container_method|
+    [:sqs_queue, :s3_published_container, :s3_private_container, :android_notifier].each do |container_method|
       AppContainer.stub(container_method) do
         raise "Shouldn't be calling me!!"
       end

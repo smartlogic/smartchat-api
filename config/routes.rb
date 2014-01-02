@@ -1,6 +1,8 @@
 Smartchat::Application.routes.draw do
   resource :device, :only => [:create], :format => false
 
+  get "/files/*file_path" => "files#show"
+
   resources :friends, :only => [:index], :format => false do
     collection do
       post :search
