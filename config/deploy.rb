@@ -60,7 +60,7 @@ namespace :workers do
 
   desc "restart workers"
   task :restart, :roles => :worker do
-    sudo "monit restart media_worker"
+    sudo "monit restart -g worker"
   end
 end
 
