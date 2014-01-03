@@ -49,3 +49,17 @@ Sidekiq is used to process web requests out of band. This is used when uploading
 ### SQS Worker
 
 The SQS Worker is used to process the other types of jobs. Tasks such as sending email and sending smartchats.
+
+## AWS
+
+Smartchat uses the AWS infrastrcture heavily.
+
+### EC2
+
+SmartChat has two types of EC2 instances - web and worker.
+
+* Web
+  * unicorn
+  * sidekiq
+* Worker
+  * SQS worker
