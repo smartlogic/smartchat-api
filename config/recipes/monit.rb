@@ -4,9 +4,10 @@ namespace :monit do
   desc "Setup all Monit configuration"
   task :setup do
     nginx
-    postgresql
+    #postgresql
     unicorn
     media_worker
+    sidekiq
     syntax
     reload
   end
@@ -16,6 +17,7 @@ namespace :monit do
   task(:postgresql, roles: :db) { monit_config "postgresql" }
   task(:unicorn, roles: :web) { monit_config "unicorn" }
   task(:media_worker, roles: :worker) { monit_config "media_worker" }
+  task(:sidekiq, roles: :web) { monit_config "sidekiq" }
 
   %w[start stop restart syntax reload].each do |command|
     desc "Run Monit #{command} script"
