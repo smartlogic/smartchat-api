@@ -18,8 +18,8 @@ module NotificationService
       "drawing_path" => media.drawing.path,
       "devices" => devices,
       "creator" => {
-        "id" => media.user_id,
-        "email" => media.user_email
+        "id" => media.poster_id,
+        "email" => media.poster_email
       }
     }.to_json)
   end

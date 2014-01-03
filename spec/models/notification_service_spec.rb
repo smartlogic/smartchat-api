@@ -6,8 +6,8 @@ describe NotificationService do
 
     media = double(:media, {
       :id => 3,
-      :user_id => 1,
-      :user_email => "eric@example.com",
+      :poster_id => 1,
+      :poster_email => "eric@example.com",
       :created_at => created_at,
       :file => double(:uploader, :path => "/path/to/file.png"),
       :drawing => double(:uploader, :path => "/path/to/drawing.png")

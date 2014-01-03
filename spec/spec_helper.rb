@@ -47,4 +47,8 @@ RSpec.configure do |config|
       end
     end
   end
+
+  config.after do
+    MediaService::Worker.jobs.clear
+  end
 end

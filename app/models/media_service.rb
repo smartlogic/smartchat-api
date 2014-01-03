@@ -15,7 +15,12 @@ module MediaService
       end
 
       friend_ids.each do |friend_id|
-        media = Media.create!("user_id" => user_id, "file" => file, "drawing" => drawing)
+        media = Media.create!({
+          "user_id" => friend_id,
+          "poster_id" => user_id,
+          "file" => file,
+          "drawing" => drawing
+        })
         AppContainer.notification_service.notify(friend_id, media)
       end
 

@@ -1,8 +1,8 @@
 class Media < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :poster, :class_name => "User"
 
   mount_uploader :file, FileUploader
   mount_uploader :drawing, FileUploader
 
-  delegate :email, :to => :user, :prefix => true
+  delegate :email, :to => :poster, :prefix => true
 end
