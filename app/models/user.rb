@@ -3,6 +3,7 @@ require 'bcrypt'
 class User < ActiveRecord::Base
   include BCrypt
 
+  has_many :media
   has_one :device
 
   delegate :device_id, :device_type, :to => :device

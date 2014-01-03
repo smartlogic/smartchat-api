@@ -4,6 +4,14 @@ class MediaController < ApplicationController
   before_filter :parse_media_tempfile, :only => :create
   before_filter :parse_drawing_tempfile, :only => :create
 
+  def index
+    render({
+      :json => current_user.media.published,
+      :status => 200,
+      :serializer => MediaIndexSerializer
+    })
+  end
+
   def create
     friend_ids = params[:media][:friend_ids]
     file_path = @media_tempfile.path
@@ -11,7 +19,7 @@ class MediaController < ApplicationController
 
     MediaService.create(current_user, friend_ids, file_path, drawing_path)
 
-    render :json => {}, :status => 202, :serializer => MediaSerializer
+    render :json => {}, :status => 202, :serializer => MediaCreationSerializer
   end
 
   private

@@ -23,6 +23,60 @@ resource "Media" do
     end
   end
 
+  get "/media" do
+    before do
+      Media.create({
+        :user_id => user.id,
+        :poster_id => other_user.id,
+        :file => File.open(Rails.root.join("spec", "fixtures", "file.png")),
+        :drawing => File.open(Rails.root.join("spec", "fixtures", "file.png")),
+        :published => true,
+        :encrypted_aes_key => "aes key",
+        :encrypted_aes_iv => "aes iv"
+      })
+    end
+
+    example_request "Get a list of media to view" do
+      expect(response_body).to be_json_eql({
+        "_embedded" => {
+          "media" => [
+            {
+              "_links" => {
+                "curies" => [
+                  {
+                    "href" => "http://smartchat.smartlogic.io/relations/{rel}",
+                    "name" => "smartchat",
+                    "templated" => true
+                  }
+                ],
+                "smartchat:files" => [
+                  {
+                    "href" => "http://example.org/files/file.png",
+                    "name" => "file"
+                  },
+                  {
+                    "href" => "http://example.org/files/file.png",
+                    "name" => "drawing"
+                  }
+                ]
+              },
+              "encrypted_aes_key" => "aes key",
+              "encrypted_aes_iv" => "aes iv"
+            }
+          ]
+        },
+        "_links" => {
+          "curies" =>  [{
+            "name" =>  "smartchat",
+            "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+            "templated" => true
+          }],
+        }
+      }.to_json)
+      expect(status).to eq(200)
+    end
+  end
+
   post "/media" do
     parameter :friend_ids, "Array of friend's ids to send this media to", :required => true, :scope => :media
     parameter :file_name, "File name", :required => true, :scope => :media
