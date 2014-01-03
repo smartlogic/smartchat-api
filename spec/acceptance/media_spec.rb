@@ -28,8 +28,8 @@ resource "Media" do
       Media.create({
         :user_id => user.id,
         :poster_id => other_user.id,
-        :file => File.open(Rails.root.join("spec", "fixtures", "file.png")),
-        :drawing => File.open(Rails.root.join("spec", "fixtures", "file.png")),
+        :file => "file.png",
+        :drawing => "drawing.png",
         :published => true,
         :encrypted_aes_key => "aes key",
         :encrypted_aes_iv => "aes iv"
@@ -55,7 +55,7 @@ resource "Media" do
                     "name" => "file"
                   },
                   {
-                    "href" => "http://example.org/files/file.png",
+                    "href" => "http://example.org/files/drawing.png",
                     "name" => "drawing"
                   }
                 ]

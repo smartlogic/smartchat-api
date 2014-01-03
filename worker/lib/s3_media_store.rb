@@ -3,9 +3,9 @@ class S3MediaStore
     @private_bucket, @published_bucket, @base_uri = private_bucket, published_bucket, base_uri
   end
 
-  def store(media_id, file_path)
+  def store(file_path)
     file = File.new(file_path)
-    s3_file_path = "media/#{media_id}/#{File.basename(file)}"
+    s3_file_path = "#{SecureRandom.hex}/#{File.basename(file)}"
 
     private_object = @private_bucket.objects[s3_file_path]
     private_object.write(file.read)

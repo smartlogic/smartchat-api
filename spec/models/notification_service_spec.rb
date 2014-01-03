@@ -9,8 +9,8 @@ describe NotificationService do
       :poster_id => 1,
       :poster_email => "eric@example.com",
       :created_at => created_at,
-      :file => double(:uploader, :path => "/path/to/file.png"),
-      :drawing => double(:uploader, :path => "/path/to/drawing.png")
+      :file => "path/to/file.png",
+      :drawing => "path/to/drawing.png"
     })
     friend = double(:friend, {
       :public_key => "public_key",
@@ -31,8 +31,8 @@ describe NotificationService do
       "user_id" => 2,
       "public_key" => "public_key",
       "created_at" => created_at,
-      "file_path" => "/path/to/file.png",
-      "drawing_path" => "/path/to/drawing.png",
+      "file_path" => "path/to/file.png",
+      "drawing_path" => "path/to/drawing.png",
       "devices" => [{
         "device_id" => "a device id",
         "device_type" => "android"

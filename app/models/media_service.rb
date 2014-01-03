@@ -8,18 +8,18 @@ module MediaService
     include Sidekiq::Worker
 
     def perform(user_id, friend_ids, file_path, drawing_path)
-      file = File.open(file_path)
-
-      if drawing_path
-        drawing = File.open(drawing_path)
-      end
-
       friend_ids.each do |friend_id|
+        file_key = AppContainer.media_store.store(file_path)
+
+        if drawing_path
+          drawing_key = AppContainer.media_store.store(drawing_path)
+        end
+
         media = Media.create!({
           "user_id" => friend_id,
           "poster_id" => user_id,
-          "file" => file,
-          "drawing" => drawing
+          "file" => file_key,
+          "drawing" => drawing_key
         })
         AppContainer.notification_service.notify(friend_id, media)
       end

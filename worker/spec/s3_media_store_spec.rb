@@ -12,9 +12,9 @@ describe S3MediaStore do
     tempfile.rewind
 
     store = S3MediaStore.new(private_bucket, published_bucket, base_uri)
-    file_path = store.store(1, tempfile.path)
+    file_path = store.store(tempfile.path)
 
-    expect(file_path).to eq("media/1/#{File.basename(tempfile)}")
+    expect(file_path).to match(/#{File.basename(tempfile)}$/)
     object = private_bucket.objects[file_path]
     expect(object.read).to eq("data")
 

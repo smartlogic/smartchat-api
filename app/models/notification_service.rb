@@ -14,8 +14,8 @@ module NotificationService
       "user_id" => friend_id,
       "public_key" => user.public_key,
       "created_at" => media.created_at,
-      "file_path" => media.file.path,
-      "drawing_path" => media.drawing.path,
+      "file_path" => media.file,
+      "drawing_path" => media.drawing,
       "devices" => devices,
       "creator" => {
         "id" => media.poster_id,
