@@ -3,6 +3,16 @@ class S3MediaStore
     @private_bucket, @published_bucket, @base_uri = private_bucket, published_bucket, base_uri
   end
 
+  def store(media_id, file_path)
+    file = File.new(file_path)
+    s3_file_path = "media/#{media_id}/#{File.basename(file)}"
+
+    private_object = @private_bucket.objects[s3_file_path]
+    private_object.write(file.read)
+
+    s3_file_path
+  end
+
   def publish(path, user_id, media_id, encryptor)
     private_object = @private_bucket.objects[path]
     encrypted_aes_key, encrypted_aes_iv, encrypted_data = encryptor.encrypt(private_object.read)

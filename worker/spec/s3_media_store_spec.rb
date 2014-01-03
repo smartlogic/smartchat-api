@@ -1,9 +1,26 @@
 require 'spec_helper'
+require 'tempfile'
 
 describe S3MediaStore do
   let(:published_bucket) { AppContainer.s3_published_bucket }
   let(:private_bucket) { AppContainer.s3_private_bucket }
   let(:base_uri) { URI::HTTP.build(:host => "example.com", :path => "/foo/") }
+
+  it "should store a file" do
+    tempfile = Tempfile.new("file")
+    tempfile.write("data")
+    tempfile.rewind
+
+    store = S3MediaStore.new(private_bucket, published_bucket, base_uri)
+    file_path = store.store(1, tempfile.path)
+
+    expect(file_path).to eq("media/1/#{File.basename(tempfile)}")
+    object = private_bucket.objects[file_path]
+    expect(object.read).to eq("data")
+
+    object.delete
+    tempfile.unlink
+  end
 
   it "encrypts before publishing" do
     path = SecureRandom.hex
