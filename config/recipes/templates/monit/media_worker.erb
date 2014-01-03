@@ -1,5 +1,8 @@
-check process media_worker
-  with pidfile <%= media_worker_pid %>
-  start program = "/bin/sh -l -c '. /home/deploy/smartchat_env && cd <%= current_path %>/worker && PATH=/opt/rbenv/shims:/opt/rbenv/bin:$PATH RBENV_ROOT=/opt/rbenv DAEMON_ENV=<%= rails_env %> bundle exec ./bin/smartchat start --pidfile <%= media_worker_pid %>'" as uid deploy and gid deploy
-  stop program = "/bin/sh -c 'cd <%= current_path %>/worker && PATH=/opt/rbenv/shims:/opt/rbenv/bin:$PATH RBENV_ROOT=/opt/rbenv DAEMON_ENV=<%= rails_env %> bundle exec ./bin/smartchat stop --pidfile <%= media_worker_pid %>'" as uid deploy and gid deploy
-  group worker
+<% media_workers.times do |i| %>
+  check process media_worker_<%= i %>
+    <% pid_file = "#{media_worker_pid}.#{i}.pid" %>
+    with pidfile <%= pid_file %>
+    start program = "/bin/sh -l -c '. /home/deploy/smartchat_env && cd <%= current_path %>/worker && PATH=/opt/rbenv/shims:/opt/rbenv/bin:$PATH RBENV_ROOT=/opt/rbenv DAEMON_ENV=<%= rails_env %> bundle exec ./bin/smartchat start --pidfile <%= pid_file %>'" as uid deploy and gid deploy
+    stop program = "/bin/sh -c 'cd <%= current_path %>/worker && PATH=/opt/rbenv/shims:/opt/rbenv/bin:$PATH RBENV_ROOT=/opt/rbenv DAEMON_ENV=<%= rails_env %> bundle exec ./bin/smartchat stop --pidfile <%= pid_file %>'" as uid deploy and gid deploy
+    group worker
+<% end %>
