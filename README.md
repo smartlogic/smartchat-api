@@ -5,6 +5,7 @@ This is the backend server for SmartChat.
 ## Requirements
 
 * postgresql
+* redis
 * ruby 2.0.0-p247
 
 ## Installation
