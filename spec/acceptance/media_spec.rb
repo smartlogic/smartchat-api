@@ -32,7 +32,9 @@ resource "Media" do
         :drawing => "drawing.png",
         :published => true,
         :encrypted_aes_key => "aes key",
-        :encrypted_aes_iv => "aes iv"
+        :encrypted_aes_iv => "aes iv",
+        :drawing_encrypted_aes_key => "aes key",
+        :drawing_encrypted_aes_iv => "aes iv"
       })
     end
 
@@ -61,7 +63,9 @@ resource "Media" do
                 ]
               },
               "encrypted_aes_key" => "aes key",
-              "encrypted_aes_iv" => "aes iv"
+              "encrypted_aes_iv" => "aes iv",
+              "drawing_encrypted_aes_key" => "aes key",
+              "drawing_encrypted_aes_iv" => "aes iv"
             }
           ]
         },
