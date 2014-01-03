@@ -33,7 +33,7 @@ export AWS_REGION='us-east-1'
 export AWS_SMTP_USERNAME='...'
 export AWS_SMTP_PASSWORD='...'
 export GCM_API_KEY='...'
-export SMARTCHAT_API_HOST="..."
+export SMARTCHAT_API_HOST='...'
 export SIDEKIQ_WEB_PASSWORD='password'
 ```
 
