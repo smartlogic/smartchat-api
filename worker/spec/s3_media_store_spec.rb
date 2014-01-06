@@ -36,6 +36,8 @@ describe S3MediaStore do
     published_object = published_bucket.objects[published_path]
 
     expect(published_object.read).to eq("atad")
+    expect(published_object.metadata["encrypted_aes_key"]).to eq("encrypted aes key")
+    expect(published_object.metadata["encrypted_aes_iv"]).to eq("encrypted aes iv")
     expect(private_object.exists?).to be_false
   end
 

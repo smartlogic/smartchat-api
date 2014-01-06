@@ -1,5 +1,7 @@
 module NotificationService
   def send_notification_to_devices(devices, notification, container = AppContainer)
+    DaemonKit.logger.debug "Sending notification to #{devices.count} devices"
+
     devices.each do |device|
       if device["device_type"] == "android"
         container.android_notifier.notify({

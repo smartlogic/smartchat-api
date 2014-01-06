@@ -19,7 +19,10 @@ class S3MediaStore
 
     published_file_path = "users/#{user_id}/media/#{media_id}/#{File.basename(path)}"
     object = @published_bucket.objects[published_file_path]
-    object.write(encrypted_data)
+    object.write(encrypted_data, :metadata => {
+      "encrypted_aes_key" => encrypted_aes_key,
+      "encrypted_aes_iv" => encrypted_aes_iv
+    })
     object.acl = :public_read
 
     private_object.delete
