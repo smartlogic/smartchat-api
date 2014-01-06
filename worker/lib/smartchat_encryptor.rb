@@ -1,3 +1,5 @@
+require 'base64'
+
 class SmartchatEncryptor
   def initialize(public_key_pem)
     @public_key_pem = public_key_pem
@@ -17,6 +19,6 @@ class SmartchatEncryptor
 
     encrypted_data = cipher.update(data) + cipher.final
 
-    [encrypted_aes_key, encrypted_aes_iv, encrypted_data]
+    [Base64.strict_encode64(encrypted_aes_key), Base64.strict_encode64(encrypted_aes_iv), encrypted_data]
   end
 end

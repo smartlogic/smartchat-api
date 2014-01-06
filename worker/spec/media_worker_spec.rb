@@ -40,10 +40,10 @@ describe MediaWorker do
       "created_at" => created_at,
       "creator_id" => 1,
       "creator_email" => "eric@example.com",
-      "encrypted_aes_key" => Base64.strict_encode64("encrypted aes key"),
-      "encrypted_aes_iv" => Base64.strict_encode64("encrypted aes iv"),
-      "drawing_encrypted_aes_key" => Base64.strict_encode64("encrypted aes key"),
-      "drawing_encrypted_aes_iv" => Base64.strict_encode64("encrypted aes iv")
+      "encrypted_aes_key" => "encrypted aes key",
+      "encrypted_aes_iv" => "encrypted aes iv",
+      "drawing_encrypted_aes_key" => "encrypted aes key",
+      "drawing_encrypted_aes_iv" => "encrypted aes iv"
     })
     expect(media_store["file_path"]).to eq("elif")
     expect(media_store["drawing_path"]).to eq("gniward")
@@ -67,8 +67,8 @@ describe MediaWorker do
       "created_at" => created_at,
       "creator_id" => 1,
       "creator_email" => "eric@example.com",
-      "encrypted_aes_key" => Base64.strict_encode64("encrypted aes key"),
-      "encrypted_aes_iv" => Base64.strict_encode64("encrypted aes iv"),
+      "encrypted_aes_key" => "encrypted aes key",
+      "encrypted_aes_iv" => "encrypted aes iv",
     })
   end
 end

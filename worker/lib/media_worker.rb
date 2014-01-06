@@ -1,5 +1,4 @@
 require 'openssl'
-require 'base64'
 
 class MediaWorker
   def perform(media_attributes, container = AppContainer)
@@ -46,6 +45,6 @@ class MediaWorker
 
   def publish(path, user_id, id, encryptor, media_store)
     published_url, encrypted_aes_key, encrypted_aes_iv = media_store.publish(path, user_id, id, encryptor)
-    [published_url, Base64.strict_encode64(encrypted_aes_key), Base64.strict_encode64(encrypted_aes_iv)]
+    [published_url, encrypted_aes_key, encrypted_aes_iv]
   end
 end

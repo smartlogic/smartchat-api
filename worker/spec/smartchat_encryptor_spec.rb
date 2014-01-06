@@ -8,8 +8,8 @@ describe SmartchatEncryptor do
     encryptor = SmartchatEncryptor.new(public_key_pem)
     encrypted_key, encrypted_iv, encrypted_data = encryptor.encrypt("this data")
 
-    aes_key = key.private_decrypt(encrypted_key)
-    aes_iv = key.private_decrypt(encrypted_iv)
+    aes_key = key.private_decrypt(Base64.strict_decode64(encrypted_key))
+    aes_iv = key.private_decrypt(Base64.strict_decode64(encrypted_iv))
 
     cipher = OpenSSL::Cipher.new("AES-128-CBC")
     cipher.decrypt
