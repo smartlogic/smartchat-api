@@ -26,7 +26,7 @@ end
 # this configuration.
 
 # Run an event-loop for processing
-AppContainer.sqs_queue.poll do |msg|
+AppContainer.queue.poll do |msg|
   DaemonKit.logger.debug "Message received"
   DaemonKit.logger.debug msg.body
 

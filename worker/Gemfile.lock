@@ -30,6 +30,7 @@ GEM
       mini_portile (~> 0.5.0)
     polyglot (0.3.3)
     rake (10.1.0)
+    redis (3.0.4)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -57,5 +58,6 @@ DEPENDENCIES
   json
   mail
   rake
+  redis
   rspec
   safely

@@ -1,6 +1,6 @@
 module InvitationService
   def invite(inviter_email, invitee_email, message, container = AppContainer)
-    container.sqs_queue.send_message({
+    container.queue.send_message({
       "queue" => "invitation",
       "invitee_email" => invitee_email,
       "inviter_email" => inviter_email,

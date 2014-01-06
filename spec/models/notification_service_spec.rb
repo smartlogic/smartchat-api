@@ -22,7 +22,7 @@ describe NotificationService do
     expect(user_klass).to receive(:find).with(2).and_return(friend)
 
     queue = double(:queue)
-    container = double(:container, :sqs_queue => queue)
+    container = double(:container, :queue => queue)
 
     expect(queue).to receive(:send_message).with({
       "queue" => "media",

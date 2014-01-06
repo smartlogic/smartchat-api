@@ -80,7 +80,7 @@ resource "Users" do
     let(:raw_post) { params.to_json }
 
     before do
-      AppContainer.stub(:sqs_queue) do
+      AppContainer.stub(:queue) do
         double(:queue, :send_message => true)
       end
     end

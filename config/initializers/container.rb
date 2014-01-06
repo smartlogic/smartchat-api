@@ -45,8 +45,13 @@ class AppContainer
       "smartchat-#{Rails.env}"
     end
 
-    let(:sqs_queue) do
-      AWS::SQS.new.queues.named(sqs_queue_name)
+    let(:queue) do
+      if Rails.env.development?
+        require 'redis_queue'
+        RedisQueue.new
+      else
+        AWS::SQS.new.queues.named(sqs_queue_name)
+      end
     end
 
     let(:notification_service) do

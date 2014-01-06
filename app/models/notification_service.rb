@@ -8,7 +8,7 @@ module NotificationService
       devices << { "device_id" => user.device_id, "device_type" => user.device_type }
     end
 
-    container.sqs_queue.send_message({
+    container.queue.send_message({
       "queue" => "media",
       "user_id" => friend_id,
       "public_key" => user.public_key,

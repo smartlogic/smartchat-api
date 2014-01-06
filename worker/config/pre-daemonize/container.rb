@@ -26,8 +26,13 @@ class AppContainer
       "smartchat-#{DAEMON_ENV}"
     end
 
-    let(:sqs_queue) do
-      AWS::SQS.new.queues.named(sqs_queue_name)
+    let(:queue) do
+      if DAEMON_ENV == "development"
+        require 'redis_queue'
+        RedisQueue.new
+      else
+        AWS::SQS.new.queues.named(sqs_queue_name)
+      end
     end
 
     let(:s3_published_bucket_name) do
