@@ -4,14 +4,13 @@ describe NotificationService do
   it "should notify users" do
     created_at = Time.now
 
-    media = double(:media, {
-      :id => 3,
-      :poster_id => 1,
-      :poster_email => "eric@example.com",
-      :created_at => created_at,
-      :file => "path/to/file.png",
-      :drawing => "path/to/drawing.png"
-    })
+    media = {
+      "poster_id" => 1,
+      "poster_email"=> "eric@example.com",
+      "created_at" => created_at,
+      "file" => "path/to/file.png",
+      "drawing" => "path/to/drawing.png"
+    }
     friend = double(:friend, {
       :public_key => "public_key",
       :device => true,
@@ -27,7 +26,6 @@ describe NotificationService do
 
     expect(queue).to receive(:send_message).with({
       "queue" => "media",
-      "id" => 3,
       "user_id" => 2,
       "public_key" => "public_key",
       "created_at" => created_at,

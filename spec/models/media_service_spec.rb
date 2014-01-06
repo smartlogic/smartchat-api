@@ -6,11 +6,23 @@ describe MediaService do
   let(:drawing_path) { Tempfile.new(["drawing", ".jpg"]).path }
 
   it "should create a media file and send a SQS message for each friend" do
-    user = double(:poster, :id => 1)
+    user = double(:poster, :id => 1, :email => "eric@example.com")
 
     notification_service = double(:NotificationService)
-    expect(notification_service).to receive(:notify).with(2, anything)
-    expect(notification_service).to receive(:notify).with(3, anything)
+    expect(notification_service).to receive(:notify).with(2, {
+      "poster_id" => 1,
+      "poster_email" => "eric@example.com",
+      "file" => "file.png",
+      "drawing" => "drawing.png",
+      "created_at" => anything
+    })
+    expect(notification_service).to receive(:notify).with(3, {
+      "poster_id" => 1,
+      "poster_email" => "eric@example.com",
+      "file" => "file.png",
+      "drawing" => "drawing.png",
+      "created_at" => anything
+    })
 
     media_store = double(:media_store)
     expect(media_store).to receive(:store).with(file_path).
@@ -25,7 +37,6 @@ describe MediaService do
 
     MediaService::Worker.drain
 
-    expect(Media.count).to eq(2)
     expect(File.exists?(file_path)).to be_false
     expect(File.exists?(drawing_path)).to be_false
   end

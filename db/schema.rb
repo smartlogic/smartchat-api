@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140103214748) do
+ActiveRecord::Schema.define(version: 20140106172721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,20 +30,6 @@ ActiveRecord::Schema.define(version: 20140103214748) do
   end
 
   add_index "friends", ["from_id", "to_id"], name: "index_friends_on_from_id_and_to_id", unique: true, using: :btree
-
-  create_table "media", force: true do |t|
-    t.integer  "poster_id",                                 null: false
-    t.string   "file",                                      null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "drawing"
-    t.integer  "user_id",                                   null: false
-    t.boolean  "published",                 default: false, null: false
-    t.text     "encrypted_aes_key"
-    t.text     "encrypted_aes_iv"
-    t.text     "drawing_encrypted_aes_key"
-    t.text     "drawing_encrypted_aes_iv"
-  end
 
   create_table "users", force: true do |t|
     t.string   "email",         null: false

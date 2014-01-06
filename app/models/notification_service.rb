@@ -10,16 +10,15 @@ module NotificationService
 
     container.sqs_queue.send_message({
       "queue" => "media",
-      "id" => media.id,
       "user_id" => friend_id,
       "public_key" => user.public_key,
-      "created_at" => media.created_at,
-      "file_path" => media.file,
-      "drawing_path" => media.drawing,
+      "created_at" => media.fetch("created_at"),
+      "file_path" => media.fetch("file"),
+      "drawing_path" => media.fetch("drawing"),
       "devices" => devices,
       "creator" => {
-        "id" => media.poster_id,
-        "email" => media.poster_email
+        "id" => media.fetch("poster_id"),
+        "email" => media.fetch("poster_email")
       }
     }.to_json)
   end
