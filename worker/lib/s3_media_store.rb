@@ -27,7 +27,7 @@ class S3MediaStore
 
     private_object.delete
 
-    [@base_uri + published_file_path, encrypted_aes_key, encrypted_aes_iv]
+    @base_uri + published_file_path
   end
 
   def read_once(path)

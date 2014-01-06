@@ -13,8 +13,7 @@ class MediaWorker
     encryptor = container.smartchat_encryptor.new(public_key)
     media_store = container.media_store
 
-    file_url, encrypted_aes_key, encrypted_aes_iv =
-      publish(file_path, user_id, id, encryptor, media_store)
+    file_url = publish(file_path, user_id, id, encryptor, media_store)
 
     notification = {
       "creator_id" => creator.fetch("id"),
@@ -26,8 +25,7 @@ class MediaWorker
     if media_attributes["drawing_path"]
       drawing_file_path = media_attributes["drawing_path"]
 
-      drawing_file_url, drawing_encrypted_aes_key, drawing_encrypted_aes_iv =
-        publish(drawing_file_path, user_id, id, encryptor, media_store)
+      drawing_file_url = publish(drawing_file_path, user_id, id, encryptor, media_store)
 
       notification.merge!({
         "drawing_file_url" => drawing_file_url,
@@ -40,7 +38,6 @@ class MediaWorker
   private
 
   def publish(path, user_id, id, encryptor, media_store)
-    published_url, encrypted_aes_key, encrypted_aes_iv = media_store.publish(path, user_id, id, encryptor)
-    [published_url, encrypted_aes_key, encrypted_aes_iv]
+    media_store.publish(path, user_id, id, encryptor)
   end
 end
