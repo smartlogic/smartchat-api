@@ -46,7 +46,7 @@ class S3MediaStore
 
   def users_index(user_id)
     folders = Hash.new({})
-    @published_bucket.objects.with_prefix("users/#{user_id}").each do |object|
+    @published_bucket.objects.with_prefix("users/#{user_id}/").each do |object|
       folder = object.key.split("/")[2]
       if object.key =~ /file/
         key = :file_path
