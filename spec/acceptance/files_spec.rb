@@ -9,7 +9,10 @@ resource "Files" do
 
     let!(:published_object) do
       published_object = published_bucket.objects[file_path]
-      published_object.write("data")
+      published_object.write("data", :metadata => {
+        "encrypted_aes_key" => "key",
+        "encrypted_aes_iv" => "iv"
+      })
       published_object
     end
 
@@ -18,6 +21,8 @@ resource "Files" do
 
       expect(response_body).to eq("data")
       expect(status).to eq(200)
+      expect(response_headers["Encrypted-Aes-Key"]).to eq("key")
+      expect(response_headers["Encrypted-Aes-Iv"]).to eq("iv")
 
       do_request
 
