@@ -26,7 +26,7 @@ class MediaController < ApplicationController
 
   def parse_media_tempfile
     ext = params[:media][:file_name].split(".").last
-    @media_tempfile = Tempfile.new([params[:media][:file_name], ".#{ext}"])
+    @media_tempfile = Tempfile.new(["file", ".#{ext}"])
     File.open(@media_tempfile.path, 'wb') do |file|
       file.write(Base64.decode64(params[:media][:file]))
     end

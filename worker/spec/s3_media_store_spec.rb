@@ -30,7 +30,7 @@ describe S3MediaStore do
     store = S3MediaStore.new(private_bucket, published_bucket, base_uri)
     encryptor = TestEncryptor.new
 
-    public_url = store.publish(path, "user_id", "media_id", encryptor)
+    public_url = store.publish(path, "user_id", "folder", "file.png", encryptor)
 
     published_path = public_url - base_uri
     published_object = published_bucket.objects[published_path]

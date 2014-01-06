@@ -32,7 +32,7 @@ class TestMediaStore
     @public_bucket = {}
   end
 
-  def publish(path, user_id, media_id, encryptor)
+  def publish(path, user_id, folder, file_name, encryptor)
     encrypted_aes_key, encrypted_aes_iv, encrypted_data = encryptor.encrypt(@private_bucket.fetch(path))
     @public_bucket[path] = encrypted_data
     path.gsub(/path$/, "url")
