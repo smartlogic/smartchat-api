@@ -23,7 +23,6 @@ class S3MediaStore
       "encrypted_aes_key" => encrypted_aes_key,
       "encrypted_aes_iv" => encrypted_aes_iv
     })
-    object.acl = :public_read
 
     private_object.delete
 
