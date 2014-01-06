@@ -21,8 +21,6 @@ class MediaWorker
       "creator_email" => creator.fetch("email"),
       "created_at" => created_at,
       "file_url" => file_url,
-      "encrypted_aes_key" => encrypted_aes_key,
-      "encrypted_aes_iv" => encrypted_aes_iv
     }
 
     if media_attributes["drawing_path"]
@@ -33,8 +31,6 @@ class MediaWorker
 
       notification.merge!({
         "drawing_file_url" => drawing_file_url,
-        "drawing_encrypted_aes_key" => drawing_encrypted_aes_key,
-        "drawing_encrypted_aes_iv" => drawing_encrypted_aes_iv
       })
     end
 
