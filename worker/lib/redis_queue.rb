@@ -9,8 +9,11 @@ class RedisQueue
 
   def poll(&block)
     loop do
-      _, message = @redis.brpop("smartchat-queue")
-      block.call(RedisMessage.new(message))
+      queue, message = @redis.brpop("smartchat-queue")
+      # queue could be nil if a timeout happened
+      if queue
+        block.call(RedisMessage.new(message))
+      end
     end
   end
 
