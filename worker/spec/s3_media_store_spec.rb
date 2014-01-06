@@ -43,12 +43,17 @@ describe S3MediaStore do
 
   it "should read once and delete the file" do
     path = SecureRandom.hex
-    published_bucket.objects[path].write("data")
+    published_bucket.objects[path].write("data", :metadata => {
+      "encrypted_aes_key" => "key",
+      "encrypted_aes_iv" => "iv",
+    })
 
     store = S3MediaStore.new(private_bucket, published_bucket, base_uri)
-    data = store.read_once(path)
+    data, aes_key, aes_iv = store.read_once(path)
 
     expect(data).to eq("data")
+    expect(aes_key).to eq("key")
+    expect(aes_iv).to eq("iv")
     expect(published_bucket.objects[path].exists?).to be_false
   end
 
@@ -56,7 +61,7 @@ describe S3MediaStore do
     path = SecureRandom.hex
 
     store = S3MediaStore.new(private_bucket, published_bucket, base_uri)
-    data = store.read_once(path)
+    data, aes_key, aes_iv = store.read_once(path)
 
     expect(data).to be_nil
   end

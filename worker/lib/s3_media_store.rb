@@ -35,11 +35,11 @@ class S3MediaStore
 
     if object.exists?
       data = object.read
+      key = object.metadata["encrypted_aes_key"]
+      iv = object.metadata["encrypted_aes_iv"]
       object.delete
-    else
-      data = nil
     end
 
-    data
+    [data, key, iv]
   end
 end
