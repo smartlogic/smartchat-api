@@ -1,7 +1,7 @@
 $stdout.sync = true
 
 Smartchat::Application.configure do
-  config.action_controller.default_url_options = { :host => "#{ENV["SMARTCHAT_API_HOST"]}:3000" }
+  config.action_controller.default_url_options = { :host => "#{ENV["SMARTCHAT_API_HOST"]}:#{ENV["SMARTCHAT_API_PORT"]}" }
 
   # Settings specified here will take precedence over those in config/application.rb.
 
