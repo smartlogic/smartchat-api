@@ -1,3 +1,5 @@
+require 'media'
+
 class S3MediaStore
   def initialize(private_bucket, published_bucket, base_uri)
     @private_bucket, @published_bucket, @base_uri = private_bucket, published_bucket, base_uri
@@ -40,5 +42,22 @@ class S3MediaStore
     end
 
     [data, key, iv]
+  end
+
+  def users_index(user_id)
+    folders = Hash.new({})
+    @published_bucket.objects.with_prefix("users/#{user_id}").each do |object|
+      folder = object.key.split("/")[2]
+      if object.key =~ /file/
+        key = :file_path
+      else
+        key = :drawing_path
+      end
+      folders[folder] = folders[folder].merge(key => object.key)
+    end
+
+    folders.map do |key, files|
+      Media.new(files[:file_path], files[:drawing_path])
+    end
   end
 end

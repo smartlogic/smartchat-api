@@ -6,9 +6,10 @@ class MediaController < ApplicationController
 
   def index
     render({
-      :json => current_user.media.published,
+      :json => AppContainer.media_store.users_index(current_user.id),
       :status => 200,
-      :serializer => MediaIndexSerializer
+      :serializer => MediaIndexSerializer,
+      :each_serializer => MediaSerializer
     })
   end
 

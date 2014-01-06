@@ -65,4 +65,19 @@ describe S3MediaStore do
 
     expect(data).to be_nil
   end
+
+  it "should list files for a particular user" do
+    encryptor = TestEncryptor.new
+    store = S3MediaStore.new(private_bucket, published_bucket, base_uri)
+
+    file_path = store.store("spec/fixtures/file.txt")
+    drawing_path = store.store("spec/fixtures/file.txt")
+
+    store.publish(file_path, 1, "folder", "file.png", encryptor)
+    store.publish(drawing_path, 1, "folder", "drawing.png", encryptor)
+
+    expect(store.users_index(1)).to eq([
+      Media.new("users/1/folder/file.png", "users/1/folder/drawing.png")
+    ])
+  end
 end

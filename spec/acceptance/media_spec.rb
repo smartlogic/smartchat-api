@@ -24,7 +24,17 @@ resource "Media" do
   end
 
   get "/media" do
-    pending "Get a list of media to view" do
+    before do
+      store = AppContainer.media_store
+      file_path = store.store("spec/fixtures/file.txt")
+      drawing_path = store.store("spec/fixtures/file.txt")
+
+      encryptor = TestEncryptor.new
+      store.publish(file_path, user.id, "folder", "file.png", encryptor)
+      store.publish(drawing_path, user.id, "folder", "drawing.png", encryptor)
+    end
+
+    example_request "Get a list of media to view" do
       expect(response_body).to be_json_eql({
         "_embedded" => {
           "media" => [
@@ -39,19 +49,15 @@ resource "Media" do
                 ],
                 "smartchat:files" => [
                   {
-                    "href" => "http://example.org/files/file.png",
+                    "href" => "http://example.org/files/users/#{user.id}/folder/file.png",
                     "name" => "file"
                   },
                   {
-                    "href" => "http://example.org/files/drawing.png",
+                    "href" => "http://example.org/files/users/#{user.id}/folder/drawing.png",
                     "name" => "drawing"
                   }
                 ]
-              },
-              "encrypted_aes_key" => "aes key",
-              "encrypted_aes_iv" => "aes iv",
-              "drawing_encrypted_aes_key" => "aes key",
-              "drawing_encrypted_aes_iv" => "aes iv"
+              }
             }
           ]
         },
