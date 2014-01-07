@@ -14,14 +14,17 @@ class MediaWorker
     encryptor = container.smartchat_encryptor.new(public_key)
     media_store = container.media_store
 
-    file_url = media_store.publish(file_path, user_id, folder, "file#{extension}", encryptor)
-
     notification = {
       "creator_id" => creator.fetch("id"),
       "creator_email" => creator.fetch("email"),
       "created_at" => created_at,
-      "file_url" => file_url,
     }
+
+    file_url = media_store.publish(file_path, user_id, folder, "file#{extension}", encryptor, notification)
+
+    notification.merge!({
+      "file_url" => file_url
+    })
 
     if media_attributes["drawing_path"]
       drawing_file_path = media_attributes["drawing_path"]
