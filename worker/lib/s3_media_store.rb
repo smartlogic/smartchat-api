@@ -15,16 +15,16 @@ class S3MediaStore
     s3_file_path
   end
 
-  def publish(path, user_id, folder, file_name, encryptor)
+  def publish(path, user_id, folder, file_name, encryptor, metadata = {})
     private_object = @private_bucket.objects[path]
     encrypted_aes_key, encrypted_aes_iv, encrypted_data = encryptor.encrypt(private_object.read)
 
     published_file_path = "users/#{user_id}/#{folder}/#{file_name}"
     object = @published_bucket.objects[published_file_path]
-    object.write(encrypted_data, :metadata => {
+    object.write(encrypted_data, :metadata => metadata.merge({
       "encrypted_aes_key" => encrypted_aes_key,
       "encrypted_aes_iv" => encrypted_aes_iv
-    })
+    }))
 
     private_object.delete
 

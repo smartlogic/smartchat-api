@@ -27,13 +27,19 @@ describe FileMediaStore do
 
       file_path = store.store("spec/fixtures/file.txt")
 
-      public_url = store.publish(file_path, "user_id", "folder", "file.png", encryptor)
+      public_url = store.publish(file_path, "user_id", "folder", "file.png", encryptor, "extra-metadata" => "true")
 
       published_path = public_url - base_uri
 
       path = Pathname.new(tmpdir).join("published", published_path.to_s)
       expect(File.exists?(path)).to be_true
       expect(File.read(path)).to eq("\natad")
+
+      redis = Redis.new
+      metadata = JSON.parse(redis.get(published_path.to_s))
+      expect(metadata["encrypted_aes_key"]).to eq("encrypted aes key")
+      expect(metadata["encrypted_aes_iv"]).to eq("encrypted aes iv")
+      expect(metadata["extra-metadata"]).to eq("true")
     end
   end
 

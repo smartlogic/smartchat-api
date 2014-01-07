@@ -30,7 +30,7 @@ describe S3MediaStore do
     store = S3MediaStore.new(private_bucket, published_bucket, base_uri)
     encryptor = TestEncryptor.new
 
-    public_url = store.publish(path, "user_id", "folder", "file.png", encryptor)
+    public_url = store.publish(path, "user_id", "folder", "file.png", encryptor, "extra-metadata" => "true")
 
     published_path = public_url - base_uri
     published_object = published_bucket.objects[published_path]
@@ -38,6 +38,7 @@ describe S3MediaStore do
     expect(published_object.read).to eq("atad")
     expect(published_object.metadata["encrypted_aes_key"]).to eq("encrypted aes key")
     expect(published_object.metadata["encrypted_aes_iv"]).to eq("encrypted aes iv")
+    expect(published_object.metadata["extra-metadata"]).to eq("true")
     expect(private_object.exists?).to be_false
   end
 

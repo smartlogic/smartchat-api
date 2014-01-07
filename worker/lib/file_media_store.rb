@@ -18,7 +18,7 @@ class FileMediaStore
     dest_path.relative_path_from(@private_directory).to_s
   end
 
-  def publish(path, user_id, folder, file_name, encryptor)
+  def publish(path, user_id, folder, file_name, encryptor, metadata = {})
     file = File.new(@private_directory.join(path))
     encrypted_aes_key, encrypted_aes_iv, encrypted_data = encryptor.encrypt(file.read)
 
@@ -29,10 +29,10 @@ class FileMediaStore
     published_file.write(encrypted_data)
     published_file.close
     @redis.sadd("smartchat-files", published_file_path)
-    @redis.set(published_file_path, {
+    @redis.set(published_file_path, metadata.merge({
       "encrypted_aes_key" => encrypted_aes_key,
       "encrypted_aes_iv" => encrypted_aes_iv
-    }.to_json)
+    }).to_json)
 
     File.delete(file)
 
@@ -48,6 +48,7 @@ class FileMediaStore
       key = metadata["encrypted_aes_key"]
       iv = metadata["encrypted_aes_iv"]
       @redis.srem("smartchat-files", path)
+      @redis.del(path)
       File.delete(file)
     end
 
