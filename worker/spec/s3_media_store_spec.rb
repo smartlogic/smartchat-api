@@ -47,14 +47,16 @@ describe S3MediaStore do
     published_bucket.objects[path].write("data", :metadata => {
       "encrypted_aes_key" => "key",
       "encrypted_aes_iv" => "iv",
+      "extra" => "true"
     })
 
     store = S3MediaStore.new(private_bucket, published_bucket, base_uri)
-    data, aes_key, aes_iv = store.read_once(path)
+    data, aes_key, aes_iv, metadata = store.read_once(path)
 
     expect(data).to eq("data")
     expect(aes_key).to eq("key")
     expect(aes_iv).to eq("iv")
+    expect(metadata).to eq({ "extra" => "true" })
     expect(published_bucket.objects[path].exists?).to be_false
   end
 
@@ -74,11 +76,11 @@ describe S3MediaStore do
     file_path = store.store("spec/fixtures/file.txt")
     drawing_path = store.store("spec/fixtures/file.txt")
 
-    store.publish(file_path, 1, "folder", "file.png", encryptor)
+    store.publish(file_path, 1, "folder", "file.png", encryptor, "extra" => true)
     store.publish(drawing_path, 1, "folder", "drawing.png", encryptor)
 
     expect(store.users_index(1)).to eq([
-      Media.new("users/1/folder/file.png", "users/1/folder/drawing.png")
+      Media.new("users/1/folder/file.png", "users/1/folder/drawing.png", { "extra" => "true" })
     ])
   end
 end

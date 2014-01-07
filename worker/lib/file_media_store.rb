@@ -45,14 +45,14 @@ class FileMediaStore
     if File.exists?(file)
       data = file.read
       metadata = JSON.parse(@redis.get(path))
-      key = metadata["encrypted_aes_key"]
-      iv = metadata["encrypted_aes_iv"]
+      key = metadata.delete("encrypted_aes_key")
+      iv = metadata.delete("encrypted_aes_iv")
       @redis.srem("smartchat-files", path)
       @redis.del(path)
       File.delete(file)
     end
 
-    [data, key, iv]
+    [data, key, iv, metadata]
   end
 
   def users_index(user_id)
@@ -61,6 +61,7 @@ class FileMediaStore
       folder = file_path.split("/")[2]
       if file_path =~ /file/
         key = :file_path
+        folders[folder] = folders[folder].merge(:metadata => metadata_for(file_path))
       else
         key = :drawing_path
       end
@@ -68,7 +69,16 @@ class FileMediaStore
     end
 
     folders.map do |key, files|
-      Media.new(files[:file_path], files[:drawing_path])
+      Media.new(files[:file_path], files[:drawing_path], files[:metadata])
     end
+  end
+
+  private
+
+  def metadata_for(key)
+    metadata = JSON.parse(@redis.get(key))
+    metadata.delete("encrypted_aes_key")
+    metadata.delete("encrypted_aes_iv")
+    metadata
   end
 end

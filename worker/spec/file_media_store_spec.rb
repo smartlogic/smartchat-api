@@ -54,14 +54,15 @@ describe FileMediaStore do
 
       file_path = store.store(tempfile.path)
       public_url =
-        store.publish(file_path, "user_id", "folder", "file.png", encryptor)
+        store.publish(file_path, "user_id", "folder", "file.png", encryptor, "extra" => "true")
       published_path = public_url - base_uri
 
-      data, aes_key, aes_iv = store.read_once(published_path.to_s)
+      data, aes_key, aes_iv, metadata = store.read_once(published_path.to_s)
 
       expect(data).to eq("atad")
       expect(aes_key).to eq("encrypted aes key")
       expect(aes_iv).to eq("encrypted aes iv")
+      expect(metadata).to eq({ "extra" => "true" })
     end
   end
 
@@ -72,11 +73,11 @@ describe FileMediaStore do
 
       file_path = store.store("spec/fixtures/file.txt")
       drawing_path = store.store("spec/fixtures/file.txt")
-      store.publish(file_path, 1, "folder", "file.png", encryptor)
+      store.publish(file_path, 1, "folder", "file.png", encryptor, "extra" => true)
       store.publish(drawing_path, 1, "folder", "drawing.png", encryptor)
 
       expect(store.users_index(1)).to eq([
-        Media.new("users/1/folder/file.png", "users/1/folder/drawing.png")
+        Media.new("users/1/folder/file.png", "users/1/folder/drawing.png", { "extra" => true })
       ])
     end
   end

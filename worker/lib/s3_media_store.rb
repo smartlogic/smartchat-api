@@ -36,12 +36,13 @@ class S3MediaStore
 
     if object.exists?
       data = object.read
-      key = object.metadata["encrypted_aes_key"]
-      iv = object.metadata["encrypted_aes_iv"]
+      metadata = object.metadata.to_h
+      key = metadata.delete("encrypted_aes_key")
+      iv = metadata.delete("encrypted_aes_iv")
       object.delete
     end
 
-    [data, key, iv]
+    [data, key, iv, metadata]
   end
 
   def users_index(user_id)
@@ -50,6 +51,10 @@ class S3MediaStore
       folder = object.key.split("/")[2]
       if object.key =~ /file/
         key = :file_path
+        metadata = object.metadata.to_h
+        metadata.delete("encrypted_aes_key")
+        metadata.delete("encrypted_aes_iv")
+        folders[folder] = folders[folder].merge(:metadata => metadata)
       else
         key = :drawing_path
       end
@@ -57,7 +62,7 @@ class S3MediaStore
     end
 
     folders.map do |key, files|
-      Media.new(files[:file_path], files[:drawing_path])
+      Media.new(files[:file_path], files[:drawing_path], files[:metadata])
     end
   end
 end
