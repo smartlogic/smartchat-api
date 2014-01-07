@@ -1,7 +1,11 @@
 class MediaSerializer < ActiveModel::Serializer
   include ApplicationSerializer
 
-  attributes :_links
+  attributes :_links, :_embedded, :created_at
+
+  def created_at
+    @object.metadata["created_at"]
+  end
 
   def _links
     hash = super
@@ -21,5 +25,14 @@ class MediaSerializer < ActiveModel::Serializer
     end
 
     hash
+  end
+
+  def _embedded
+    {
+      "creator" => {
+        "id" => @object.metadata["creator_id"].to_i,
+        "email" => @object.metadata["creator_email"]
+      }
+    }
   end
 end

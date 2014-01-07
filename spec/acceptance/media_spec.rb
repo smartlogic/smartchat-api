@@ -30,7 +30,11 @@ resource "Media" do
       drawing_path = store.store("spec/fixtures/file.txt")
 
       encryptor = TestEncryptor.new
-      store.publish(file_path, user.id, "folder", "file.png", encryptor)
+      store.publish(file_path, user.id, "folder", "file.png", encryptor, {
+        "creator_id" => 1,
+        "creator_email" => "eric@example.com",
+        "created_at" => Time.now
+      })
       store.publish(drawing_path, user.id, "folder", "drawing.png", encryptor)
     end
 
@@ -39,6 +43,12 @@ resource "Media" do
         "_embedded" => {
           "media" => [
             {
+              "_embedded" => {
+                "creator" => {
+                  "id" => 1,
+                  "email" => "eric@example.com",
+                }
+              },
               "_links" => {
                 "curies" => [
                   {
