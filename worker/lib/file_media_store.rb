@@ -2,7 +2,7 @@ require 'media'
 
 class FileMediaStore
   def initialize(directory, base_uri)
-    @file_metadata = {}
+    @redis = Redis.new
     @private_directory, @published_directory = directory.join("private"), directory.join("published")
     @base_uri = base_uri
 
@@ -28,10 +28,11 @@ class FileMediaStore
     published_file = File.new(@published_directory.join(published_file_path), "w")
     published_file.write(encrypted_data)
     published_file.close
-    @file_metadata[published_file_path] = {
+    @redis.sadd("smartchat-files", published_file_path)
+    @redis.set(published_file_path, {
       "encrypted_aes_key" => encrypted_aes_key,
       "encrypted_aes_iv" => encrypted_aes_iv
-    }
+    }.to_json)
 
     File.delete(file)
 
@@ -43,8 +44,10 @@ class FileMediaStore
 
     if File.exists?(file)
       data = file.read
-      key = @file_metadata[path]["encrypted_aes_key"]
-      iv = @file_metadata[path]["encrypted_aes_iv"]
+      metadata = JSON.parse(@redis.get(path))
+      key = metadata["encrypted_aes_key"]
+      iv = metadata["encrypted_aes_iv"]
+      @redis.srem("smartchat-files", path)
       File.delete(file)
     end
 
@@ -53,7 +56,7 @@ class FileMediaStore
 
   def users_index(user_id)
     folders = Hash.new({})
-    @file_metadata.each do |file_path, metadata|
+    @redis.smembers("smartchat-files").each do |file_path|
       folder = file_path.split("/")[2]
       if file_path =~ /file/
         key = :file_path
