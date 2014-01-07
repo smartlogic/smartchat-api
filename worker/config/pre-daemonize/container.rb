@@ -19,7 +19,15 @@ class AppContainer
     end
 
     let(:media_store) do
-      S3MediaStore.new(s3_private_bucket, s3_published_bucket, media_uri)
+      if DAEMON_ENV == "development"
+        puts "Using files for media store"
+        require 'file_media_store'
+        path = Pathname.new(File.expand_path("../../../../tmp/files", __FILE__))
+        FileMediaStore.new(path, media_uri)
+      else
+        puts "Using S3 for media store"
+        S3MediaStore.new(s3_private_bucket, s3_published_bucket, media_uri)
+      end
     end
 
     let(:sqs_queue_name) do
@@ -28,9 +36,11 @@ class AppContainer
 
     let(:queue) do
       if DAEMON_ENV == "development"
+        puts "Using Redis Queue"
         require 'redis_queue'
         RedisQueue.new
       else
+        puts "Using SQS Queue"
         AWS::SQS.new.queues.named(sqs_queue_name)
       end
     end

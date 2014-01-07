@@ -22,7 +22,13 @@ class AppContainer
     end
 
     let(:media_store) do
-      S3MediaStore.new(s3_private_bucket, s3_published_bucket, media_uri)
+      if Rails.env.development?
+        require 'file_media_store'
+        path = Pathname.new(Rails.root.join("tmp", "files"))
+        FileMediaStore.new(path, media_uri)
+      else
+        S3MediaStore.new(s3_private_bucket, s3_published_bucket, media_uri)
+      end
     end
 
     let(:s3_published_bucket_name) do
