@@ -207,6 +207,7 @@ DEPENDENCIES
   pg
   pry-rails
   rails (= 4.0.2)
+  redis-namespace
   rspec-rails
   rspec_api_documentation!
   sidekiq

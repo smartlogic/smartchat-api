@@ -1,8 +1,8 @@
 require 'media'
 
 class FileMediaStore
-  def initialize(directory, base_uri)
-    @redis = Redis.new
+  def initialize(directory, base_uri, redis)
+    @redis = redis
     @private_directory, @published_directory = directory.join("private"), directory.join("published")
     @base_uri = base_uri
 

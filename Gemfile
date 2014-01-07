@@ -23,6 +23,7 @@ end
 
 group :development, :test do
   gem 'pry-rails'
+  gem 'redis-namespace'
   gem 'rspec_api_documentation', :github => 'zipmark/rspec_api_documentation'
   gem 'rspec-rails'
   gem 'thin'

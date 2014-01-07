@@ -21,4 +21,5 @@ group :development, :test do
   gem 'rake'
   gem 'rspec'
   gem 'redis'
+  gem 'redis-namespace'
 end

@@ -7,6 +7,12 @@ class AppContainer
       end
     end
 
+    if DAEMON_ENV == "development"
+      let(:redis) do
+        Redis::Namespace.new("smartchat-development", :redis => Redis.new)
+      end
+    end
+
     let(:media_uri) do
       case DAEMON_ENV
       when "development"
@@ -23,7 +29,7 @@ class AppContainer
         puts "Using files for media store"
         require 'file_media_store'
         path = Pathname.new(File.expand_path("../../../../tmp/files", __FILE__))
-        FileMediaStore.new(path, media_uri)
+        FileMediaStore.new(path, media_uri, redis)
       else
         puts "Using S3 for media store"
         S3MediaStore.new(s3_private_bucket, s3_published_bucket, media_uri)
@@ -38,7 +44,7 @@ class AppContainer
       if DAEMON_ENV == "development"
         puts "Using Redis Queue"
         require 'redis_queue'
-        RedisQueue.new
+        RedisQueue.new(redis)
       else
         puts "Using SQS Queue"
         AWS::SQS.new.queues.named(sqs_queue_name)

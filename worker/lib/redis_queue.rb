@@ -3,8 +3,8 @@ require 'redis'
 RedisMessage = Struct.new(:body)
 
 class RedisQueue
-  def initialize
-    @redis = Redis.new
+  def initialize(redis)
+    @redis = redis
   end
 
   def poll(&block)

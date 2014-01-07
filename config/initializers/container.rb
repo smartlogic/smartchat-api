@@ -10,6 +10,12 @@ class AppContainer
       end
     end
 
+    if Rails.env.development?
+      let(:redis) do
+        Redis::Namespace.new("smartchat-development", :redis => Redis.new)
+      end
+    end
+
     let(:media_uri) do
       case Rails.env
       when "development"
@@ -25,7 +31,7 @@ class AppContainer
       if Rails.env.development?
         require 'file_media_store'
         path = Pathname.new(Rails.root.join("tmp", "files"))
-        FileMediaStore.new(path, media_uri)
+        FileMediaStore.new(path, media_uri, redis)
       else
         S3MediaStore.new(s3_private_bucket, s3_published_bucket, media_uri)
       end
@@ -54,7 +60,7 @@ class AppContainer
     let(:queue) do
       if Rails.env.development?
         require 'redis_queue'
-        RedisQueue.new
+        RedisQueue.new(redis)
       else
         AWS::SQS.new.queues.named(sqs_queue_name)
       end

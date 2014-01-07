@@ -5,6 +5,7 @@ require 'tempfile'
 
 describe FileMediaStore do
   let(:base_uri) { URI::HTTP.build(:host => "example.com", :path => "/foo/") }
+  let(:redis) { Redis::Namespace.new("smartchat-test", :redis => Redis.new) }
 
   it "should store a file" do
     Dir.mktmpdir do |tmpdir|
@@ -12,7 +13,7 @@ describe FileMediaStore do
       tempfile.write("data")
       tempfile.rewind
 
-      store = FileMediaStore.new(Pathname.new(tmpdir), base_uri)
+      store = FileMediaStore.new(Pathname.new(tmpdir), base_uri, redis)
       file_path = store.store(tempfile.path)
 
       expect(file_path).to match(/#{File.basename(tempfile)}$/)
@@ -22,7 +23,7 @@ describe FileMediaStore do
 
   it "encryptes before publishing" do
     Dir.mktmpdir do |tmpdir|
-      store = FileMediaStore.new(Pathname.new(tmpdir), base_uri)
+      store = FileMediaStore.new(Pathname.new(tmpdir), base_uri, redis)
       encryptor = TestEncryptor.new
 
       file_path = store.store("spec/fixtures/file.txt")
@@ -35,7 +36,6 @@ describe FileMediaStore do
       expect(File.exists?(path)).to be_true
       expect(File.read(path)).to eq("\natad")
 
-      redis = Redis.new
       metadata = JSON.parse(redis.get(published_path.to_s))
       expect(metadata["encrypted_aes_key"]).to eq("encrypted aes key")
       expect(metadata["encrypted_aes_iv"]).to eq("encrypted aes iv")
@@ -49,7 +49,7 @@ describe FileMediaStore do
       tempfile.write("data")
       tempfile.rewind
 
-      store = FileMediaStore.new(Pathname.new(tmpdir), base_uri)
+      store = FileMediaStore.new(Pathname.new(tmpdir), base_uri, redis)
       encryptor = TestEncryptor.new
 
       file_path = store.store(tempfile.path)
@@ -67,7 +67,7 @@ describe FileMediaStore do
 
   it "should list files for a particular user" do
     Dir.mktmpdir do |tmpdir|
-      store = FileMediaStore.new(Pathname.new(tmpdir), base_uri)
+      store = FileMediaStore.new(Pathname.new(tmpdir), base_uri, redis)
       encryptor = TestEncryptor.new
 
       file_path = store.store("spec/fixtures/file.txt")
