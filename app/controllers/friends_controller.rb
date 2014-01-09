@@ -10,7 +10,7 @@ class FriendsController < ApplicationController
 
   def search
     render({
-      :json => User.with_hashed_phone_numbers(params[:phone_numbers]),
+      :json => User.with_hashed_phone_numbers(params[:phone_numbers]).excluding_friends(current_user),
       :status => 200,
       :serializer => FriendSearchSerializer,
       :each_serializer => FriendSearchUserSerializer

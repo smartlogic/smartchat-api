@@ -41,6 +41,18 @@ resource "Friends" do
 
     let(:raw_post) { params.to_json }
 
+    let!(:your_friend) do
+      friend = UserService.create({
+        :email => "friend@example.com",
+        :password => "password",
+        :phone => "123-123-1235"
+      })
+
+      FriendService.create(user, friend)
+
+      friend
+    end
+
     let!(:other_user) do
       UserService.create({
         :email => "other@example.com",

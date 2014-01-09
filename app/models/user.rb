@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
     where("md5(phone) in (?)", phone_numbers)
   end
 
+  def self.excluding_friends(user)
+    where("id not in (?)", FriendService.find_friends(user).map(&:id))
+  end
+
   def password
     @password ||= Password.new(password_hash)
   end
