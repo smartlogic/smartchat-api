@@ -20,7 +20,12 @@ class User < ActiveRecord::Base
   end
 
   def self.excluding_friends(user)
-    where("id not in (?)", FriendService.find_friends(user).map(&:id))
+    users = FriendService.find_friends(user)
+    if users.present?
+      where("id not in (?)", users.map(&:id))
+    else
+      scoped
+    end
   end
 
   def password
