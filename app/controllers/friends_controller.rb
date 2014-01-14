@@ -21,8 +21,10 @@ class FriendsController < ApplicationController
       found_by_email = []
     end
 
+    users_found = (found_by_phone + found_by_email).uniq
+
     render({
-      :json => found_by_phone + found_by_email,
+      :json => users_found,
       :status => 200,
       :serializer => FriendSearchSerializer,
       :each_serializer => FriendSearchUserSerializer
