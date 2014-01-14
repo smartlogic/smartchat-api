@@ -9,8 +9,20 @@ class FriendsController < ApplicationController
   end
 
   def search
+    if params[:phone_numbers].present?
+      found_by_phone = User.with_hashed_phone_numbers(params[:phone_numbers]).excluding_friends(current_user)
+    else
+      found_by_phone = []
+    end
+
+    if params[:emails].present?
+      found_by_email = User.with_hashed_emails(params[:emails]).excluding_friends(current_user)
+    else
+      found_by_email = []
+    end
+
     render({
-      :json => User.with_hashed_phone_numbers(params[:phone_numbers]).excluding_friends(current_user),
+      :json => found_by_phone + found_by_email,
       :status => 200,
       :serializer => FriendSearchSerializer,
       :each_serializer => FriendSearchUserSerializer

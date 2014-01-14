@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   include BCrypt
 
   validates :email, :presence => true,
+    :uniqueness => true,
     :format => {
       :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/,
       :message => "not an email address", :allow_nil => true
@@ -24,15 +25,19 @@ class User < ActiveRecord::Base
   end
 
   def self.with_hashed_phone_numbers(phone_numbers)
-    where("md5(phone) in (?)", phone_numbers)
+    select("*").select("true as found_by_phone").where("md5(phone) in (?)", phone_numbers)
+  end
+
+  def self.with_hashed_emails(emails)
+    select("*").select("true as found_by_email").where("md5(email) in (?)", emails)
   end
 
   def self.excluding_friends(user)
-    users = FriendService.find_friends(user)
+    users = FriendService.find_friends(user).compact
     if users.present?
       where("id not in (?)", users.map(&:id))
     else
-      scoped
+      all
     end
   end
 

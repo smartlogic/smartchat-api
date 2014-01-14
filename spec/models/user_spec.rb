@@ -24,6 +24,13 @@ describe User do
     expect(subject.phone).to be_nil
   end
 
+  it "should not allow another user with the same email" do
+    UserService.create(:email => "eric@example.com", :password => "password", :phone => "123")
+
+    subject.email = "eric@example.com"
+    expect(subject).to have(1).error_on(:email)
+  end
+
   context "it should destroy the current device" do
     it "exists" do
       user = User.new

@@ -36,8 +36,10 @@ resource "Friends" do
     header "Content-Type", "application/json"
 
     parameter :phone_numbers, "User phone numbers to search for"
+    parameter :emails, "User emails to search for"
 
-    let(:phone_numbers) { [Digest::MD5.hexdigest(other_user.phone)] }
+    let(:phone_numbers) { [Digest::MD5.hexdigest(user_1.phone)] }
+    let(:emails) { [Digest::MD5.hexdigest(user_2.email)] }
 
     let(:raw_post) { params.to_json }
 
@@ -53,11 +55,19 @@ resource "Friends" do
       friend
     end
 
-    let!(:other_user) do
+    let!(:user_1) do
       UserService.create({
         :email => "other@example.com",
         :password => "password",
         :phone => "123-123-1235"
+      })
+    end
+
+    let!(:user_2) do
+      UserService.create({
+        :email => "user_2@example.com",
+        :password => "password",
+        :phone => "123-123-3235"
       })
     end
 
@@ -66,12 +76,20 @@ resource "Friends" do
         "_embedded" => {
           "friends" => [
             {
-              "email" => "other@example.com",
               "phone_number" => Digest::MD5.hexdigest("1231231235"),
               "_links" => {
                 "smartchat:add-friend" => {
                   "name" => "Add as a friend",
-                  "href" => add_friend_url(other_user.id, :host => host)
+                  "href" => add_friend_url(user_1.id, :host => host)
+                }
+              }
+            },
+            {
+              "email" => Digest::MD5.hexdigest("user_2@example.com"),
+              "_links" => {
+                "smartchat:add-friend" => {
+                  "name" => "Add as a friend",
+                  "href" => add_friend_url(user_2.id, :host => host)
                 }
               }
             }
