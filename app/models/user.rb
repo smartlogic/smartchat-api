@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
       :message => "not an email address", :allow_nil => true
     }
   validates :password, :presence => true
-  validates :phone, :presence => true
 
   has_one :device
 
@@ -25,7 +24,7 @@ class User < ActiveRecord::Base
   end
 
   def self.with_hashed_phone_numbers(phone_numbers)
-    select("*").select("true as found_by_phone").where("md5(phone) in (?)", phone_numbers)
+    select("*").select("true as found_by_phone").where("md5(phone_number) in (?)", phone_numbers)
   end
 
   def self.with_hashed_emails(emails)
@@ -52,14 +51,14 @@ class User < ActiveRecord::Base
     self.password_hash = @password
   end
 
-  def phone=(new_phone)
-    self[:phone] = new_phone
+  def phone_number=(new_phone_number)
+    self[:phone_number] = new_phone_number
 
-    if phone.present?
-      self[:phone] = phone.gsub(/[^\d]/, "")
+    if phone_number.present?
+      self[:phone_number] = phone_number.gsub(/[^\d]/, "")
     end
 
-    phone
+    phone_number
   end
 
   def device_destroy

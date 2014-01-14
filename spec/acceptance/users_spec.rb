@@ -9,13 +9,13 @@ resource "Users" do
   post "/users" do
     parameter :email, "Email of user", :required => true, :scope => :user
     parameter :password, "Password of user", :required => true, :scope => :user
-    parameter :phone, "Phone number of user", :required => true, :scope => :user
+    parameter :phone_number, "Phone number of user", :scope => :user
 
     let(:raw_post) { params.to_json }
 
     let(:email) { "eric@example.com" }
     let(:password) { "password" }
-    let(:phone) { "123-123-1234" }
+    let(:phone_number) { "123-123-1234" }
 
     example_request "Creating a new user" do
       expect(response_body).to be_json_eql({
@@ -35,7 +35,7 @@ resource "Users" do
     context "bad data", :document => false do
       let(:email) { nil }
       let(:password) { nil }
-      let(:phone) { nil }
+      let(:phone_number) { nil }
 
       example_request "Creating a new user - failure" do
         expect(response_body).to be_json_eql({
@@ -45,9 +45,6 @@ resource "Users" do
                 "can't be blank"
               ],
               "password" => [
-                "can't be blank"
-              ],
-              "phone" => [
                 "can't be blank"
               ]
             }
@@ -77,7 +74,7 @@ resource "Users" do
       UserService.create({
         :email => "eric@example.com",
         :password => "password",
-        :phone => "123-123-1234"
+        :phone_number => "123-123-1234"
       })
     end
 

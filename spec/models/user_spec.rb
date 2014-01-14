@@ -16,16 +16,16 @@ describe User do
     expect(subject.password).to eq("hi")
   end
 
-  it "should remove all non numerical characters when setting a phone number" do
-    subject.phone = "(123) 555-1234"
-    expect(subject.phone).to eq("1235551234")
+  it "should remove all non numerical characters when setting a phone_number number" do
+    subject.phone_number = "(123) 555-1234"
+    expect(subject.phone_number).to eq("1235551234")
 
-    subject.phone = nil
-    expect(subject.phone).to be_nil
+    subject.phone_number = nil
+    expect(subject.phone_number).to be_nil
   end
 
   it "should not allow another user with the same email" do
-    UserService.create(:email => "eric@example.com", :password => "password", :phone => "123")
+    UserService.create(:email => "eric@example.com", :password => "password", :phone_number => "123")
 
     subject.email = "eric@example.com"
     expect(subject).to have(1).error_on(:email)

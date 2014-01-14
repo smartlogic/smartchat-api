@@ -12,7 +12,7 @@ resource "Media" do
     UserService.create({
       :email => "other@example.com",
       :password => "password",
-      :phone => "123-123-1234"
+      :phone_number => "123-123-1234"
     })
   end
 

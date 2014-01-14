@@ -38,7 +38,7 @@ resource "Friends" do
     parameter :phone_numbers, "User phone numbers to search for"
     parameter :emails, "User emails to search for"
 
-    let(:phone_numbers) { [Digest::MD5.hexdigest(user_1.phone)] }
+    let(:phone_numbers) { [Digest::MD5.hexdigest(user_1.phone_number)] }
     let(:emails) { [Digest::MD5.hexdigest(user_2.email)] }
 
     let(:raw_post) { params.to_json }
@@ -47,7 +47,7 @@ resource "Friends" do
       friend = UserService.create({
         :email => "friend@example.com",
         :password => "password",
-        :phone => "123-123-1235"
+        :phone_number => "123-123-1235"
       })
 
       FriendService.create(user, friend)
@@ -59,7 +59,7 @@ resource "Friends" do
       UserService.create({
         :email => "other@example.com",
         :password => "password",
-        :phone => "123-123-1235"
+        :phone_number => "123-123-1235"
       })
     end
 
@@ -67,7 +67,6 @@ resource "Friends" do
       UserService.create({
         :email => "user_2@example.com",
         :password => "password",
-        :phone => "123-123-3235"
       })
     end
 
@@ -119,7 +118,7 @@ resource "Friends" do
       UserService.create({
         :email => "other@example.com",
         :password => "password",
-        :phone => "123-123-1234"
+        :phone_number => "123-123-1234"
       })
     end
 

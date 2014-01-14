@@ -8,7 +8,7 @@ class FriendSearchUserSerializer < ActiveModel::Serializer
   end
 
   def phone_number
-    Digest::MD5.hexdigest(user.phone)
+    Digest::MD5.hexdigest(user.phone_number)
   end
 
   def include_phone_number?
