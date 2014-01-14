@@ -11,4 +11,9 @@ module FriendService
     friend_klass.where(:from_id => for_user.id).joins(:to).map(&:to)
   end
   module_function :find_friends
+
+  def friends_with_user?(for_user_id, to_user_id)
+    Friend.where(:from_id => for_user_id, :to_id => to_user_id).present?
+  end
+  module_function :friends_with_user?
 end

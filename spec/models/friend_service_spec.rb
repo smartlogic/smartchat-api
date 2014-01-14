@@ -29,4 +29,15 @@ describe FriendService do
 
     expect(friends).to eq([friend])
   end
+
+  it "should know if a user is friends with another" do
+    eric = UserService.create(:email => "eric@example.com", :password => "password")
+    sam = UserService.create(:email => "sam@example.com", :password => "password")
+
+    expect(FriendService.friends_with_user?(eric.id, sam.id)).to be_false
+
+    FriendService.create(eric, sam)
+
+    expect(FriendService.friends_with_user?(eric.id, sam.id)).to be_true
+  end
 end

@@ -9,6 +9,10 @@ module MediaService
 
     def perform(user_id, user_email, friend_ids, file_path, drawing_path)
       friend_ids.each do |friend_id|
+        unless AppContainer.friend_service.friends_with_user?(friend_id, user_id)
+          next
+        end
+
         file_key = AppContainer.media_store.store(file_path)
 
         if drawing_path

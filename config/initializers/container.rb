@@ -69,5 +69,9 @@ class AppContainer
     let(:notification_service) do
       NotificationService
     end
+
+    let(:friend_service) do
+      FriendService
+    end
   end
 end
