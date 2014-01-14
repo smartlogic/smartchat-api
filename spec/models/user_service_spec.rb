@@ -18,8 +18,7 @@ describe UserService do
 
     expect(user_double).to receive(:private_key=)
     expect(user_double).to receive(:public_key=)
-    expect(user_double).to receive(:phone=).with("1231231234")
-    expect(user_double).to receive(:save!)
+    expect(user_double).to receive(:save)
 
     UserService.create(user_attributes, user_klass_double)
   end

@@ -16,6 +16,14 @@ describe User do
     expect(subject.password).to eq("hi")
   end
 
+  it "should remove all non numerical characters when setting a phone number" do
+    subject.phone = "(123) 555-1234"
+    expect(subject.phone).to eq("1235551234")
+
+    subject.phone = nil
+    expect(subject.phone).to be_nil
+  end
+
   context "it should destroy the current device" do
     it "exists" do
       user = User.new

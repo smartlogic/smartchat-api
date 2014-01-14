@@ -3,7 +3,12 @@ class UsersController < ApplicationController
 
   def create
     user = UserService.create(user_attributes)
-    render :json => user, :status => 201, :private_key => true
+
+    if user.persisted?
+      render :json => user, :status => 201, :private_key => true
+    else
+      render :json => user.errors, :status => 422, :serializer => UserErrorSerializer
+    end
   end
 
   def sign_in

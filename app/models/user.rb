@@ -3,6 +3,14 @@ require 'bcrypt'
 class User < ActiveRecord::Base
   include BCrypt
 
+  validates :email, :presence => true,
+    :format => {
+      :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/,
+      :message => "not an email address", :allow_nil => true
+    }
+  validates :password, :presence => true
+  validates :phone, :presence => true
+
   has_one :device
 
   delegate :device_id, :device_type, :to => :device
@@ -29,12 +37,24 @@ class User < ActiveRecord::Base
   end
 
   def password
+    return unless password_hash
     @password ||= Password.new(password_hash)
   end
 
   def password=(new_password)
+    return if new_password.blank?
     @password = Password.create(new_password)
     self.password_hash = @password
+  end
+
+  def phone=(new_phone)
+    self[:phone] = new_phone
+
+    if phone.present?
+      self[:phone] = phone.gsub(/[^\d]/, "")
+    end
+
+    phone
   end
 
   def device_destroy

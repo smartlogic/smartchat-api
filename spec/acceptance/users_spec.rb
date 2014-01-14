@@ -31,6 +31,62 @@ resource "Users" do
       expect(response_body).to have_json_path("private_key")
       expect(status).to eq(201)
     end
+
+    context "bad data", :document => false do
+      let(:email) { nil }
+      let(:password) { nil }
+      let(:phone) { nil }
+
+      example_request "Creating a new user - failure" do
+        expect(response_body).to be_json_eql({
+          "_embedded" => {
+            "errors" => {
+              "email" => [
+                "can't be blank"
+              ],
+              "password" => [
+                "can't be blank"
+              ],
+              "phone" => [
+                "can't be blank"
+              ]
+            }
+          },
+          "_links" => {
+            "curies" =>  [{
+              "name" =>  "smartchat",
+              "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+              "templated" => true
+            }]
+          }
+        }.to_json)
+        expect(status).to eq(422)
+      end
+    end
+
+    context "bad data", :document => false do
+      let(:email) { "eric" }
+
+      example_request "Creating a new user - invalid data" do
+        expect(response_body).to be_json_eql({
+          "_embedded" => {
+            "errors" => {
+              "email" => [
+                "not an email address"
+              ]
+            }
+          },
+          "_links" => {
+            "curies" =>  [{
+              "name" =>  "smartchat",
+              "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+              "templated" => true
+            }]
+          }
+        }.to_json)
+        expect(status).to eq(422)
+      end
+    end
   end
 
   post "/users/sign_in" do
