@@ -78,6 +78,7 @@ resource "Friends" do
         "_embedded" => {
           "friends" => [
             {
+              "username" => "other",
               "phone_number" => Digest::MD5.hexdigest("1231231235"),
               "_links" => {
                 "smartchat:add-friend" => {
@@ -87,6 +88,7 @@ resource "Friends" do
               }
             },
             {
+              "username" => "user_2",
               "email" => Digest::MD5.hexdigest("user_2@example.com"),
               "_links" => {
                 "smartchat:add-friend" => {
@@ -150,7 +152,7 @@ resource "Friends" do
         "_embedded" => {
           "friends" => [
             {
-              :email => "other@example.com"
+              :username => "other"
             }
           ]
         },

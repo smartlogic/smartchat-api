@@ -1,7 +1,7 @@
 class FriendSearchUserSerializer < ActiveModel::Serializer
   include ApplicationSerializer
 
-  attributes :email, :phone_number
+  attributes :username, :email, :phone_number
 
   def email
     Digest::MD5.hexdigest(user.email)
