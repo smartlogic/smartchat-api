@@ -6,7 +6,7 @@ describe MediaService do
   let(:drawing_path) { Tempfile.new(["drawing", ".jpg"]).path }
 
   it "should create a media file and send a SQS message for each friend" do
-    user = double(:poster, :id => 1, :email => "eric@example.com")
+    user = double(:poster, :id => 1, :username => "eric")
 
     friend_service = double(:FriendService)
     expect(friend_service).to receive(:friends_with_user?).with(2, 1).and_return(true)
@@ -16,14 +16,14 @@ describe MediaService do
     notification_service = double(:NotificationService)
     expect(notification_service).to receive(:notify).with(2, {
       "poster_id" => 1,
-      "poster_email" => "eric@example.com",
+      "poster_username" => "eric",
       "file" => "file.png",
       "drawing" => "drawing.png",
       "created_at" => anything
     })
     expect(notification_service).to receive(:notify).with(3, {
       "poster_id" => 1,
-      "poster_email" => "eric@example.com",
+      "poster_username" => "eric",
       "file" => "file.png",
       "drawing" => "drawing.png",
       "created_at" => anything

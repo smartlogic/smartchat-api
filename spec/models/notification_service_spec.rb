@@ -6,7 +6,7 @@ describe NotificationService do
 
     media = {
       "poster_id" => 1,
-      "poster_email"=> "eric@example.com",
+      "poster_username"=> "eric",
       "created_at" => created_at,
       "file" => "path/to/file.png",
       "drawing" => "path/to/drawing.png"
@@ -37,7 +37,7 @@ describe NotificationService do
       }],
       "creator" => {
         "id" => 1,
-        "email" => "eric@example.com"
+        "username" => "eric"
       }
     }.to_json)
 

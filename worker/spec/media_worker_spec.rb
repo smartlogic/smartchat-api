@@ -16,7 +16,7 @@ describe MediaWorker do
     }],
     "creator" => {
       "id" => 1,
-      "email" => "eric@example.com"
+      "username" => "eric"
     }
   } }
 
@@ -39,7 +39,7 @@ describe MediaWorker do
       "drawing_file_url" => "drawing_url",
       "created_at" => created_at,
       "creator_id" => 1,
-      "creator_email" => "eric@example.com",
+      "creator_username" => "eric",
     })
     expect(media_store["file_path"]).to eq("elif")
     expect(media_store["drawing_path"]).to eq("gniward")
@@ -62,7 +62,7 @@ describe MediaWorker do
       "file_url" => "file_url",
       "created_at" => created_at,
       "creator_id" => 1,
-      "creator_email" => "eric@example.com",
+      "creator_username" => "eric",
     })
   end
 end

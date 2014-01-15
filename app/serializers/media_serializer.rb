@@ -31,7 +31,7 @@ class MediaSerializer < ActiveModel::Serializer
     {
       "creator" => {
         "id" => @object.metadata["creator_id"].to_i,
-        "email" => @object.metadata["creator_email"]
+        "username" => @object.metadata["creator_username"]
       }
     }
   end

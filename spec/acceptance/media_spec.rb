@@ -32,7 +32,7 @@ resource "Media" do
       encryptor = TestEncryptor.new
       store.publish(file_path, user.id, "folder", "file.png", encryptor, {
         "creator_id" => 1,
-        "creator_email" => "eric@example.com",
+        "creator_username" => "eric",
         "created_at" => Time.now
       })
       store.publish(drawing_path, user.id, "folder", "drawing.png", encryptor)
@@ -46,7 +46,7 @@ resource "Media" do
               "_embedded" => {
                 "creator" => {
                   "id" => 1,
-                  "email" => "eric@example.com",
+                  "username" => "eric",
                 }
               },
               "_links" => {

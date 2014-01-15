@@ -18,7 +18,7 @@ module NotificationService
       "devices" => devices,
       "creator" => {
         "id" => media.fetch("poster_id"),
-        "email" => media.fetch("poster_email")
+        "username" => media.fetch("poster_username")
       }
     }.to_json)
   end

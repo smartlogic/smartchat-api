@@ -16,7 +16,7 @@ class MediaWorker
 
     notification = {
       "creator_id" => creator.fetch("id"),
-      "creator_email" => creator.fetch("email"),
+      "creator_username" => creator.fetch("username"),
       "created_at" => created_at,
     }
 
