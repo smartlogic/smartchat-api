@@ -31,8 +31,8 @@ describe FriendService do
   end
 
   it "should know if a user is friends with another" do
-    eric = UserService.create(:email => "eric@example.com", :password => "password")
-    sam = UserService.create(:email => "sam@example.com", :password => "password")
+    eric = create_user(:username => "eric", :email => "eric@example.com")
+    sam = create_user(:username => "sam", :email => "sam@example.com")
 
     expect(FriendService.friends_with_user?(eric.id, sam.id)).to be_false
 

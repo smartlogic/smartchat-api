@@ -37,9 +37,9 @@ resource "Root" do
 
       let!(:user) do
         UserService.create({
+          :username => "eric",
           :email => "eric@example.com",
           :password => "password",
-          :phone_number => "123-123-1234"
         })
       end
 
@@ -50,7 +50,7 @@ resource "Root" do
       let(:auth_header) do
         digest = OpenSSL::Digest::SHA256.new
         signed_base64 = Base64.encode64(private_key.sign(digest, "http://example.org#{path}"))
-        user_string = "eric@example.com:#{signed_base64}"
+        user_string = "eric:#{signed_base64}"
         "Basic #{Base64.encode64(user_string)}"
       end
 
@@ -92,9 +92,9 @@ resource "Root" do
 
       let!(:user) do
         UserService.create({
+          :username => "eric",
           :email => "eric@example.com",
           :password => "password",
-          :phone_number => "123-123-1234"
         })
       end
 

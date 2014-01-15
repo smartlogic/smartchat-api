@@ -25,10 +25,25 @@ describe User do
   end
 
   it "should not allow another user with the same email" do
-    UserService.create(:email => "eric@example.com", :password => "password", :phone_number => "123")
+    UserService.create({
+      :username => "eric",
+      :email => "eric@example.com",
+      :password => "password",
+    })
 
     subject.email = "eric@example.com"
     expect(subject).to have(1).error_on(:email)
+  end
+
+  it "should not allow another user with the same username" do
+    UserService.create({
+      :username => "eric",
+      :email => "eric@example.com",
+      :password => "password",
+    })
+
+    subject.username = "eric"
+    expect(subject).to have(1).error_on(:username)
   end
 
   context "it should destroy the current device" do

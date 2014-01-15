@@ -45,6 +45,7 @@ resource "Friends" do
 
     let!(:your_friend) do
       friend = UserService.create({
+        :username => "friend",
         :email => "friend@example.com",
         :password => "password",
         :phone_number => "123-123-1235"
@@ -57,6 +58,7 @@ resource "Friends" do
 
     let!(:user_1) do
       UserService.create({
+        :username => "other",
         :email => "other@example.com",
         :password => "password",
         :phone_number => "123-123-1235"
@@ -65,6 +67,7 @@ resource "Friends" do
 
     let!(:user_2) do
       UserService.create({
+        :username => "user_2",
         :email => "user_2@example.com",
         :password => "password",
       })
@@ -116,6 +119,7 @@ resource "Friends" do
 
     let!(:other_user) do
       UserService.create({
+        :username => "other",
         :email => "other@example.com",
         :password => "password",
         :phone_number => "123-123-1234"
@@ -139,7 +143,7 @@ resource "Friends" do
       expect(status).to eq(201)
 
       client.get("/friends", "", headers.merge({
-        "Authorization" => sign_header(private_key, user.email, "http://example.org/friends")
+        "Authorization" => sign_header(private_key, user.username, "http://example.org/friends")
       }))
 
       expect(response_body).to be_json_eql({

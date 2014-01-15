@@ -12,9 +12,9 @@ class UsersController < ApplicationController
   end
 
   def sign_in
-    email, password = Base64.decode64(request.headers["Authorization"].gsub("Basic ", "")).split(":")
-    user = User.where(:email => email).first
-    if user.password == password
+    username, password = Base64.decode64(request.headers["Authorization"].gsub("Basic ", "")).split(":")
+    user = User.where(:username => username).first
+    if user && user.password == password
       render :json => user, :status => 200, :private_key => true
     else
       render :json => {}, :status => 401
@@ -30,6 +30,6 @@ class UsersController < ApplicationController
   private
 
   def user_attributes
-    params.require(:user).permit(:email, :password, :phone_number)
+    params.require(:user).permit(:username, :email, :password, :phone_number)
   end
 end

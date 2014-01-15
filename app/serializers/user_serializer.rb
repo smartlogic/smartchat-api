@@ -1,7 +1,7 @@
 class UserSerializer < ActiveModel::Serializer
   include ApplicationSerializer
 
-  attributes :email, :private_key
+  attributes :username, :email, :private_key
 
   private
 

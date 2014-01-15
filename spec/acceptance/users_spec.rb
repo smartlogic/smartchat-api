@@ -7,18 +7,21 @@ resource "Users" do
   header "Content-Type", "application/json"
 
   post "/users" do
+    parameter :username, "Username of user", :required => true, :scope => :user
     parameter :email, "Email of user", :required => true, :scope => :user
     parameter :password, "Password of user", :required => true, :scope => :user
     parameter :phone_number, "Phone number of user", :scope => :user
 
     let(:raw_post) { params.to_json }
 
+    let(:username) { "eric" }
     let(:email) { "eric@example.com" }
     let(:password) { "password" }
     let(:phone_number) { "123-123-1234" }
 
     example_request "Creating a new user" do
       expect(response_body).to be_json_eql({
+        :username => "eric",
         :email => "eric@example.com",
         :_links => {
           "curies" =>  [{
@@ -33,6 +36,7 @@ resource "Users" do
     end
 
     context "bad data", :document => false do
+      let(:username) { nil }
       let(:email) { nil }
       let(:password) { nil }
       let(:phone_number) { nil }
@@ -41,6 +45,9 @@ resource "Users" do
         expect(response_body).to be_json_eql({
           "_embedded" => {
             "errors" => {
+              "username" => [
+                "can't be blank"
+              ],
               "email" => [
                 "can't be blank"
               ],
@@ -66,23 +73,24 @@ resource "Users" do
     header "Authorization", :auth
 
     let(:auth) do
-      user_string = "#{email}:#{password}"
+      user_string = "#{username}:#{password}"
       "Basic #{Base64.encode64(user_string)}"
     end
 
     let!(:user) do
       UserService.create({
+        :username => "eric",
         :email => "eric@example.com",
         :password => "password",
-        :phone_number => "123-123-1234"
       })
     end
 
-    let(:email) { user.email }
+    let(:username) { user.username }
     let(:password) { "password" }
 
     example_request "Signing in" do
       expect(response_body).to be_json_eql({
+        :username => "eric",
         :email => "eric@example.com",
         :_links => {
           "curies" =>  [{

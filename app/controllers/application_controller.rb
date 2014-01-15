@@ -10,10 +10,10 @@ class ApplicationController < ActionController::Base
   def check_authorization
     return unless request.headers["Authorization"]
 
-    email, signed_path = Base64.decode64(request.headers["Authorization"].gsub("Basic ", "")).split(":")
+    username, signed_path = Base64.decode64(request.headers["Authorization"].gsub("Basic ", "")).split(":")
     signed_path = Base64.decode64(signed_path)
 
-    user = User.where(:email => email).first
+    user = User.where(:username => username).first
 
     unless user
       render :text => "", :status => 401
