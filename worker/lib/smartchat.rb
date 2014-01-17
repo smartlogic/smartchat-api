@@ -5,3 +5,5 @@ require 'invitation_worker'
 require 'smartchat_encryptor'
 require 's3_media_store'
 require 'media'
+
+require 'clean_up_worker'

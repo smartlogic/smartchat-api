@@ -80,7 +80,9 @@ describe S3MediaStore do
     store.publish(drawing_path, 1, "folder", "drawing.png", encryptor)
 
     expect(store.users_index(1)).to eq([
-      Media.new("users/1/folder/file.png", "users/1/folder/drawing.png", { "extra" => "true" })
+      Media.new("users/1/folder/file.png", "users/1/folder/drawing.png", anything, {
+        "extra" => "true"
+      })
     ])
   end
 

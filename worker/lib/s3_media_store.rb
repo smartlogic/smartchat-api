@@ -22,6 +22,7 @@ class S3MediaStore
     published_file_path = "users/#{user_id}/#{folder}/#{file_name}"
     object = @published_bucket.objects[published_file_path]
     object.write(encrypted_data, :metadata => metadata.merge({
+      "last-modified" => Time.now,
       "encrypted_aes_key" => encrypted_aes_key,
       "encrypted_aes_iv" => encrypted_aes_iv
     }))
@@ -62,7 +63,8 @@ class S3MediaStore
     end
 
     folders.map do |key, files|
-      Media.new(files[:file_path], files[:drawing_path], files[:metadata])
+      last_modified = files[:metadata].delete("last-modified")
+      Media.new(files[:file_path], files[:drawing_path], Time.parse(last_modified), files[:metadata])
     end
   end
 

@@ -37,6 +37,8 @@ AppContainer.queue.poll do |msg|
     MediaWorker.new.perform(body)
   when "invitation"
     InvitationWorker.new.perform(body)
+  when "clean-up"
+    CleanUpWorker.new.perform(body)
   else
     DaemonKit.logger.warn "Got a message for an unknown queue"
   end
