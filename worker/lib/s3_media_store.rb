@@ -65,4 +65,14 @@ class S3MediaStore
       Media.new(files[:file_path], files[:drawing_path], files[:metadata])
     end
   end
+
+  def clean_up_user!(user_id, timestamp)
+    @published_bucket.objects.with_prefix("users/#{user_id}/").each do |object|
+      last_modified = Time.parse(object.metadata["last-modified"])
+
+      if last_modified < timestamp
+        object.delete
+      end
+    end
+  end
 end

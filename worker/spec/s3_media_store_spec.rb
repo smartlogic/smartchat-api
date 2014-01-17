@@ -83,4 +83,26 @@ describe S3MediaStore do
       Media.new("users/1/folder/file.png", "users/1/folder/drawing.png", { "extra" => "true" })
     ])
   end
+
+  it "should clean up old files" do
+    user = SecureRandom.hex
+    object1 = published_bucket.objects["users/#{user}/file1.txt"]
+    object1.write("data", :metadata => { "last-modified" => Time.parse("2014-01-10") })
+
+    object2 = published_bucket.objects["users/#{user}/file2.txt"]
+    object2.write("data", :metadata => { "last-modified" => Time.parse("2014-01-11") })
+
+    object3 = published_bucket.objects["users/#{user}/file3.txt"]
+    object3.write("data", :metadata => { "last-modified" => Time.parse("2014-01-13") })
+
+    old = Time.parse("2014-01-12")
+    store = S3MediaStore.new(private_bucket, published_bucket, base_uri)
+    store.clean_up_user!(user, old)
+
+    expect(object1.exists?).to be_false
+    expect(object2.exists?).to be_false
+    expect(object3.exists?).to be_true
+
+    object3.delete
+  end
 end
