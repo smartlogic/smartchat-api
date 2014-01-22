@@ -62,7 +62,7 @@ describe FileMediaStore do
       expect(data).to eq("atad")
       expect(aes_key).to eq("encrypted aes key")
       expect(aes_iv).to eq("encrypted aes iv")
-      expect(metadata).to eq({ "extra" => "true" })
+      expect(metadata).to include({ "extra" => "true" })
     end
   end
 
@@ -77,7 +77,7 @@ describe FileMediaStore do
       store.publish(drawing_path, 1, "folder", "drawing.png", encryptor)
 
       expect(store.users_index(1)).to eq([
-        Media.new("users/1/folder/file.png", "users/1/folder/drawing.png", { "extra" => true })
+        Media.new("users/1/folder/file.png", "users/1/folder/drawing.png", anything, { "extra" => true })
       ])
     end
   end

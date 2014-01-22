@@ -1,1 +1,1 @@
-Media = Struct.new(:file_path, :drawing_path, :timestamp, :metadata)
+Media = Value.new(:file_path, :drawing_path, :timestamp, :metadata)

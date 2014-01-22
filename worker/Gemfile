@@ -16,6 +16,7 @@ gem 'faraday'
 gem 'json'
 gem 'mail'
 gem 'safely'
+gem 'values'
 
 group :development, :test do
   gem 'rake'

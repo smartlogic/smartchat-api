@@ -11,6 +11,7 @@ gem 'pg'
 gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'unf'
+gem 'values'
 
 group :staging, :production do
   gem 'unicorn'
