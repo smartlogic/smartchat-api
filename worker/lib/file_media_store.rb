@@ -75,6 +75,10 @@ class FileMediaStore
     end
   end
 
+  def clean_up_user!(user_id, timestamp)
+    # doesn't matter
+  end
+
   private
 
   def metadata_for(key)
