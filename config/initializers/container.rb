@@ -73,5 +73,9 @@ class AppContainer
     let(:friend_service) do
       FriendService
     end
+
+    let(:clean_up_limit) do
+      -> { 2.weeks.ago }
+    end
   end
 end
