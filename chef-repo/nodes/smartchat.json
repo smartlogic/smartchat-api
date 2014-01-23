@@ -26,6 +26,14 @@
   "ruby_build" : {
     "git_version": "f758900a28e2ed695ad051dbf982e286014b076f"
   },
+  "redisio" : {
+    "servers" : [
+      {
+        "port" : "6379",
+        "loglevel" : "warning"
+      }
+    ]
+  },
   "smartchat" : {
     "smartchat_env" : "/home/deploy",
     "env" : {
