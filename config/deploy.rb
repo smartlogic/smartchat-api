@@ -1,5 +1,6 @@
 require 'bundler/capistrano'
 require 'capistrano/ext/multistage'
+require 'whenever/capistrano'
 
 load 'config/recipes/base'
 load 'config/recipes/nginx'
@@ -33,6 +34,9 @@ set :target_os, :ubuntu
 set :user, "deploy"
 
 set :application_settings, "/home/deploy/smartchat_env"
+
+set :whenever_command, "bundle exec whenever"
+set :whenever_roles, :scheduler
 
 namespace :custom do
   desc "set up database.yml"
