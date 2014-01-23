@@ -12,6 +12,7 @@ gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'unf'
 gem 'values'
+gem 'whenever'
 
 group :staging, :production do
   gem 'unicorn'
@@ -20,7 +21,6 @@ end
 group :development do
   gem 'foreman'
   gem 'capistrano', '~> 2.15.5'
-  gem 'whenever'
 end
 
 group :development, :test do
