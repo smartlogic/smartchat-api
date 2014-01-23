@@ -20,6 +20,7 @@ end
 group :development do
   gem 'foreman'
   gem 'capistrano', '~> 2.15.5'
+  gem 'whenever'
 end
 
 group :development, :test do
