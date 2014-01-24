@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
     user = User.where(:username => username).first
 
     unless user
+      Rails.logger.info("User not found")
       render :text => "", :status => 401
       return
     end
@@ -25,6 +26,7 @@ class ApplicationController < ActionController::Base
     if public_key.verify OpenSSL::Digest::SHA256.new, signed_path, request.original_url
       @current_user = user
     else
+      Rails.logger.info("Bad signature")
       render :text => "", :status => 401
     end
   end
