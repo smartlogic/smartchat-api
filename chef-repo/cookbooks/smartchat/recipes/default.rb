@@ -24,6 +24,13 @@ cookbook_file "/etc/rsyslog.conf" do
   mode 00644
 end
 
+cookbook_file "/etc/rsyslog.d/22-loggly.conf" do
+  source "22-loggly.conf"
+  owner "root"
+  group "root"
+  mode 00644
+end
+
 package "rsyslog-gnutls"
 
 service "rsyslog" do
