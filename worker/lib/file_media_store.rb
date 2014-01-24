@@ -60,6 +60,7 @@ class FileMediaStore
     folders = Hash.new({})
     @redis.smembers("smartchat-files").each do |file_path|
       folder = file_path.split("/")[2]
+      next unless file_path =~ /users\/#{user_id}\//
       if file_path =~ /file/
         key = :file_path
         folders[folder] = folders[folder].merge(:metadata => metadata_for(file_path))
