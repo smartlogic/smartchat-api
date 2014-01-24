@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe MediaService do
+  let(:expire_in) { 15 }
   let(:friend_ids) { [2, 3, 4] }
   let(:file_path) { Tempfile.new(["file", ".jpg"]).path }
   let(:drawing_path) { Tempfile.new(["drawing", ".jpg"]).path }
@@ -19,14 +20,16 @@ describe MediaService do
       "poster_username" => "eric",
       "file" => "file.png",
       "drawing" => "drawing.png",
-      "created_at" => anything
+      "created_at" => anything,
+      "expire_in" => 15
     })
     expect(notification_service).to receive(:notify).with(3, {
       "poster_id" => 1,
       "poster_username" => "eric",
       "file" => "file.png",
       "drawing" => "drawing.png",
-      "created_at" => anything
+      "created_at" => anything,
+      "expire_in" => 15
     })
 
     media_store = double(:media_store)
@@ -39,7 +42,7 @@ describe MediaService do
     AppContainer.stub(:notification_service).and_return(notification_service)
     AppContainer.stub(:media_store).and_return(media_store)
 
-    MediaService.create(user, friend_ids, file_path, drawing_path)
+    MediaService.create(user, friend_ids, file_path, drawing_path, expire_in)
 
     MediaService::Worker.drain
 

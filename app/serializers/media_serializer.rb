@@ -1,7 +1,11 @@
 class MediaSerializer < ActiveModel::Serializer
   include ApplicationSerializer
 
-  attributes :_links, :_embedded, :created_at
+  attributes :_links, :_embedded, :created_at, :expire_in
+
+  def expire_in
+    @object.metadata["expire_in"].to_i
+  end
 
   def created_at
     @object.metadata["created_at"]

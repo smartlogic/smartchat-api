@@ -31,6 +31,7 @@ resource "Media" do
 
       encryptor = TestEncryptor.new
       store.publish(file_path, user.id, "folder", "file.png", encryptor, {
+        "expire_in" => 15,
         "creator_id" => 1,
         "creator_username" => "eric",
         "created_at" => Time.now
@@ -43,6 +44,7 @@ resource "Media" do
         "_embedded" => {
           "media" => [
             {
+              "expire_in" => 15,
               "_embedded" => {
                 "creator" => {
                   "id" => 1,
@@ -88,7 +90,9 @@ resource "Media" do
     parameter :file_name, "File name", :required => true, :scope => :media
     parameter :file, "The photo or video", :required => true, :scope => :media
     parameter :drawing, "PNG of user's drawing", :scope => :media
+    parameter :expire_in, "Expire in # of secodns, defaults to 10", :scope => :media
 
+    let(:expire_in) { 15 }
     let(:friend_ids) { [other_user.id] }
     let(:file_name) { "file.png" }
     let(:file) do

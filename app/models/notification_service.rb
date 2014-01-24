@@ -15,6 +15,7 @@ module NotificationService
       "created_at" => media.fetch("created_at"),
       "file_path" => media.fetch("file"),
       "drawing_path" => media.fetch("drawing"),
+      "expire_in" => media.fetch("expire_in"),
       "devices" => devices,
       "creator" => {
         "id" => media.fetch("poster_id"),

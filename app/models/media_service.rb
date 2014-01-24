@@ -1,13 +1,15 @@
 module MediaService
-  def create(user, friend_ids, file_path, drawing_path)
-    Worker.perform_async(user.id, user.username, friend_ids, file_path, drawing_path)
+  DEFAULT_EXPIRE_IN = 10
+
+  def create(user, friend_ids, file_path, drawing_path, expire_in = DEFAULT_EXPIRE_IN)
+    Worker.perform_async(user.id, user.username, friend_ids, file_path, drawing_path, expire_in)
   end
   module_function :create
 
   class Worker
     include Sidekiq::Worker
 
-    def perform(user_id, user_username, friend_ids, file_path, drawing_path)
+    def perform(user_id, user_username, friend_ids, file_path, drawing_path, expire_in)
       friend_ids.each do |friend_id|
         unless AppContainer.friend_service.friends_with_user?(friend_id, user_id)
           next
@@ -24,7 +26,8 @@ module MediaService
           "poster_username" => user_username,
           "file" => file_key,
           "drawing" => drawing_key,
-          "created_at" => Time.now
+          "created_at" => Time.now,
+          "expire_in" => expire_in
         })
       end
 

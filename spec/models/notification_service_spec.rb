@@ -9,7 +9,8 @@ describe NotificationService do
       "poster_username"=> "eric",
       "created_at" => created_at,
       "file" => "path/to/file.png",
-      "drawing" => "path/to/drawing.png"
+      "drawing" => "path/to/drawing.png",
+      "expire_in" => 15
     }
     friend = double(:friend, {
       :public_key => "public_key",
@@ -31,6 +32,7 @@ describe NotificationService do
       "created_at" => created_at,
       "file_path" => "path/to/file.png",
       "drawing_path" => "path/to/drawing.png",
+      "expire_in" => 15,
       "devices" => [{
         "device_id" => "a device id",
         "device_type" => "android"

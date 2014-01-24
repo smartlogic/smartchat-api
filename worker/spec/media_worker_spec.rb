@@ -10,6 +10,7 @@ describe MediaWorker do
     "created_at" => created_at,
     "file_path" => "file_path",
     "drawing_path" => "drawing_path",
+    "expire_in" => 15,
     "devices" => [{
       "device_id" => "a device id",
       "device_type" => "android"
@@ -40,6 +41,7 @@ describe MediaWorker do
       "created_at" => created_at,
       "creator_id" => 1,
       "creator_username" => "eric",
+      "expire_in" => 15
     })
     expect(media_store["file_path"]).to eq("elif")
     expect(media_store["drawing_path"]).to eq("gniward")
@@ -63,6 +65,7 @@ describe MediaWorker do
       "created_at" => created_at,
       "creator_id" => 1,
       "creator_username" => "eric",
+      "expire_in" => 15
     })
   end
 end

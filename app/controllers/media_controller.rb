@@ -17,8 +17,9 @@ class MediaController < ApplicationController
     friend_ids = params[:media][:friend_ids]
     file_path = @media_tempfile.path
     drawing_path = @drawing_tempfile.path if @drawing_tempfile
+    expire_in = params[:media][:expire_in] || MediaService::DEFAULT_EXPIRE_IN
 
-    MediaService.create(current_user, friend_ids, file_path, drawing_path)
+    MediaService.create(current_user, friend_ids, file_path, drawing_path, expire_in)
 
     render :json => {}, :status => 202, :serializer => MediaCreationSerializer
   end

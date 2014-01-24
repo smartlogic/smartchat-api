@@ -7,6 +7,7 @@ class MediaWorker
     creator = media_attributes.fetch("creator")
     public_key = media_attributes.fetch("public_key")
     devices = media_attributes.fetch("devices")
+    expire_in = media_attributes.fetch("expire_in")
     folder = SecureRandom.hex
     file_path = media_attributes.fetch("file_path")
     extension = File.extname(file_path)
@@ -18,6 +19,7 @@ class MediaWorker
       "creator_id" => creator.fetch("id"),
       "creator_username" => creator.fetch("username"),
       "created_at" => created_at,
+      "expire_in" => expire_in
     }
 
     file_url = media_store.publish(file_path, user_id, folder, "file#{extension}", encryptor, notification)
