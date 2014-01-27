@@ -24,4 +24,24 @@ module NotificationService
     }.to_json)
   end
   module_function :notify
+
+  def friend_added(to_user, from_user, container = AppContainer)
+    return unless to_user.device
+
+    devices = []
+    devices << { "device_id" => to_user.device_id, "device_type" => to_user.device_type }
+
+    container.queue.send_message({
+      "queue" => "send-device-notification",
+      "user_id" => to_user.id,
+      "devices" => devices,
+      "message" => {
+        "groupie" => {
+          "id" => from_user.id,
+          "username" => from_user.username
+        }
+      }
+    }.to_json)
+  end
+  module_function :friend_added
 end

@@ -39,6 +39,8 @@ AppContainer.queue.poll do |msg|
     InvitationWorker.new.perform(body)
   when "clean-up"
     CleanUpWorker.new.perform(body)
+  when "send-device-notification"
+    SendDeviceNotificationWorker.new.perform(body)
   else
     DaemonKit.logger.warn "Got a message for an unknown queue"
   end

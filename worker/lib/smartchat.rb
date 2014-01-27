@@ -7,3 +7,4 @@ require 's3_media_store'
 require 'media'
 
 require 'clean_up_worker'
+require 'send_device_notification_worker'

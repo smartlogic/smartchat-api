@@ -45,4 +45,31 @@ describe NotificationService do
 
     NotificationService.notify(2, media, user_klass, container)
   end
+
+  it "should notifiy users of someone adding them as a friend" do
+    eric = create_user(:username => "eric", :email => "eric@example.com")
+    sam = create_user(:username => "sam", :email => "sam@example.com")
+
+    sam.create_device(:device_id => "a device id", :device_type => "android")
+
+    queue = double(:queue)
+    container = double(:container, :queue => queue)
+
+    expect(queue).to receive(:send_message).with({
+      "queue" => "send-device-notification",
+      "user_id" => sam.id,
+      "devices" => [{
+        "device_id" => "a device id",
+        "device_type" => "android"
+      }],
+      "message" => {
+        "groupie" => {
+          "id" => eric.id,
+          "username" => "eric"
+        }
+      }
+    }.to_json)
+
+    NotificationService.friend_added(sam, eric, container)
+  end
 end

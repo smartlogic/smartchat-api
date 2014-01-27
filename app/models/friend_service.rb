@@ -1,9 +1,11 @@
 module FriendService
-  def create(from_user, to_user)
+  def create(from_user, to_user, container = AppContainer)
     Friend.create({
       :from_id => from_user.id,
       :to_id => to_user.id
     })
+
+    container.notification_service.friend_added(to_user, from_user)
   end
   module_function :create
 

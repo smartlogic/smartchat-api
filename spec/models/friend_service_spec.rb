@@ -1,13 +1,18 @@
 require 'spec_helper'
 
 describe FriendService do
-  it "should create a friend relationship" do
+  it "should notify the other user if they have a device attached" do
     eric = create_user(:username => "eric", :email => "eric@example.com")
     sam = create_user(:username => "sam", :email => "sam@example.com")
 
-    FriendService.create(eric, sam)
+    sam.create_device(:device_type => "android", :device_id => "abc")
 
-    expect(Friend.count).to eq(1)
+    notification = double(:notification)
+    container = double(:container, :notification_service => notification)
+
+    expect(notification).to receive(:friend_added).with(sam, eric)
+
+    FriendService.create(eric, sam, container)
   end
   
   it "should find all friends associated with a user" do
