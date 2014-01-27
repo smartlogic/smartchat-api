@@ -40,4 +40,20 @@ describe FriendService do
 
     expect(FriendService.friends_with_user?(eric.id, sam.id)).to be_true
   end
+
+  it "should find groupies" do
+    eric = create_user(:username => "eric", :email => "eric@example.com")
+    sam = create_user(:username => "sam", :email => "sam@example.com")
+
+    expect(FriendService.has_groupies?(eric.id)).to be_false
+
+    FriendService.create(sam, eric)
+
+    expect(FriendService.has_groupies?(eric.id)).to be_true
+    expect(FriendService.groupies(eric.id)).to eq([sam])
+
+    FriendService.create(eric, sam)
+
+    expect(FriendService.has_groupies?(eric.id)).to be_false
+  end
 end

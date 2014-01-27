@@ -6,10 +6,121 @@ resource "Friends" do
   include_context :routes
 
   get "/friends" do
-    example_request "Listing friends" do
+    context "has friends" do
+      let!(:your_friend) do
+        friend = UserService.create({
+          :username => "friend",
+          :email => "friend@example.com",
+          :password => "password",
+          :phone_number => "123-123-1235"
+        })
+
+        FriendService.create(user, friend)
+
+        friend
+      end
+
+      let!(:groupie) do
+        friend = UserService.create({
+          :username => "groupie",
+          :email => "groupie@example.com",
+          :password => "password",
+        })
+
+        FriendService.create(friend, user)
+
+        friend
+      end
+
+      example_request "Listing friends" do
+        expect(response_body).to be_json_eql({
+          "_embedded" => {
+            "friends" => [
+              {
+                :username => "friend"
+              }
+            ]
+          },
+          "_links" => {
+            "curies" =>  [{
+              "name" =>  "smartchat",
+              "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+              "templated" => true
+            }],
+            "self" => {
+              "name" => "List of your friends",
+              "href" => friends_url(:host => host)
+            },
+            "search" => {
+              "name" => "Search for friends",
+              "href" => search_friends_url(:host => host) + "{?email}",
+              "templated" => true
+            },
+            "smartchat:groupies" => {
+              "name" => "List out groupies",
+              "href" => groupies_friends_url(:host => host)
+            }
+          }
+        }.to_json)
+        expect(status).to eq(200)
+      end
+    end
+
+    context "no friends" do
+      example_request "Listing friends" do
+        expect(response_body).to be_json_eql({
+          "_embedded" => {
+            "friends" => []
+          },
+          "_links" => {
+            "curies" =>  [{
+              "name" =>  "smartchat",
+              "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+              "templated" => true
+            }],
+            "self" => {
+              "name" => "List of your friends",
+              "href" => friends_url(:host => host)
+            },
+            "search" => {
+              "name" => "Search for friends",
+              "href" => search_friends_url(:host => host) + "{?email}",
+              "templated" => true
+            },
+          }
+        }.to_json)
+        expect(status).to eq(200)
+      end
+    end
+  end
+
+  get "/friends/groupies" do
+    let!(:groupie) do
+      friend = UserService.create({
+        :username => "groupie",
+        :email => "groupie@example.com",
+        :password => "password",
+      })
+
+      FriendService.create(friend, user)
+
+      friend
+    end
+
+    example_request "Viewing groupies" do
       expect(response_body).to be_json_eql({
         "_embedded" => {
-          "friends" => []
+          "friends" => [
+            {
+              "username" => "groupie",
+              "_links" => {
+                "smartchat:add-friend" => {
+                  "name" => "Add as a friend",
+                  "href" => add_friend_url(groupie.id, :host => host)
+                }
+              }
+            },
+          ]
         },
         "_links" => {
           "curies" =>  [{
@@ -17,13 +128,9 @@ resource "Friends" do
             "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
             "templated" => true
           }],
-          "self" => {
-            "name" => "List of your friends",
-            "href" => friends_url(:host => host)
-          },
           "search" => {
             "name" => "Search for friends",
-            "href" => search_friends_url(:host => host) + "{?email}",
+            "href" => search_friends_url(:host => host) + "{?phone_numbers}",
             "templated" => true
           }
         }

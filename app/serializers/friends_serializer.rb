@@ -24,6 +24,19 @@ class FriendsSerializer < ActiveModel::ArraySerializer
       }
     }
 
+    if FriendService.has_groupies?(scope.id)
+      hash[:_links]["smartchat:groupies"] = {
+        "name" => "List out groupies",
+        "href" => groupies_friends_url
+      }
+    end
+
     hash
+  end
+
+  private
+
+  def scope
+    @options[:scope]
   end
 end

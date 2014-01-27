@@ -6,6 +6,7 @@ Smartchat::Application.routes.draw do
   resources :friends, :only => [:index], :format => false do
     collection do
       post :search
+      get :groupies
     end
 
     member do

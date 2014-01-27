@@ -8,6 +8,15 @@ class FriendsController < ApplicationController
     })
   end
 
+  def groupies
+    render({
+      :json => FriendService.groupies(current_user.id),
+      :status => 200,
+      :serializer => FriendSearchSerializer,
+      :each_serializer => FriendSearchUserSerializer
+    })
+  end
+
   def search
     if params[:phone_numbers].present?
       found_by_phone = User.with_hashed_phone_numbers(params[:phone_numbers]).excluding_friends(current_user)

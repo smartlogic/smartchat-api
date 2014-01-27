@@ -16,4 +16,16 @@ module FriendService
     Friend.where(:from_id => for_user_id, :to_id => to_user_id).present?
   end
   module_function :friends_with_user?
+
+  def has_groupies?(user_id)
+    groupies(user_id).present?
+  end
+  module_function :has_groupies?
+
+  def groupies(user_id)
+    Friend.joins(:from).
+      where(:to_id => user_id).
+      where("friends.from_id not in (select friends.to_id from friends where friends.from_id = ?)", user_id).map(&:from)
+  end
+  module_function :groupies
 end
