@@ -46,13 +46,17 @@ class S3MediaStore
     [data, key, iv, metadata]
   end
 
-  def users_index(user_id)
+  #
+  # Filters by user and friend ids
+  #
+  def users_index(user_id, friend_ids)
     folders = Hash.new({})
     @published_bucket.objects.with_prefix("users/#{user_id}/").each do |object|
+      metadata = object.metadata.to_h
+
       folder = object.key.split("/")[2]
       if object.key =~ /file/
         key = :file_path
-        metadata = object.metadata.to_h
         metadata.delete("encrypted_aes_key")
         metadata.delete("encrypted_aes_iv")
         folders[folder] = folders[folder].merge(:metadata => metadata)
@@ -65,6 +69,8 @@ class S3MediaStore
     folders.map do |key, files|
       last_modified = files[:metadata].delete("last-modified")
       Media.new(files[:file_path], files[:drawing_path], Time.parse(last_modified), files[:metadata])
+    end.select do |media|
+      friend_ids.include?(media.metadata["creator_id"].to_i)
     end
   end
 

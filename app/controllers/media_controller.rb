@@ -5,8 +5,9 @@ class MediaController < ApplicationController
   before_filter :parse_drawing_tempfile, :only => :create
 
   def index
+    friend_ids = FriendService.find_friends(current_user).map(&:id)
     render({
-      :json => AppContainer.media_store.users_index(current_user.id),
+      :json => AppContainer.media_store.users_index(current_user.id, friend_ids),
       :status => 200,
       :serializer => MediaIndexSerializer,
       :each_serializer => MediaSerializer

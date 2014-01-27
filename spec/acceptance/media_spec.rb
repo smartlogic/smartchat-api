@@ -10,6 +10,7 @@ resource "Media" do
 
   let!(:other_user) do
     UserService.create({
+      :username => "other",
       :email => "other@example.com",
       :password => "password",
       :phone_number => "123-123-1234"
@@ -29,11 +30,13 @@ resource "Media" do
       file_path = store.store("spec/fixtures/file.txt")
       drawing_path = store.store("spec/fixtures/file.txt")
 
+      Friend.create(:from_id => user.id, :to_id => other_user.id)
+
       encryptor = TestEncryptor.new
       store.publish(file_path, user.id, "folder", "file.png", encryptor, {
         "expire_in" => 15,
-        "creator_id" => 1,
-        "creator_username" => "eric",
+        "creator_id" => other_user.id,
+        "creator_username" => other_user.username,
         "created_at" => Time.now
       })
       store.publish(drawing_path, user.id, "folder", "drawing.png", encryptor)
@@ -47,8 +50,8 @@ resource "Media" do
               "expire_in" => 15,
               "_embedded" => {
                 "creator" => {
-                  "id" => 1,
-                  "username" => "eric",
+                  "id" => other_user.id,
+                  "username" => other_user.username
                 }
               },
               "_links" => {
