@@ -36,6 +36,7 @@ describe MediaWorker do
     MediaWorker.new.perform(media_attributes, container)
 
     expect(notification.lookup("android", "a device id")).to eq({
+      "type" => "media",
       "file_url" => "file_url",
       "drawing_file_url" => "drawing_url",
       "created_at" => created_at,
@@ -61,6 +62,7 @@ describe MediaWorker do
     MediaWorker.new.perform(media_attributes, container)
 
     expect(notification.lookup("android", "a device id")).to eq({
+      "type" => "media",
       "file_url" => "file_url",
       "created_at" => created_at,
       "creator_id" => 1,

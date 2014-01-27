@@ -16,6 +16,7 @@ class MediaWorker
     media_store = container.media_store
 
     notification = {
+      "type" => "media",
       "creator_id" => creator.fetch("id"),
       "creator_username" => creator.fetch("username"),
       "created_at" => created_at,
