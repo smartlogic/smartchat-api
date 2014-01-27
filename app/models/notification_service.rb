@@ -16,6 +16,7 @@ module NotificationService
       "file_path" => media.fetch("file"),
       "drawing_path" => media.fetch("drawing"),
       "expire_in" => media.fetch("expire_in"),
+      "pending" => media.fetch("pending"),
       "devices" => devices,
       "creator" => {
         "id" => media.fetch("poster_id"),

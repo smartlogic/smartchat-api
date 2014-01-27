@@ -10,7 +10,8 @@ describe NotificationService do
       "created_at" => created_at,
       "file" => "path/to/file.png",
       "drawing" => "path/to/drawing.png",
-      "expire_in" => 15
+      "expire_in" => 15,
+      "pending" => false
     }
     friend = double(:friend, {
       :public_key => "public_key",
@@ -33,6 +34,7 @@ describe NotificationService do
       "file_path" => "path/to/file.png",
       "drawing_path" => "path/to/drawing.png",
       "expire_in" => 15,
+      "pending" => false,
       "devices" => [{
         "device_id" => "a device id",
         "device_type" => "android"
