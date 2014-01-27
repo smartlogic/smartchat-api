@@ -36,10 +36,9 @@ module NotificationService
       "user_id" => to_user.id,
       "devices" => devices,
       "message" => {
-        "groupie" => {
-          "id" => from_user.id,
-          "username" => from_user.username
-        }
+        "type" => "friend-added",
+        "groupie_id" => from_user.id,
+        "groupie_username" => from_user.username
       }
     }.to_json)
   end

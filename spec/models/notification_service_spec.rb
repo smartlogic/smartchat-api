@@ -63,10 +63,9 @@ describe NotificationService do
         "device_type" => "android"
       }],
       "message" => {
-        "groupie" => {
-          "id" => eric.id,
-          "username" => "eric"
-        }
+        "type" => "friend-added",
+        "groupie_id" => eric.id,
+        "groupie_username" => "eric"
       }
     }.to_json)
 
