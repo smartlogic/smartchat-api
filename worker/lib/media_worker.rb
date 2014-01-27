@@ -8,6 +8,7 @@ class MediaWorker
     public_key = media_attributes.fetch("public_key")
     devices = media_attributes.fetch("devices")
     expire_in = media_attributes.fetch("expire_in")
+    pending = media_attributes.fetch("pending")
     folder = SecureRandom.hex
     file_path = media_attributes.fetch("file_path")
     extension = File.extname(file_path)
@@ -40,6 +41,8 @@ class MediaWorker
       })
     end
 
-    container.notification_service.send_notification_to_devices(devices, notification)
+    unless pending
+      container.notification_service.send_notification_to_devices(devices, notification)
+    end
   end
 end

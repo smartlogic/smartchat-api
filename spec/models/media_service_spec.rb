@@ -21,7 +21,8 @@ describe MediaService do
       "file" => "file.png",
       "drawing" => "drawing.png",
       "created_at" => anything,
-      "expire_in" => 15
+      "expire_in" => 15,
+      "pending" => false
     })
     expect(notification_service).to receive(:notify).with(3, {
       "poster_id" => 1,
@@ -29,14 +30,24 @@ describe MediaService do
       "file" => "file.png",
       "drawing" => "drawing.png",
       "created_at" => anything,
-      "expire_in" => 15
+      "expire_in" => 15,
+      "pending" => false
+    })
+    expect(notification_service).to receive(:notify).with(4, {
+      "poster_id" => 1,
+      "poster_username" => "eric",
+      "file" => "file.png",
+      "drawing" => "drawing.png",
+      "created_at" => anything,
+      "expire_in" => 15,
+      "pending" => true
     })
 
     media_store = double(:media_store)
     expect(media_store).to receive(:store).with(file_path).
-      and_return("file.png").exactly(2).times
+      and_return("file.png").exactly(3).times
     expect(media_store).to receive(:store).with(drawing_path).
-      and_return("drawing.png").exactly(2).times
+      and_return("drawing.png").exactly(3).times
 
     AppContainer.stub(:friend_service).and_return(friend_service)
     AppContainer.stub(:notification_service).and_return(notification_service)

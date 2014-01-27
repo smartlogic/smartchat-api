@@ -11,10 +11,6 @@ module MediaService
 
     def perform(user_id, user_username, friend_ids, file_path, drawing_path, expire_in)
       friend_ids.each do |friend_id|
-        unless AppContainer.friend_service.friends_with_user?(friend_id, user_id)
-          next
-        end
-
         file_key = AppContainer.media_store.store(file_path)
 
         if drawing_path
@@ -27,7 +23,8 @@ module MediaService
           "file" => file_key,
           "drawing" => drawing_key,
           "created_at" => Time.now,
-          "expire_in" => expire_in
+          "expire_in" => expire_in,
+          "pending" => !AppContainer.friend_service.friends_with_user?(friend_id, user_id)
         })
       end
 

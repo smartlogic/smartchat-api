@@ -11,6 +11,7 @@ describe MediaWorker do
     "file_path" => "file_path",
     "drawing_path" => "drawing_path",
     "expire_in" => 15,
+    "pending" => false,
     "devices" => [{
       "device_id" => "a device id",
       "device_type" => "android"
@@ -69,5 +70,20 @@ describe MediaWorker do
       "creator_username" => "eric",
       "expire_in" => 15
     })
+  end
+
+  it "should not send a notification for pending smarches" do
+    notification = TestNotificationService.new
+    media_store = TestMediaStore.new("file_path" => "file", "drawing_path" => "drawing")
+
+    container = double(:container, {
+      :media_store => media_store,
+      :smartchat_encryptor => TestEncryptorFactory.new(encryptor),
+      :notification_service => notification
+    })
+
+    MediaWorker.new.perform(media_attributes.merge("pending" => true), container)
+
+    expect(notification.lookup("android", "a device id")).to be_nil
   end
 end
