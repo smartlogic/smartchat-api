@@ -36,6 +36,15 @@ export AWS_SMTP_PASSWORD='...'
 export GCM_API_KEY='...'
 export TWILIO_ACCOUNT_SID='...'
 export TWILIO_VERIFICATION_PHONE_NUMBER='...'
+export SIDEKIQ_WEB_PASSWORD='password'
+```
+
+Most of these are not required in development though. Development only environment variables.
+
+```bash
+export GCM_API_KEY='...' # Required for android push notifications
+export TWILIO_ACCOUNT_SID='...' # Required for twilio interactions
+export TWILIO_VERIFICATION_PHONE_NUMBER='...' # Required for verifying SMS
 export SMARTCHAT_API_HOST='...'
 export SMARTCHAT_API_PORT='5000'
 export SIDEKIQ_WEB_PASSWORD='password'
