@@ -73,11 +73,16 @@ describe FileMediaStore do
 
       file_path = store.store("spec/fixtures/file.txt")
       drawing_path = store.store("spec/fixtures/file.txt")
-      store.publish(file_path, 1, "folder", "file.png", encryptor, "extra" => true)
+      store.publish(file_path, 1, "folder", "file.png", encryptor, "creator_id" => 2)
       store.publish(drawing_path, 1, "folder", "drawing.png", encryptor)
 
-      expect(store.users_index(1)).to eq([
-        Media.new("users/1/folder/file.png", "users/1/folder/drawing.png", anything, { "extra" => true })
+      file_path = store.store("spec/fixtures/file.txt")
+      store.publish(file_path, 1, "second-folder", "file.png", encryptor, "creator_id" => 3)
+
+      expect(store.users_index(1, [2])).to eq([
+        Media.new("users/1/folder/file.png", "users/1/folder/drawing.png", anything, {
+          "creator_id" => 2
+        })
       ])
     end
   end

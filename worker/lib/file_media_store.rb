@@ -56,7 +56,7 @@ class FileMediaStore
     [data, key, iv, metadata]
   end
 
-  def users_index(user_id)
+  def users_index(user_id, friend_ids)
     folders = Hash.new({})
     @redis.smembers("smartchat-files").each do |file_path|
       folder = file_path.split("/")[2]
@@ -73,6 +73,8 @@ class FileMediaStore
     folders.map do |key, files|
       last_modified = files[:metadata].delete("last-modified")
       Media.new(files[:file_path], files[:drawing_path], Time.parse(last_modified), files[:metadata])
+    end.select do |media|
+      friend_ids.include?(media.metadata["creator_id"].to_i)
     end
   end
 
