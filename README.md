@@ -68,10 +68,12 @@ Smartchat uses the AWS infrastrcture heavily.
 
 ### EC2
 
-SmartChat has two types of EC2 instances - web and worker.
+SmartChat has three types of EC2 instances.
 
 * Web
   * unicorn
   * sidekiq
 * Worker
   * SQS worker
+* Scheduler
+  * cron jobs
