@@ -15,7 +15,7 @@ class FriendSearchSerializer < ActiveModel::ArraySerializer
       }],
       "search" => {
         "name" => "Search for friends",
-        "href" => search_friends_url() + "{?phone_numbers}",
+        "href" => search_friends_url() + "{?emails,phone_numbers}",
         "templated" => true
       }
     }

@@ -53,7 +53,7 @@ resource "Friends" do
             },
             "search" => {
               "name" => "Search for friends",
-              "href" => search_friends_url(:host => host) + "{?email}",
+              "href" => search_friends_url(:host => host) + "{?emails,phone_numbers}",
               "templated" => true
             },
             "smartchat:groupies" => {
@@ -84,7 +84,7 @@ resource "Friends" do
             },
             "search" => {
               "name" => "Search for friends",
-              "href" => search_friends_url(:host => host) + "{?email}",
+              "href" => search_friends_url(:host => host) + "{?emails,phone_numbers}",
               "templated" => true
             },
           }
@@ -130,7 +130,7 @@ resource "Friends" do
           }],
           "search" => {
             "name" => "Search for friends",
-            "href" => search_friends_url(:host => host) + "{?phone_numbers}",
+            "href" => search_friends_url(:host => host) + "{?emails,phone_numbers}",
             "templated" => true
           }
         }
@@ -214,7 +214,7 @@ resource "Friends" do
           }],
           "search" => {
             "name" => "Search for friends",
-            "href" => search_friends_url(:host => host) + "{?phone_numbers}",
+            "href" => search_friends_url(:host => host) + "{?emails,phone_numbers}",
             "templated" => true
           }
         }
@@ -275,7 +275,7 @@ resource "Friends" do
           },
           "search" => {
             "name" => "Search for friends",
-            "href" => search_friends_url(:host => host) + "{?email}",
+            "href" => search_friends_url(:host => host) + "{?emails,phone_numbers}",
             "templated" => true
           }
         }
