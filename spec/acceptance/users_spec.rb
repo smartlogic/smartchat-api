@@ -127,4 +127,26 @@ resource "Users" do
       expect(status).to eq(204)
     end
   end
+
+  get "/users/sms/verify" do
+    include_context :auth
+
+    example_request "Viewing verification code to send via SMS" do
+      user.reload
+      expect(response_body).to be_json_eql({
+        "verification_code" => user.sms_verification_code,
+        "_links" => {
+          "curies" =>  [{
+            "name" =>  "smartchat",
+            "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+            "templated" => true
+          }],
+          "self" => {
+            "href" => sms_verify_users_url(:host => host)
+          }
+        }
+      }.to_json)
+      expect(status).to eq(200)
+    end
+  end
 end

@@ -79,11 +79,25 @@ resource "Root" do
             "smartchat:invitations" => {
               "name" => "Invite a user to SmartChat",
               "href" => invite_users_url(:host => host)
+            },
+            "smartchat:sms-verify" => {
+              "name" => "Verify your phone number via SMS",
+              "href" => sms_verify_users_url(:host => host)
             }
           }
         }.to_json)
 
         expect(status).to eq(200)
+      end
+
+      context "sms verified", :document => false do
+        before do
+          user.update_attributes(:phone_number => "1231231234")
+        end
+
+        example_request "Authorized" do
+          expect(response_body).to_not have_json_path("_links/smartchat:sms-verify")
+        end
       end
     end
 

@@ -27,6 +27,11 @@ class UsersController < ApplicationController
     head 204
   end
 
+  def sms_verify
+    current_user.generate_sms_verification_code
+    render :json => current_user, :serializer => SmsVerifySerializer
+  end
+
   private
 
   def user_attributes

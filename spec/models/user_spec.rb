@@ -64,4 +64,22 @@ describe User do
       expect(user.device).to be_nil
     end
   end
+
+  context "phone number verification" do
+    it "should be verified" do
+      user = User.new(:phone_number => "1231231234")
+      expect(user).to be_phone_number_verified
+    end
+
+    it "should not be verified" do
+      user = User.new
+      expect(user).to_not be_phone_number_verified
+    end
+  end
+
+  it "should generate an sms verification code" do
+    user = User.new
+    user.generate_sms_verification_code
+    expect(user.sms_verification_code).to_not be_empty
+  end
 end

@@ -20,6 +20,8 @@ Smartchat::Application.routes.draw do
     collection do
       post :invite
       post :sign_in
+
+      get "/sms/verify" => :sms_verify
     end
   end
 

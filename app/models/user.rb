@@ -62,6 +62,15 @@ class User < ActiveRecord::Base
     phone_number
   end
 
+  def phone_number_verified?
+    phone_number.present?
+  end
+
+  def generate_sms_verification_code
+    self.sms_verification_code = SecureRandom.hex(4)
+    save
+  end
+
   def device_destroy
     if device
       device.destroy

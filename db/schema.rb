@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140115153123) do
+ActiveRecord::Schema.define(version: 20140128163223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,14 +32,15 @@ ActiveRecord::Schema.define(version: 20140115153123) do
   add_index "friends", ["from_id", "to_id"], name: "index_friends_on_from_id_and_to_id", unique: true, using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",         null: false
-    t.string   "password_hash", null: false
+    t.string   "email",                 null: false
+    t.string   "password_hash",         null: false
     t.string   "phone_number"
-    t.text     "private_key",   null: false
-    t.text     "public_key",    null: false
+    t.text     "private_key",           null: false
+    t.text     "public_key",            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "username"
+    t.string   "sms_verification_code"
   end
 
 end
