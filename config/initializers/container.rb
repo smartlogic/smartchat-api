@@ -81,5 +81,9 @@ class AppContainer
     let(:twilio_account_sid) do
       ENV["TWILIO_ACCOUNT_SID"]
     end
+
+    let(:verification_phone_number) do
+      ENV["TWILIO_VERIFICATION_PHONE_NUMBER"]
+    end
   end
 end

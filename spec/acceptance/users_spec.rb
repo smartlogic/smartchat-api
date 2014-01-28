@@ -128,10 +128,15 @@ resource "Users" do
   get "/users/sms/verify" do
     include_context :auth
 
+    before do
+      AppContainer.stub(:verification_phone_number => "1235551234")
+    end
+
     example_request "Viewing verification code to send via SMS" do
       user.reload
       expect(response_body).to be_json_eql({
         "verification_code" => user.sms_verification_code,
+        "verification_phone_number" => "1235551234",
         "_links" => {
           "curies" =>  [{
             "name" =>  "smartchat",
