@@ -11,7 +11,7 @@ This is the backend server for SmartChat.
 ## Installation
 
     $ bundle
-    $ rake db:create db:migrate db:test:prepare
+    $ rake db:create db:migrate db:test:prepare db:seed
     $ cd worker
     $ bundle
     $ cd ../
