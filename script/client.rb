@@ -6,6 +6,7 @@ require 'capybara/server'
 require 'database_cleaner'
 require 'faraday'
 require 'uri_template'
+require 'sidekiq/testing'
 
 DatabaseCleaner.strategy = :truncation
 
@@ -33,9 +34,9 @@ begin
   end
 
   other = UserService.create({
+    :username => "other",
     :email => "other@example.com",
     :password => "password",
-    :phone => "123-123-1234"
   })
 
   other.create_device(:device_id => "123", :device_type => "android")
@@ -46,13 +47,13 @@ begin
   end
 
   response_body = JSON.parse(client.get("/").body)
-  registration_link = response_body["_links"]["smartchat:user"]["href"]
+  registration_link = response_body["_links"]["smartchat:users"]["href"]
 
   response = client.post(registration_link, {
     :user => {
+      :username => "eric",
       :email => "eric@example.com",
       :password => "password",
-      :phone => "123-123-1234"
     }
   }.to_json)
 
@@ -67,7 +68,7 @@ begin
 
   puts "Registered"
 
-  client.basic_auth("eric@example.com", sign_url(private_key, "http://localhost:8888/"))
+  client.basic_auth("eric", sign_url(private_key, "http://localhost:8888/"))
 
   response = client.get("http://localhost:8888/")
 
@@ -76,36 +77,38 @@ begin
   response_body = JSON.parse(response.body)
 
   friends_url = response_body["_links"]["smartchat:friends"]["href"]
-  client.basic_auth("eric@example.com", sign_url(private_key, friends_url))
+  client.basic_auth("eric", sign_url(private_key, friends_url))
   response = client.get(friends_url)
 
   response_body = JSON.parse(response.body)
 
   puts "Searching for other@example.com"
 
-  search_url = URITemplate.new(response_body["_links"]["search"]["href"]).expand(:email => "other@example.com")
-  client.basic_auth("eric@example.com", sign_url(private_key, search_url))
+  search_url = response_body["_links"]["search"]["href"]
+  search_url = URITemplate.new(search_url).expand(:emails => [Digest::MD5.hexdigest("other@example.com")])
+  p search_url
+  client.basic_auth("eric", sign_url(private_key, search_url))
   response = client.post(search_url)
 
   response_body = JSON.parse(response.body)
 
   puts "Found the following friends:"
   response_body["_embedded"]["friends"].each do |friend|
-    puts "* #{friend["email"]}"
+    puts "* #{friend["username"]}"
   end
 
   raise "No friends to add" unless response_body["_embedded"]["friends"].count > 0
 
   friend = response_body["_embedded"]["friends"].first
-  puts "Adding #{friend["email"]}"
+  puts "Adding #{friend["username"]}"
 
   add_friend_url = friend["_links"]["smartchat:add-friend"]["href"]
-  client.basic_auth("eric@example.com", sign_url(private_key, add_friend_url))
+  client.basic_auth("eric", sign_url(private_key, add_friend_url))
   response = client.post(add_friend_url)
 
   raise "Failed adding friend" unless response.status == 201
 
-  client.basic_auth("eric@example.com", sign_url(private_key, friends_url))
+  client.basic_auth("eric", sign_url(private_key, friends_url))
   response = client.get(friends_url)
 
   response_body = JSON.parse(response.body)
@@ -114,16 +117,16 @@ begin
 
   puts "Your friends"
   friends = response_body["_embedded"]["friends"].each do |friend|
-    puts "* #{friend["email"]}"
+    puts "* #{friend["username"]}"
   end
 
   puts "Sending a smartchat"
 
-  client.basic_auth("eric@example.com", sign_url(private_key, "http://localhost:8888/"))
+  client.basic_auth("eric", sign_url(private_key, "http://localhost:8888/"))
   response = client.get("http://localhost:8888/")
 
   smartchat_url = JSON.parse(response.body)["_links"]["smartchat:media"]["href"]
-  client.basic_auth("eric@example.com", sign_url(private_key, smartchat_url))
+  client.basic_auth("eric", sign_url(private_key, smartchat_url))
   response = client.post(smartchat_url, {
     :media => {
       :friend_ids => friends.map { |f| f["id"] },
@@ -132,7 +135,7 @@ begin
     }
   }.to_json)
 
-  raise "Error creating media" unless response.status == 201
+  raise "Error creating media" unless response.status == 202
 ensure
   DatabaseCleaner.clean
 end
