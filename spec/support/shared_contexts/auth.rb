@@ -5,8 +5,7 @@ shared_context :auth do
     UserService.create({
       :username => "eric",
       :email => "eric@example.com",
-      :password => "password",
-      :phone_number => "123-123-1234"
+      :password => "password"
     })
   end
 

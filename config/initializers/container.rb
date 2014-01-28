@@ -77,5 +77,9 @@ class AppContainer
     let(:clean_up_limit) do
       -> { 2.weeks.ago }
     end
+
+    let(:twilio_account_sid) do
+      ENV["TWILIO_ACCOUNT_SID"]
+    end
   end
 end

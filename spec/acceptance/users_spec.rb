@@ -10,14 +10,12 @@ resource "Users" do
     parameter :username, "Username of user", :required => true, :scope => :user
     parameter :email, "Email of user", :required => true, :scope => :user
     parameter :password, "Password of user", :required => true, :scope => :user
-    parameter :phone_number, "Phone number of user", :scope => :user
 
     let(:raw_post) { params.to_json }
 
     let(:username) { "eric" }
     let(:email) { "eric@example.com" }
     let(:password) { "password" }
-    let(:phone_number) { "123-123-1234" }
 
     example_request "Creating a new user" do
       expect(response_body).to be_json_eql({
@@ -39,7 +37,6 @@ resource "Users" do
       let(:username) { nil }
       let(:email) { nil }
       let(:password) { nil }
-      let(:phone_number) { nil }
 
       example_request "Creating a new user - failure" do
         expect(response_body).to be_json_eql({
@@ -147,6 +144,69 @@ resource "Users" do
         }
       }.to_json)
       expect(status).to eq(200)
+    end
+  end
+
+  post "/users/sms/confirm" do
+    include_context :auth
+
+    header "Content-Type", "application/x-www-form-urlencoded"
+
+    parameter :AccountSid, "Account ID of Twilio account - must match", :required => true
+    parameter :Body, "Body of SMS message", :required => true
+    parameter :From, "Phone number sent from", :required => true
+
+    before do
+      user.generate_sms_verification_code
+
+      AppContainer.stub(:twilio_account_sid) { "twilio-account" }
+    end
+
+    let(:AccountSid) { "twilio-account" }
+    let(:Body) { "Body of text - #{user.sms_verification_code}" }
+    let(:From) { "+11231231234" }
+
+    example_request "Twilio verification" do
+      explanation "This is twilio sending us a received message"
+
+      expect(response_body).to eq(
+        <<-XML
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Sms>
+    Your phone number has been verified.
+  </Sms>
+</Response>
+        XML
+      )
+      expect(status).to eq(200)
+
+      user.reload
+
+      expect(user.phone_number).to eq("1231231234")
+    end
+
+    context "bad Body", :document => false do
+      let(:Body) { "Body of text" }
+
+      example_request "Twilio verification" do
+        expect(response_body).to eq(
+          <<-XML
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+</Response>
+          XML
+        )
+        expect(status).to eq(422)
+      end
+    end
+
+    context "bad AccountSid", :document => false do
+      let(:AccountSid) { "bad id" }
+
+      example_request "Twilio verification" do
+        expect(status).to eq(403)
+      end
     end
   end
 end

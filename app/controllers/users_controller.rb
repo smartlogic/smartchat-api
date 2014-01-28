@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   skip_before_filter :check_authorization, :only => [:create, :sign_in]
 
+  before_filter :verify_twilio_account, :only => :sms_confirm
+
   def create
     user = UserService.create(user_attributes)
 
@@ -32,9 +34,34 @@ class UsersController < ApplicationController
     render :json => current_user, :serializer => SmsVerifySerializer
   end
 
+  def sms_confirm
+    if UserService.verify_sms(params[:From], params[:Body])
+      render :xml => <<-XML
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Sms>
+    Your phone number has been verified.
+  </Sms>
+</Response>
+      XML
+    else
+      render :status => 422, :xml => <<-XML
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+</Response>
+      XML
+    end
+  end
+
   private
 
   def user_attributes
-    params.require(:user).permit(:username, :email, :password, :phone_number)
+    params.require(:user).permit(:username, :email, :password)
+  end
+
+  def verify_twilio_account
+    if params[:AccountSid] != AppContainer.twilio_account_sid
+      head 403
+    end
   end
 end

@@ -41,6 +41,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.find_verification_code(verification_code)
+    where(:sms_verification_code => verification_code).first
+  end
+
   def password
     return unless password_hash
     @password ||= Password.new(password_hash)
@@ -57,6 +61,7 @@ class User < ActiveRecord::Base
 
     if phone_number.present?
       self[:phone_number] = phone_number.gsub(/[^\d]/, "")
+      self[:phone_number] = phone_number[1..-1] if phone_number.length == 11
     end
 
     phone_number

@@ -2,6 +2,7 @@ require 'openssl'
 
 module UserService
   CIPHER = 'AES-128-CBC'
+  VERIFICATION_REGEX = / - ([a-f\d]{8})$/
 
   def create(user_attributes, user_klass = User, pk_klass = OpenSSL::PKey::RSA, cipher_klass = OpenSSL::Cipher)
     user = user_klass.new(user_attributes)
@@ -17,4 +18,20 @@ module UserService
     user
   end
   module_function :create
+
+  def verify_sms(phone_number, sms_body)
+    match_data = VERIFICATION_REGEX.match(sms_body)
+
+    return unless match_data
+
+    code = match_data.captures.first
+    user = User.find_verification_code(code)
+
+    return unless user
+
+    user.sms_verification_code = nil
+    user.phone_number = phone_number
+    user.save
+  end
+  module_function :verify_sms
 end

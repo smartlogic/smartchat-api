@@ -34,8 +34,9 @@ export AWS_REGION='us-east-1'
 export AWS_SMTP_USERNAME='...'
 export AWS_SMTP_PASSWORD='...'
 export GCM_API_KEY='...'
+export TWILIO_ACCOUNT_SID='...'
 export SMARTCHAT_API_HOST='...'
-export SMARTCHAT_API_PORT="5000"
+export SMARTCHAT_API_PORT='5000'
 export SIDEKIQ_WEB_PASSWORD='password'
 ```
 
