@@ -15,16 +15,6 @@ class Configuration
     :sidekiq_web_password
   ]
 
-  KEYS.each do |key|
-    define_method(key) do
-      @redis.get(key)
-    end
-
-    define_method("#{key}=") do |value|
-      @redis.set(key, value)
-    end
-  end
-
   def to_h
     KEYS.inject({}) do |hash, key|
       hash.merge(key => @redis.get(key))

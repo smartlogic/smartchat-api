@@ -86,17 +86,11 @@ class AppContainer
     end
 
     let(:twilio_account_sid) do
-      config.twilio_account_sid
+      ENV["TWILIO_ACCOUNT_SID"]
     end
 
     let(:verification_phone_number) do
-      config.twilio_verification_phone_number
+      ENV["TWILIO_VERIFICATION_PHONE_NUMBER"]
     end
   end
 end
-
-AWS.config({
-  access_key_id: AppContainer.config.aws_access_key_id,
-  secret_access_key: AppContainer.config.aws_secret_access_key,
-  region: AppContainer.config.aws_region
-})
