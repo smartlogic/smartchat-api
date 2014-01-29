@@ -1,5 +1,6 @@
 $LOAD_PATH.unshift(File.expand_path("../../worker/lib", File.dirname(__FILE__)))
 require 's3_media_store'
+require 'configuration'
 
 class AppContainer
   class << self
@@ -8,6 +9,12 @@ class AppContainer
         @lets ||= {}
         @lets[method] ||= instance_eval(&block)
       end
+    end
+
+    let(:config) do
+      redis_yaml = YAML.load(File.read("config/redis.yml"))[Rails.env]
+      config_redis = Redis::Namespace.new("smartchat:config", :redis => Redis.new(redis_yaml))
+      Configuration.new(config_redis)
     end
 
     if Rails.env.development?
@@ -79,11 +86,17 @@ class AppContainer
     end
 
     let(:twilio_account_sid) do
-      ENV["TWILIO_ACCOUNT_SID"]
+      config.twilio_account_sid
     end
 
     let(:verification_phone_number) do
-      ENV["TWILIO_VERIFICATION_PHONE_NUMBER"]
+      config.twilio_verification_phone_number
     end
   end
 end
+
+AWS.config({
+  access_key_id: AppContainer.config.aws_access_key_id,
+  secret_access_key: AppContainer.config.aws_secret_access_key,
+  region: AppContainer.config.aws_region
+})
