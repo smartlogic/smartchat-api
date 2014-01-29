@@ -206,6 +206,7 @@ DEPENDENCIES
   capistrano (~> 2.15.5)
   capybara
   database_cleaner
+  dotenv
   faraday
   foreman
   json_spec
