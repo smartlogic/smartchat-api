@@ -8,5 +8,3 @@ require 'media'
 
 require 'clean_up_worker'
 require 'send_device_notification_worker'
-
-require 'configuration'
