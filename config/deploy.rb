@@ -62,6 +62,7 @@ namespace :custom do
     bucket = s3.buckets["smartchat-config"]
     object = bucket.objects["#{rails_env}.env"]
     put object.read, "#{current_path}/.env"
+    put object.read, "#{current_path}/worker/.env"
   end
 end
 

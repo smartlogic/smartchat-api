@@ -15,6 +15,7 @@ GEM
       safely (>= 0.3.1)
       thor
     diff-lcs (1.2.5)
+    dotenv (0.9.0)
     eventmachine (1.0.3)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
@@ -64,6 +65,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk
   daemon-kit
+  dotenv
   faraday
   json
   mail

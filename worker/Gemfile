@@ -12,6 +12,7 @@ source 'https://rubygems.org'
 gem 'daemon-kit'
 
 gem 'aws-sdk'
+gem 'dotenv'
 gem 'faraday'
 gem 'json'
 gem 'mail'
