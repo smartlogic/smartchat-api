@@ -16,7 +16,7 @@
 /worker/log/*.log
 /tmp
 
-/.env
+/*.env
 /chef-repo/.vagrant
 /.ruby-version
 /public/uploads
