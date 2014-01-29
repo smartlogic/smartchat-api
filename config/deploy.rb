@@ -33,8 +33,6 @@ set :target_os, :ubuntu
 
 set :user, "deploy"
 
-set :application_settings, "/home/deploy/smartchat_env"
-
 set :whenever_command, "bundle exec whenever"
 set :whenever_roles, :scheduler
 
