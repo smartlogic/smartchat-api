@@ -39,17 +39,6 @@
       }
     ]
   },
-  "smartchat" : {
-    "smartchat_env" : "/home/deploy",
-    "env" : {
-      "AWS_ACCESS_KEY_ID": "AKIAJTG5C7I7TLPBNALQ",
-      "AWS_SECRET_ACCESS_KEY": "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",
-      "AWS_REGION": "us-east-1",
-      "SIDEKIQ_WEB_PASSWORD": "password",
-      "TWILIO_ACCOUNT_SID" : "ACa2427d9ea189ee5decf5b86376b198a9",
-      "TWILIO_VERIFICATION_PHONE_NUMBER" : "14435360250"
-    }
-  },
   "run_list": [
     "users_solo::admins",
     "sudo",
@@ -61,7 +50,6 @@
     "rbenv::ruby_build",
     "smartchat",
     "smartchat::database",
-    "smartchat::smartchat_env",
     "nginx::repo",
     "nginx",
     "monit"
