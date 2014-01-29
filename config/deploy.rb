@@ -54,6 +54,15 @@ namespace :custom do
     run "cd #{release_path} && rbenv local 2.0.0-p247"
     run "cd #{release_path}/worker && rbenv local 2.0.0-p247"
   end
+
+  desc "Get config from S3"
+  task :config, :roles => :app do
+    require 'aws-sdk'
+    s3 = AWS::S3.new
+    bucket = s3.buckets["smartchat-config"]
+    object = bucket.objects["#{rails_env}.env"]
+    put object.read, "#{current_path}/.env"
+  end
 end
 
 namespace :workers do
@@ -72,5 +81,6 @@ after "deploy:setup", "custom:setup"
 before 'bundle:install', 'custom:rbenv_version'
 after 'bundle:install', 'workers:bundle'
 after "deploy:update_code", "custom:symlink"
+after "deploy:update", "custom:config"
 after "deploy:update", "deploy:cleanup"
 after "deploy:restart", "workers:restart"
