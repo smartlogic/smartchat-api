@@ -3,7 +3,7 @@ check process <%= application %>_unicorn with pidfile <%= unicorn_pid %>
   stop program = "/etc/init.d/unicorn_<%= application %> stop"
 
   if failed host localhost port 80 protocol http
-    and request '/my_local_crime' with timeout 5 seconds for 2 cycles
+    and request '/' with timeout 5 seconds for 2 cycles
     then restart
   if 5 restarts within 5 cycles then timeout
 
