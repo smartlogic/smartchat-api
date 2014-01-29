@@ -13,8 +13,8 @@ Mail.defaults do
   delivery_method(:smtp, {
     :address => 'email-smtp.us-east-1.amazonaws.com',
     :port => '587',
-    :user_name => ENV["AWS_SMTP_USERNAME"],
-    :password => ENV["AWS_SMTP_PASSWORD"],
+    :user_name => AppContainer.config.aws_smtp_username,
+    :password => AppContainer.config.aws_smtp_password,
     :authentication => :plain,
     :enable_starttls_auto => true
   })

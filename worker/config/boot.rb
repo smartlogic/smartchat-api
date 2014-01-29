@@ -6,6 +6,8 @@ DAEMON_ROOT = "#{File.expand_path(File.dirname(__FILE__))}/.." unless defined?( 
 require "rubygems"
 require "bundler/setup"
 
+$LOAD_PATH.unshift(File.expand_path("../../lib", File.dirname(__FILE__)))
+
 module DaemonKit
   class << self
     def boot!

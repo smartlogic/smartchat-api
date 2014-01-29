@@ -1,3 +1,8 @@
+require 'aws-sdk'
+require 'redis'
+require 'redis-namespace'
+require 'configuration'
+
 class AppContainer
   class << self
     def self.let(method, &block)
@@ -79,8 +84,14 @@ class AppContainer
       SmartchatEncryptor
     end
 
+    let(:config) do
+      redis_yaml = YAML.load(File.read(File.expand_path("../../../../config/redis.yml", __FILE__)))[DAEMON_ENV]
+      config_redis = Redis::Namespace.new("smartchat:config", :redis => Redis.new(redis_yaml))
+      Configuration.new(config_redis)
+    end
+
     let(:gcm_api_key) do
-      ENV["GCM_API_KEY"]
+      config.gcm_api_key
     end
 
     let(:from_address) do
@@ -92,3 +103,9 @@ class AppContainer
     end
   end
 end
+
+AWS.config({
+  access_key_id: AppContainer.config.aws_access_key_id,
+  secret_access_key: AppContainer.config.aws_secret_access_key,
+  region: AppContainer.config.aws_region
+})
