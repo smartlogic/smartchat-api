@@ -26,7 +26,7 @@ class AppContainer
     let(:media_uri) do
       case Rails.env
       when "development"
-        URI::HTTP.build(:scheme => "http", :host => ENV["SMARTCHAT_API_HOST"], :port => ENV["SMARTCHAT_API_PORT"], :path => "/files/")
+        URI::HTTP.build(:scheme => "http", :host => ENV["SMARTCHAT_API_HOST"], :port => ENV["SMARTCHAT_API_PORT"].to_i, :path => "/files/")
       when "test"
         URI::HTTP.build(:scheme => "http", :host => "example.com", :path => "/files/")
       when "production"
