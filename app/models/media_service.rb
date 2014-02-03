@@ -9,6 +9,8 @@ module MediaService
   class Worker
     include Sidekiq::Worker
 
+    sidekiq_options :retry => 5
+
     def perform(user_id, user_username, friend_ids, file_path, drawing_path, expire_in)
       friend_ids.each do |friend_id|
         file_key = AppContainer.media_store.store(file_path)
