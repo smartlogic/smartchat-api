@@ -1,4 +1,4 @@
-["eric", "sam", "yair", "paul"].each do |user|
+["eric", "sam", "yair", "paul", "tom"].each do |user|
   UserService.create({
     :username => user,
     :email => "#{user}@example.com",
