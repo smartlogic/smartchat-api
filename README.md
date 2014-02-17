@@ -1,6 +1,6 @@
 # SmartChat API
 
-This is the backend server for SmartChat.
+This is the backend server for SmartChat, a sharing platform.
 
 ## Requirements
 
@@ -25,29 +25,29 @@ Foreman will start all necessary processes to run smartchat locally.
 
 ## Environment Variables
 
-Smartchat requires numerous environment variables to be set to run properly.
+Smartchat requires numerous environment variables to be set to run properly, and uses [dotenv](https://github.com/bkeepers/dotenv).
 
 ```bash
-export AWS_ACCESS_KEY_ID='...'
-export AWS_SECRET_ACCESS_KEY='...'
-export AWS_REGION='us-east-1'
-export AWS_SMTP_USERNAME='...'
-export AWS_SMTP_PASSWORD='...'
-export GCM_API_KEY='...'
-export TWILIO_ACCOUNT_SID='...'
-export TWILIO_VERIFICATION_PHONE_NUMBER='...'
-export SIDEKIQ_WEB_PASSWORD='password'
+AWS_ACCESS_KEY_ID='...'
+AWS_SECRET_ACCESS_KEY='...'
+AWS_REGION='us-east-1'
+AWS_SMTP_USERNAME='...'
+AWS_SMTP_PASSWORD='...'
+GCM_API_KEY='...'
+TWILIO_ACCOUNT_SID='...'
+TWILIO_VERIFICATION_PHONE_NUMBER='...'
+SIDEKIQ_WEB_PASSWORD='password'
 ```
 
 Most of these are not required in development though. Development only environment variables.
 
 ```bash
-export GCM_API_KEY='...' # Required for android push notifications
-export TWILIO_ACCOUNT_SID='...' # Required for twilio interactions
-export TWILIO_VERIFICATION_PHONE_NUMBER='...' # Required for verifying SMS
-export SMARTCHAT_API_HOST='...'
-export SMARTCHAT_API_PORT='5000'
-export SIDEKIQ_WEB_PASSWORD='password'
+GCM_API_KEY='...' # Required for android push notifications
+TWILIO_ACCOUNT_SID='...' # Required for twilio interactions
+TWILIO_VERIFICATION_PHONE_NUMBER='...' # Required for verifying SMS
+SMARTCHAT_API_HOST='...'
+SMARTCHAT_API_PORT='5000'
+SIDEKIQ_WEB_PASSWORD='password'
 ```
 
 ## Workers
