@@ -1,4 +1,6 @@
 require 'aws-sdk'
+require 'dotenv'
+Dotenv.load
 
 set :rails_env, "production"
 
