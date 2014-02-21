@@ -10,7 +10,7 @@ class FriendsSerializer < ActiveModel::ArraySerializer
     hash[:_links] = {
       "curies" =>  [{
         "name" =>  "smartchat",
-        "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+        "href" =>  "https://smartchat.smartlogic.io/relations/{rel}",
         "templated" => true
       }],
       "self" => {

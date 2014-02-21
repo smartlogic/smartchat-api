@@ -44,7 +44,7 @@ resource "Friends" do
           "_links" => {
             "curies" =>  [{
               "name" =>  "smartchat",
-              "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+              "href" =>  "https://smartchat.smartlogic.io/relations/{rel}",
               "templated" => true
             }],
             "self" => {
@@ -75,7 +75,7 @@ resource "Friends" do
           "_links" => {
             "curies" =>  [{
               "name" =>  "smartchat",
-              "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+              "href" =>  "https://smartchat.smartlogic.io/relations/{rel}",
               "templated" => true
             }],
             "self" => {
@@ -125,7 +125,7 @@ resource "Friends" do
         "_links" => {
           "curies" =>  [{
             "name" =>  "smartchat",
-            "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+            "href" =>  "https://smartchat.smartlogic.io/relations/{rel}",
             "templated" => true
           }],
           "search" => {
@@ -209,7 +209,7 @@ resource "Friends" do
         "_links" => {
           "curies" =>  [{
             "name" =>  "smartchat",
-            "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+            "href" =>  "https://smartchat.smartlogic.io/relations/{rel}",
             "templated" => true
           }],
           "search" => {
@@ -240,7 +240,7 @@ resource "Friends" do
         "_links" => {
           "curies" =>  [{
             "name" =>  "smartchat",
-            "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+            "href" =>  "https://smartchat.smartlogic.io/relations/{rel}",
             "templated" => true
           }],
           "smartchat:friends" => {
@@ -266,7 +266,7 @@ resource "Friends" do
         "_links" => {
           "curies" =>  [{
             "name" =>  "smartchat",
-            "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+            "href" =>  "https://smartchat.smartlogic.io/relations/{rel}",
             "templated" => true
           }],
           "self" => {

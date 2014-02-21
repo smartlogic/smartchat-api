@@ -57,7 +57,7 @@ resource "Media" do
               "_links" => {
                 "curies" => [
                   {
-                    "href" => "http://smartchat.smartlogic.io/relations/{rel}",
+                    "href" => "https://smartchat.smartlogic.io/relations/{rel}",
                     "name" => "smartchat",
                     "templated" => true
                   }
@@ -79,7 +79,7 @@ resource "Media" do
         "_links" => {
           "curies" =>  [{
             "name" =>  "smartchat",
-            "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+            "href" =>  "https://smartchat.smartlogic.io/relations/{rel}",
             "templated" => true
           }],
         }
@@ -110,7 +110,7 @@ resource "Media" do
         "_links" => {
           "curies" =>  [{
             "name" =>  "smartchat",
-            "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+            "href" =>  "https://smartchat.smartlogic.io/relations/{rel}",
             "templated" => true
           }],
         }
@@ -129,7 +129,7 @@ resource "Media" do
           "_links" => {
             "curies" =>  [{
               "name" =>  "smartchat",
-              "href" =>  "http://smartchat.smartlogic.io/relations/{rel}",
+              "href" =>  "https://smartchat.smartlogic.io/relations/{rel}",
               "templated" => true
             }],
           }
