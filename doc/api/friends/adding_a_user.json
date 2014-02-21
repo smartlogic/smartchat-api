@@ -1,0 +1,51 @@
+{
+  "resource": "Friends",
+  "http_method": "POST",
+  "route": "/friends/:id/add",
+  "description": "Adding a user",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "/friends/248/add",
+      "request_body": null,
+      "request_headers": {
+        "Authorization": "Basic ZXJpYzpMVmtYWDB0S3BuRGdWalBoSnJCeHpMckNja3lnTzB2cldtbC9wUDlx\nSGpzM2Y0U3RLalM0ajVhTE1lSTAKVk5IUThWZTRmMGxXWjVoWVdTSmR1NHRJ\nTnlHVmZxb3NuRmhLYWlvaU5EaU43cVZNS08wa2xtSHcyMkxpCjh2YjBzbW1N\ncmVLVlpQOGdrbDZ0eVAwdnNIdFJualFLTyswMnNkbFFsVzB5UHNQMFVJcU1X\nVVRZTkIrbgpBanU1Mis5b1BlVFJHTUs4Vjc1djNaNUg4TUQyTkNqY1lvU044\nWXBlUERLWkYvbmdydlJZWDFwb09wWmYKMHEyUjZlaklQaEN2TWlURGRaMmhF\neTZGYWF2Q3Y5dXplOW9MVTlLa2F5S1FrR2ozYmhzYkVZRkpRVEpJCmY1UVdR\nMFRqVG5uYnE0a0I5VFVTT3pBV2d2QjhKT1MrTnZURlhHRDBDUT09Cg==\n",
+        "Host": "example.org",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/x-www-form-urlencoded",
+      "response_status": 201,
+      "response_status_text": "Created",
+      "response_body": "{\"_links\":{\"curies\":[{\"name\":\"smartchat\",\"href\":\"http://smartchat.smartlogic.io/relations/{rel}\",\"templated\":true}],\"smartchat:friends\":{\"name\":\"List of your friends\",\"href\":\"http://example.org/friends\"}}}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"37dae1acfcb995b288f93f5125b69b6c\"","Cache-Control":"max-age=0, private, must-revalidate","X-Request-Id":"ca79f8de-f365-4d12-a1d6-052bbbdf8cd9","X-Runtime":"0.007709","Content-Length":"205"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+},
+    {
+"request_method": "GET",
+"request_path": "/friends",
+"request_body": null,
+"request_headers": {
+  "Authorization": "Basic ZXJpYzpNTTYxRkhHZ3NxRUk5RU56bUhLdzV4WUlXVjBGU2VjRVpzTGxqb0JT\nVEFycmpGSkY5aUVyWmFmZWJiUTIKUTFFcHpzL2JDYzc1aE0wazAzTngzaEd3\nckplVExVNGNsU3lzMzUzL1lLcXA1ME9EcmtEcnZkVHY2bDFDCitQREdFZVJ5\nbVZUbC93Z0xvTVdMY2RCUHZGUVdWd1NaUVVmTldXZVJGUnphSG1yTjM2bHZh\nNlAyNUNjYQpCR0RNdnZOdjZONlQ5dFlpSFcyQnFRVHdpQ3RTUkR3V2R5VmlS\naHJITElSVTBWQTM2VGthK2VQWWFPZVMKSkdBQ09ydlIrcmNmU3B2Tm5Xd21R\nQldBcE9uVTVpUzhKdnlkTnc3b283WGQ5Mkc3dnJTRXpQTFZsajF2CjlldElI\nOGJzYzFOeEp2Szl1R2xCVEp4QndHb0tMN01hMzNrSlFPQmhOUT09Cg==\n",
+  "Host": "example.org",
+  "Cookie": ""
+},
+"request_query_parameters": {
+},
+"request_content_type": null,
+"response_status": 200,
+"response_status_text": "OK",
+"response_body": "{\"_embedded\":{\"friends\":[{\"id\":248,\"username\":\"other\"}]},\"_links\":{\"curies\":[{\"name\":\"smartchat\",\"href\":\"http://smartchat.smartlogic.io/relations/{rel}\",\"templated\":true}],\"self\":{\"name\":\"List of your friends\",\"href\":\"http://example.org/friends\"},\"search\":{\"name\":\"Search for friends\",\"href\":\"http://example.org/friends/search{?emails,phone_numbers}\",\"templated\":true}}}",
+"response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"7fc1fd4d74434c15632499b6314038cf\"","Cache-Control":"max-age=0, private, must-revalidate","X-Request-Id":"1443eeb7-ea85-4c85-9bf1-2e7e54341a1d","X-Runtime":"0.008352","Content-Length":"370"},
+"response_content_type": "application/json; charset=utf-8",
+"curl": null
+}
+  ]
+}

@@ -9,6 +9,7 @@ gem 'bcrypt-ruby'
 gem 'dotenv'
 gem 'faraday'
 gem 'pg'
+gem 'raddocs'
 gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', :require => nil
 gem 'unf'

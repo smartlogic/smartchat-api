@@ -1,0 +1,44 @@
+{
+  "resource": "Device",
+  "http_method": "POST",
+  "route": "/device",
+  "description": "Register a new device",
+  "explanation": "This will overwrite the previous device",
+  "parameters": [
+    {
+      "required": true,
+      "scope": "device",
+      "name": "device_id",
+      "description": "Device ID"
+    },
+    {
+      "required": true,
+      "scope": "device",
+      "name": "device_type",
+      "description": "Android or iOS"
+    }
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "/device",
+      "request_body": "{\"device\":{\"device_id\":\"123\",\"device_type\":\"android\"}}",
+      "request_headers": {
+        "Authorization": "Basic ZXJpYzpUL0s5SGd0bE92SW1DTmhEeHg1TTdhL0dGMXk5cytvak8xWlQ3UDlw\nanBoenFnZThFMzNpOG5xVXJ0d1IKMHVoSm8xcitSMXNXUFhmcWk1OWVtK285\nM0R3Y2xkYUlRMnRRZTdjQitIUnlFenErWFdNM0NwTnZiMjZECjhzNmpOU3Vi\nNERhRGJiSWp3YWJHN0d3bWc2NFpvTjRXMVdpd0F1aXI0NzhLcnpTT2FFa01K\neGxNMkxRSgp1MjhHQk9OWXlvQnY5bFJHOVVySzlSYlJ4Qk80QTR1QlpxOW1O\nTmtPZVdaOUdPZzZSclpCRmtxOWMxZGMKV1BiUWNIMzFNcTRlVzBKQUxrdEhH\namYxTFU3THpuN1FNRGdUWHRUYWFnakRsbTJVajVBaVkwcGhyM1RaCmxTMjBu\nQkF6ZjZ4Y3ZSZkdVaXFtajBuTWVOYmgxbXFHdWNpeE5QenVSZz09Cg==\n",
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 201,
+      "response_status_text": "Created",
+      "response_body": "{\"_links\":{\"curies\":[{\"name\":\"smartchat\",\"href\":\"http://smartchat.smartlogic.io/relations/{rel}\",\"templated\":true}]}}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"f315fa92c2a64b953c8b68afbf848ac5\"","Cache-Control":"max-age=0, private, must-revalidate","X-Request-Id":"c8b85edf-d443-41bc-bb2c-8486f03b6756","X-Runtime":"0.012543","Content-Length":"117"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

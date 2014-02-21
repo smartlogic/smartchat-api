@@ -1,0 +1,31 @@
+{
+  "resource": "Root",
+  "http_method": "GET",
+  "route": "/",
+  "description": "Authorized",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/",
+      "request_body": null,
+      "request_headers": {
+        "Authorization": "Basic ZXJpYzpJVmlWZ1VlSFVjUFNkWkFNOFQ2ZzhsQlpWaThJdFNQWXdwYkptWU0w\nMGp4Z3dybEw1OFFSb3VuTUpUN1QKdmE3TWludGowQnJlOHFZOFJpajYxN2xM\nRXhGREs3Wlh1Q3RzTUR0d0s1YktUZkpZT1FsTThjYUNIS1l1Ci9pM25wWWMw\neTJueklPNU9MTG5RQ1hCcjA5aFFEWitGSHEwQnltdHhFMkp6NURmMU51all3\nMWZOVGZlTgpPd1dxRmJZdXNyOG94TFVwMzNnTTJ5WUF3T3YwSGY3QmN5dHE1\ncFVFRXVRZTViQlY4YzVFR3NIS3p2RFYKdmxuMjJNclVwMVdGL1VTWURHS3cy\nZ3RkOWNQSFRmSWJlbVJScEVwSUcyWVdmc1cxVStabTNUUmhOd0h5CnRIRCtH\nY3dXWmpaVUdxV3BINy9GL2JDUGlmSmhDc1ROUlpaVTdGSU1SZz09Cg==\n",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": null,
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"_links\":{\"curies\":[{\"name\":\"smartchat\",\"href\":\"http://smartchat.smartlogic.io/relations/{rel}\",\"templated\":true}],\"self\":{\"href\":\"http://example.org/\"},\"smartchat:friends\":{\"href\":\"http://example.org/friends\"},\"smartchat:media\":{\"name\":\"Create a smartchat\",\"href\":\"http://example.org/media\"},\"smartchat:devices\":{\"name\":\"Register a new device\",\"href\":\"http://example.org/device\"},\"smartchat:invitations\":{\"name\":\"Invite a user to SmartChat\",\"href\":\"http://example.org/users/invite\"},\"smartchat:sms-verify\":{\"name\":\"Verify your phone number via SMS\",\"href\":\"http://example.org/users/sms/verify\"}}}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"7feda9d80173ea29ae28f67fb7d564d3\"","Cache-Control":"max-age=0, private, must-revalidate","X-Request-Id":"9e601967-8025-48b8-8a9a-24618fd1a164","X-Runtime":"0.004550","Content-Length":"598"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

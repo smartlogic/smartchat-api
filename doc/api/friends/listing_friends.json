@@ -1,0 +1,31 @@
+{
+  "resource": "Friends",
+  "http_method": "GET",
+  "route": "/friends",
+  "description": "Listing friends",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/friends",
+      "request_body": null,
+      "request_headers": {
+        "Authorization": "Basic ZXJpYzpsU3Q2SDhaV09tMldtTUFuMURUc2Q4QlpTOSt5Szd4a3ZxaGJ3RUh6\nd0FXK2VROENsSVZvWU1ZM2d6N20KWUJ5cTVsUG5GVlJmdzd1a1VaeW5jQmt3\nNjJJZUpWbG5Mc0NQVjZ5WndQbVhPWHpvSDdmVENqSEhUYy9NClI5TjEydUhw\ncnRIcVozcVFtOTAxZVRaQlJrc0lnakl0QXU4bGxzSFdGc2o3Z1gwKytaNExB\nOWM0NkFHZQptNDZtZkJ1bjVsVkJ5b0lQN0hEUFYydGYxdlMrcTdzZnZUVFpC\nc2wyNktvZ3VTdEgwUlEyZk11NnNjenAKUngrSXQ2WUJYKzF3Tm55Q1hGbkkv\nQng1Yy9XT1hzV29MSDBMTXl5OFZBak03emFlN013cVMvUnUyY0Q2CmVBUk5P\nTXdiM2dncHdoQUFQM0cyaDJ3aURaUmJBZElpenRrL0wyV3JNQT09Cg==\n",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": null,
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"_embedded\":{\"friends\":[{\"id\":239,\"username\":\"friend\"}]},\"_links\":{\"curies\":[{\"name\":\"smartchat\",\"href\":\"http://smartchat.smartlogic.io/relations/{rel}\",\"templated\":true}],\"self\":{\"name\":\"List of your friends\",\"href\":\"http://example.org/friends\"},\"search\":{\"name\":\"Search for friends\",\"href\":\"http://example.org/friends/search{?emails,phone_numbers}\",\"templated\":true},\"smartchat:groupies\":{\"name\":\"List out groupies\",\"href\":\"http://example.org/friends/groupies\"}}}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"e088be17ed094506b8a17ae331685547\"","Cache-Control":"max-age=0, private, must-revalidate","X-Request-Id":"319cdcbf-d050-4dc4-91f2-fbd2affe7d36","X-Runtime":"0.013318","Content-Length":"466"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "resource": "Users",
+  "http_method": "POST",
+  "route": "/users/invite",
+  "description": "Sending an invite",
+  "explanation": null,
+  "parameters": [
+    {
+      "required": true,
+      "name": "email",
+      "description": "User email to invite"
+    },
+    {
+      "required": true,
+      "name": "message",
+      "description": "Custom message from user to include"
+    }
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "/users/invite",
+      "request_body": "{\"email\":\"eric@example.com\",\"message\":\"Check this out!\"}",
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Basic ZXJpYzp4clZ6Qm84NFF2M0I1UzJPSGRsaXk3QXlWMzdvZDZhU2p1d1hoZkJt\nSjAySmMydkhOZWNUMFN5SVJMcEEKZnZqSjN2cWZBelg2UFI3YjJmK1RXR0Rn\nYXFwbk1za1A0Tmlwc0FhU29VMXQzZ0lQaTgyTGd3bE0wR0s1CnJ2b1pxRVVQ\nazFMMnVtbjBQWnorT3Ivb1hkQTdyb20wWGtYLzVxTVFmazEwc0l6WW52L01k\nY2tKN2l3dwpDS1d6dDNCRFpRTTE1akN0YXNUaVMzNXdkbkpwZnVpMmlWTEVD\nTkozSUhWZDUrOHYrWVY1NURpdTVqc2IKVWFZQnp4NWxQQUd0VWdhbEd1T1lO\nd1hkR0QySjhqbXdmaWpBM0M4eTM5YlMxSVlLTzd3SHBKRU9BT0E4ClRDeElx\nVUlkaDBVSUthelZWZTRrNzJsNGNSakRzTVhpMnYxVENaVjhzZz09Cg==\n",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 204,
+      "response_status_text": "No Content",
+      "response_body": null,
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Cache-Control":"no-cache","X-Request-Id":"ca441c22-ebed-40f2-a679-0702d9ee19d2","X-Runtime":"0.009055"},
+      "response_content_type": null,
+      "curl": null
+}
+  ]
+}

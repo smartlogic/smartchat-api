@@ -1,0 +1,60 @@
+{
+  "resource": "Media",
+  "http_method": "POST",
+  "route": "/media",
+  "description": "Uploading a new media file",
+  "explanation": null,
+  "parameters": [
+    {
+      "required": true,
+      "scope": "media",
+      "name": "friend_ids",
+      "description": "Array of friend's ids to send this media to"
+    },
+    {
+      "required": true,
+      "scope": "media",
+      "name": "file_name",
+      "description": "File name"
+    },
+    {
+      "required": true,
+      "scope": "media",
+      "name": "file",
+      "description": "The photo or video"
+    },
+    {
+      "scope": "media",
+      "name": "drawing",
+      "description": "PNG of user's drawing"
+    },
+    {
+      "scope": "media",
+      "name": "expire_in",
+      "description": "Expire in # of secodns, defaults to 10"
+    }
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "/media",
+      "request_body": "{\"media\":{\"friend_ids\":[250],\"file_name\":\"file.png\",\"file\":\"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAACXBIWXMAAAsT\\nAAALEwEAmpwYAAAAB3RJTUUH3QsbEgEOc70vhgAAAB1pVFh0Q29tbWVudAAA\\nAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAADElEQVQI12P4//8/AAX+Av7c\\nzFnnAAAAAElFTkSuQmCC\\n\",\"expire_in\":15}}",
+      "request_headers": {
+        "Authorization": "Basic ZXJpYzpWVUxTejJmZGxrL3l6VlhVbVNyZGtMUS9vS2lxSlJ2aWltaENaVlJB\nRmpSZUt3Y01qdzRtMU5zTlQ5eHUKblFLUjVqdkVSZjgzZ1pDRDZBMUpkY3JB\nRXVvVFh3aC9pZDZxdTRxbUFwRzRjVEFtbUM2dUJwem5iMTc4CjEyUnhRNE11\nUGh5THJJejBXQnNtQVJ4UnY5MmduRzM1alJCTENQaGxMYVIrZVd1QkxYMG01\nV1ZISmlxZApEbVI1Wmp5OXpoTU4rcnlCeWpIZTFna0xDQzAzOUE2M2JTNnlL\ndEpudDdDbVp1RFZDTHdqeU5KME5qMUMKZjBLZHFlVW9pSlpPd3BqNFFibkpn\nU2JMOTZHZDlqU1N6bytuUjdwQU1jWjFwdVBqb0JHSHJjdFg2d2dwCnNRV00r\nb2dOUXZaTkM5alpraWgxWUIxYy8rSUtWZUgvNld0R3JBZTJZdz09Cg==\n",
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 202,
+      "response_status_text": "Accepted",
+      "response_body": "{\"_links\":{\"curies\":[{\"name\":\"smartchat\",\"href\":\"http://smartchat.smartlogic.io/relations/{rel}\",\"templated\":true}]}}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","Cache-Control":"no-cache","X-Request-Id":"673dc22c-360b-44ba-b2ed-4b1f792831e4","X-Runtime":"0.009882","Content-Length":"117"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

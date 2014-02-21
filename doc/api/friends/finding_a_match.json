@@ -1,0 +1,39 @@
+{
+  "resource": "Friends",
+  "http_method": "POST",
+  "route": "/friends/search",
+  "description": "Finding a match",
+  "explanation": null,
+  "parameters": [
+    {
+      "name": "phone_numbers",
+      "description": "User phone numbers to search for"
+    },
+    {
+      "name": "emails",
+      "description": "User emails to search for"
+    }
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "/friends/search",
+      "request_body": "{\"phone_numbers\":[\"7734018687c6d735b360df02ca87e579\"],\"emails\":[\"de54c9567234025a4b326d7882e91ce4\"]}",
+      "request_headers": {
+        "Authorization": "Basic ZXJpYzpzUXhXaFhaMFAySFQxUjBaZjkzNmJwQzJTZTRUWnowK0prZWsxaFdl\nYmNoK2tsS1BxMVNEU0luUVV3c08KajhVa0V1NUh4UWl4N2ZOdkloZjhOSEhh\nQlg5cVJ0b2E1NjdneVNVMytTR0k2VXFNQ0pubXkxL0IvWkRxCkJFK3VGSW5t\nMzhwbnVaZld3bVE0RTgxNG1UNU9lamE4dkdlcG5hczg2cktmdTNwKzk3Vmpp\ndDl6cmxXZQpLOXZ3VlB1SVgyeE14RmxYRVF2M0EzbHVlcVFJc2FlOHJzWHEy\nMEorNmxCR2I4Z1lLMkd2Qm9wa2dqVDUKbHZ4ZGkxV2V5dy9UOG1vcm5PaFYx\nVFBsNUZDcmh0NlVUeXpodlB0TC9lZk1FWFM5cTJYNFUxMUxwWXRGCndRekV0\nQ2NCTHRyQ3pZZ0d1N1RrVzZFU1NCbjRtU2hoS3VDZ1JkbEFBQT09Cg==\n",
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"_embedded\":{\"friends\":[{\"_links\":{\"smartchat:add-friend\":{\"name\":\"Add as a friend\",\"href\":\"http://example.org/friends/243/add\"}},\"username\":\"other\",\"phone_number\":\"7734018687c6d735b360df02ca87e579\"},{\"_links\":{\"smartchat:add-friend\":{\"name\":\"Add as a friend\",\"href\":\"http://example.org/friends/244/add\"}},\"username\":\"user_2\",\"email\":\"de54c9567234025a4b326d7882e91ce4\"}]},\"_links\":{\"curies\":[{\"name\":\"smartchat\",\"href\":\"http://smartchat.smartlogic.io/relations/{rel}\",\"templated\":true}],\"search\":{\"name\":\"Search for friends\",\"href\":\"http://example.org/friends/search{?emails,phone_numbers}\",\"templated\":true}}}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"bde3c18764816b41a829c6e0cf01f76f\"","Cache-Control":"max-age=0, private, must-revalidate","X-Request-Id":"4ac9d883-5aae-4e15-905d-bd8e9b9d073d","X-Runtime":"0.013825","Content-Length":"611"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

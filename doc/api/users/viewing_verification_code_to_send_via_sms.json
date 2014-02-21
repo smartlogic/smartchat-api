@@ -1,0 +1,32 @@
+{
+  "resource": "Users",
+  "http_method": "GET",
+  "route": "/users/sms/verify",
+  "description": "Viewing verification code to send via SMS",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/users/sms/verify",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Basic ZXJpYzpVYnhjOWRnSVJqV3J6d1JvZ2UrWmNmZlA5TDRqSi9wWWwyNmVJdVBk\ndnlvQjBISldLN3RveVVsVDl1aE0Kc1RMaWNwSDA3VUY5a3Vpc055QUFucFl5\nVFUxaURTKy9YNVhjbW43eFBqRWVmVFpCOWxaYU9FZm45QnZCCk9mK1J2NG1l\nUkJlaXZXakpTRXFBWUlaWG1qSlVOcjg1a1V4eVQva0lLN0JzUHJmZGZlSno2\nSGZ0bm9vZQpQY25PZVBRaHJ1bUM0UG0zNjNnS2VrWFlGK1NzT2pYWVVJQXk2\nMWZ6NnVyUlovSVJQS0xmdkZoTFROS0YKWld6TUJyUndKUXpQekdDbVh4dmRL\nNTlsYStabUhHZXFWUUtZcldKMU5UVEkwb1FCaWV0Q3RvaTJPTmdwCmc2VHFX\nMDJxeHRoMFVQaGxWSWYzelVQQ3BXNkRUaHlqMTJ0aVpRaWZKUT09Cg==\n",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"_links\":{\"curies\":[{\"name\":\"smartchat\",\"href\":\"http://smartchat.smartlogic.io/relations/{rel}\",\"templated\":true}],\"self\":{\"href\":\"http://example.org/users/sms/verify\"}},\"verification_code\":\"1707d1d6\",\"verification_phone_number\":\"1235551234\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"de91b7e26847edd8af8c9a627c54f6d0\"","Cache-Control":"max-age=0, private, must-revalidate","X-Request-Id":"674ebf9a-184c-459c-929d-3686555ee4fb","X-Runtime":"0.009030","Content-Length":"243"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

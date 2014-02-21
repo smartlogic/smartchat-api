@@ -52,3 +52,8 @@ RSpec.configure do |config|
     MediaService::Worker.jobs.clear
   end
 end
+
+RspecApiDocumentation.configure do |config|
+  config.api_name = "SmartChat"
+  config.format = [:json]
+end

@@ -1,0 +1,32 @@
+{
+  "resource": "Users",
+  "http_method": "POST",
+  "route": "/users/sign_in",
+  "description": "Signing in",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "/users/sign_in",
+      "request_body": null,
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Basic ZXJpYzpwYXNzd29yZA==\n",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"_links\":{\"curies\":[{\"name\":\"smartchat\",\"href\":\"http://smartchat.smartlogic.io/relations/{rel}\",\"templated\":true}]},\"username\":\"eric\",\"email\":\"eric@example.com\",\"private_key\":\"-----BEGIN RSA PRIVATE KEY-----\\nProc-Type: 4,ENCRYPTED\\nDEK-Info: AES-128-CBC,38932C7EEA6F58B46A9C45B3A883EA80\\n\\n/327k2d124FRI3K0FQzLYC0tPNHc2ih4mb/MnLpKayKXUe1s6hi2vfivie0kK+Ph\\n1+EsCWUNP72Ri6HMsmyuj21mdQR//lGqBA/EYHdFjUGidZEdB6bH2XloUvEtmnIW\\nQc1vsy7XEAtAIHNlH7dsCYs8/fIwGLLk1Neu1XT1VDVVGLNH/hsKspEzub29VX8M\\nha7cG9KW+eMREBHqXOeJ66inIiezf+9PRZVD69sn8FHiqK08q9CC8l/v9cf9NxYD\\nn4iHxJK1x7pC/m7Z6Pw5SZyUweiHHYrIxcddD5nHYU4WF5dxVHPEcgwkBSz5XA0n\\nun2x0m3ajMZ5PadAeed7Te+JkwK+Pg4F2OA1EmaxvlIewYNMD6p1/CyPp8X5Ok5F\\nICxrvmHMIoeL/8Qo4/331RXOom3bKzJQWpl3111qeNBiNen+F5L645mqydKrIEMR\\n44ctQA4rIiCXhlQnVagCZ3ESlYFtUL5EJtW7sbw1G9rpFGDo4I6sVuZVdJEWAE5T\\npAEbUO6D9gScJKcnbSbQfG8pV+vjrziZv0T+yWLaBMsXgZukmaHJgQw3poTsi6CP\\nsfA1SI0TISwGW2jdz5VmDTvxfy8Zz/TM/NZY4L1Thlme44fRqCKTVQznHmnUkVLc\\njBQVIqNS8Z8JX5SnZefyOpKJOorDPQ6fRu53WIFR02mJoETLDaKW91d0BX1bpD3Y\\nNK3S3AF3a8Q1SCzBB3XAKCAJdVhaAXA9shY9aYINqxgt6AMNIsYVqC97IYU9TpXG\\n/3+c6Ihio3OR4qgbV9IAhH29HpETCAUcQunng1Mbu6TpOSlrmzBYjJGi14i8rDvu\\n+Rz1uufSFqv97r6LzOS4dh4JvTzh+8QGJejMlSQVpVttFrOjO9ei/TyxBeAl4QvV\\nZcLDm4BcUJPm0gaCFwgnmCVaTjPg/TvlkeopKfvnV+UJCu24w0gnOjrfHN6SzPVM\\noBzx82enBfvCJ8kshhrasPuxl1NPqm6ckJjOlI0BDeLxd+0jfFj9BsED/6WsFWaF\\nG2VEoC4ELEbWTeGVVaaDx+en8u4Ri72gYwY3RfYy/L1RYcdlxGZK59pURvUeg2Xk\\n9NEhnQbJt++6ORewNKs1Z/ZxztzCjINq8J7UjANthq6FV66vkWX1q2yVW4l41OjH\\nYLVx1kurkCBBJMH23PItG7ybeWvq6RJhJcY/TCYs8RpzERs2guohHKfcXQM0qZfP\\nQIdIeK395uEl4S9H4sMkAm/axCEskZWyRCDqhzRNvDKScD32vJqXG/eZIRcsBs1W\\nNNjdrl11thF8vZqCAgJN0Zov3t23PGh2HApUEt+sHhXzdk2r31paWW6YFPd3QhCD\\nfmzdnuoxXtm0Zp7BZiiMhi2u5Q0hMC0c8y3QGwqBSlWSC5acpkWagx2tkMuuSHP9\\n59BHTdR0SbtfKAzhcuw1sB2fn+vTujd2Fzck2AhxckJuX0+771u66+zVSrnr9Tm9\\ncNlN2Fh6p2+hxUVlCZrB40kiGig0y0hS+8whhh1xNdUy/vDZFXvhJ+mUEhVka7DR\\nXZRZ0D9GbbMMI5Do9wJL3GXSSD0nNQI2u5A4ZqmKZtQg3PjhnuFuRvWyFlGhHBJv\\n-----END RSA PRIVATE KEY-----\\n\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"f301f0af39a096a38c74bd41eb860a64\"","Cache-Control":"max-age=0, private, must-revalidate","X-Request-Id":"2da5e727-92f4-4ed6-9f3e-76775d3df35d","X-Runtime":"0.080284","Content-Length":"1975"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

@@ -26,6 +26,7 @@ Smartchat::Application.routes.draw do
     end
   end
 
+  mount Raddocs::App => "/docs"
   mount Sidekiq::Web => '/sidekiq'
 
   root :to => "home#index"

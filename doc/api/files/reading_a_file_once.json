@@ -1,0 +1,48 @@
+{
+  "resource": "Files",
+  "http_method": "GET",
+  "route": "/files/:file_path",
+  "description": "Reading a file once",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/files/4709f058a1762beed070987f4c63cee6.txt",
+      "request_body": null,
+      "request_headers": {
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": null,
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "data",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Encrypted-Aes-Key":"key","Encrypted-Aes-Iv":"iv","Content-Disposition":"attachment","Content-Transfer-Encoding":"binary","Content-Type":"application/octet-stream","Cache-Control":"private","ETag":"\"8d777f385d3dfec8815d20f7496026dc\"","X-Request-Id":"ca733833-d8bb-4d07-9d37-67e95b85c6d5","X-Runtime":"0.182589","Content-Length":"4"},
+      "response_content_type": "application/octet-stream",
+      "curl": null
+},
+    {
+"request_method": "GET",
+"request_path": "/files/4709f058a1762beed070987f4c63cee6.txt",
+"request_body": null,
+"request_headers": {
+  "Host": "example.org",
+  "Cookie": ""
+},
+"request_query_parameters": {
+},
+"request_content_type": null,
+"response_status": 404,
+"response_status_text": "Not Found",
+"response_body": " ",
+"response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"text/html","Cache-Control":"no-cache","X-Request-Id":"cfaf7b90-11bf-46f5-ad76-a699f2adf5f5","X-Runtime":"0.045009","Content-Length":"1"},
+"response_content_type": "text/html",
+"curl": null
+}
+  ]
+}

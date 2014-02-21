@@ -1,0 +1,48 @@
+{
+  "resource": "Users",
+  "http_method": "POST",
+  "route": "/users",
+  "description": "Creating a new user",
+  "explanation": null,
+  "parameters": [
+    {
+      "required": true,
+      "scope": "user",
+      "name": "username",
+      "description": "Username of user"
+    },
+    {
+      "required": true,
+      "scope": "user",
+      "name": "email",
+      "description": "Email of user"
+    },
+    {
+      "required": true,
+      "scope": "user",
+      "name": "password",
+      "description": "Password of user"
+    }
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "/users",
+      "request_body": "{\"user\":{\"username\":\"eric\",\"email\":\"eric@example.com\",\"password\":\"password\"}}",
+      "request_headers": {
+        "Content-Type": "application/json",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/json",
+      "response_status": 201,
+      "response_status_text": "Created",
+      "response_body": "{\"_links\":{\"curies\":[{\"name\":\"smartchat\",\"href\":\"http://smartchat.smartlogic.io/relations/{rel}\",\"templated\":true}]},\"username\":\"eric\",\"email\":\"eric@example.com\",\"private_key\":\"-----BEGIN RSA PRIVATE KEY-----\\nProc-Type: 4,ENCRYPTED\\nDEK-Info: AES-128-CBC,D560C3EA2F502713D039C6E6257F25CF\\n\\n1ZkE99YVkIwbejPJ+0CPPZLpNb8UBqru3xqoDeGuSg4Yn6NS5g9lEgHuOJKHcfKs\\nD/0cfoXpsO4tsE0pOkjYP1tK/srpSm/kTGZFtPnqNGG8XKi1Cso72jeMpJuor6fS\\nRGMy08QU5q2WlvPFDbnuY1Rjkcihb473lxPy2u0vQ6Y/UypUUpOmO3NHCvCaZlpW\\nLL4eunlyz6OQUhDLrl5Vfg/2mkEDE4++rfPwR2usCWITVE6m5z3R+vqGb2GLREB4\\nqAJOUsGxC9vL0ObkgNZbmgy3lMjoDWSHkMTUtL5fO2sHqsOc4mLvzo6CXz6GAcZF\\nf5I7u06jcBjIKkziIOCcqH6sacJ9KstHWbs6Rn90IcCfndFPwTqvl2C49Y0re9xS\\n0q89OUHoUe5JcUGRKkJnl8xe76oZooj0jw5PTwKiMwLD7f9Sx77r/vIHUeGSOn5N\\n018keaGeU34kRBA7budosdLWoLPJQ0Rcjifmaii5P/prvleQSno5wxo3OEzHi4Rb\\nHJ5jvvr5CIuz44GIMG1QgvpMwySjRXP+pf3zi3BInpnYuSr7r7LjNOiRdQ3D59qS\\nKRECHmqMESEFncQLU9lHsEUi8eqIfc2uUrGmhCAt8HPWmKB2V6fSKF9PTpq+PVnA\\nuKWluJspmz3g9hwJh12B6Ho84j9qYX7R/S5SsiggqgbZh9O/z0APC4B+pPLVz2FQ\\nrK/J1ztkCljGjdBZSufQk7fh2bBMoZ2KuRyf4YBXnR8/azXWVgYRfQoEy0o64d4/\\nIWcz0DmFBmhw0PYjkgSszV0s3uE/3GXcb7ERE625IcNq90WAzp/6p/NpQD9C7vvx\\n8oVLJfpWL8S6lyG3Ysv8a081gu8/Xqp0aNRxtObrlrlQ61gMa1sRn0B/42O83SyD\\ngS0/srJrc7ciBL4abyaW1FzvG2EnbXqYFgk+KylrVKm9jZE0WEaKp50M3Nx5Fu2b\\nqHLTlWqRn+CvUKdu7YtFsEN6k3DBUNQUXb0Oi9k7jqvZ1fUXjyZsXIqj7mMeLP0l\\ndjMKH6f0FqtUx9zLrlSS/ENqxh90p0pUCSJbYC3QLOyWdsOvxMzyc3D5WhNCdW7O\\nyn59y1XKYfPGBvRPk/6AdL065e7hqhXwDAlZI9ORs0z3HyGAs90BuJhH2b3pZp4n\\nb50U3SyhcVqt+lC3WkrKXxClmdTBwBGBXMX/a3EzpI82oh8eIm4qKL0xC/NWk26T\\no84aHyTbXqNqqHXrYkEiRAB4vRElgn9ruIZiH6c7ouzdvDa6RSJZv6r5lVzWa/3o\\n+JyJnHKnTkLS5HjoxGhrh97xiwEKuW+1Ywyl3mRBhjl09amFzbPqacg98+ceAmie\\ndnf0aFCqL64OJMx/Hmkp9t/fITWhOXDXQrdCrqcbp5eVflE1SS7nHUylQHaVuQoY\\niY3JXFlC5ztO9Mtq/GKWo8F0aky8wTm2pifYWax1Ye4P7slmjf0E6UGh5fJZZhSv\\nzUswHzdO8nszkUPyxRUikY6UipVUHvXEnSjs2J22XueJ4uN18bnF2Fqs+640xSZR\\nz+GY5d4bzE7DiG4RxclwEXImIayAOQmMQHc5Z8Doh2YtapONWh6RT2TaIlCAHFv/\\n-----END RSA PRIVATE KEY-----\\n\"}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"78c7f82a070b79f1782c772a5a1f7cab\"","Cache-Control":"max-age=0, private, must-revalidate","X-Request-Id":"f8517bd2-79cb-491f-9d32-dccc6564e514","X-Runtime":"0.132384","Content-Length":"1975"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}

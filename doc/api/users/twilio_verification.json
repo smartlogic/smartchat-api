@@ -1,0 +1,46 @@
+{
+  "resource": "Users",
+  "http_method": "POST",
+  "route": "/users/sms/confirm",
+  "description": "Twilio verification",
+  "explanation": "This is twilio sending us a received message",
+  "parameters": [
+    {
+      "required": true,
+      "name": "AccountSid",
+      "description": "Account ID of Twilio account - must match"
+    },
+    {
+      "required": true,
+      "name": "Body",
+      "description": "Body of SMS message"
+    },
+    {
+      "required": true,
+      "name": "From",
+      "description": "Phone number sent from"
+    }
+  ],
+  "requests": [
+    {
+      "request_method": "POST",
+      "request_path": "/users/sms/confirm",
+      "request_body": "AccountSid=twilio-account&Body=Body+of+text+-+eef92273&From=%2B11231231234",
+      "request_headers": {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": "Basic ZXJpYzpmZmNGSjRVNHFCS3Vyc2t2MFpycE5YTXMwVTR4a1ptNkhFU0xaQVQw\nTDBNUnF0Y0dSYmx3cG4zYjVyNnEKZ1hac2lTaWtXUTQrSktjUE1xLzNhSmtM\ndXd3VDhFdXBNdFU1aEU1d0MveVYraGVXR21uc2xiMDJma25jClNSTTN2NE1M\nSVA0R0c0OFhkUHFzL2ltYnhQSUJiY3NTeWVla2hPM1BwRmQva1UxdlVEQ3Az\naXcyWkRWSgp6ckdlWDM5WEM5NU8reE5nc2NKL2MzZmh2RXE5c3NNYlRDb00w\nV2xBbTZobnNZZDZ2elo3SHpselFqbEUKbUo5d1FmRG0zOTZWMHlteDhyUDZi\nU2pjQ01Vcld6Ry9jK3doYXZoSkRRSFFaY2ZCUkt1aVNCcVpSQlQ5CkVSVVgr\nNDRCVnM0TnhmL3M5VDNsVmZBZjY2aGJ2L0ZweExUSVM4WnNCQT09Cg==\n",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": "application/x-www-form-urlencoded",
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n  <Sms>\n    Your phone number has been verified.\n  </Sms>\n</Response>\n",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/xml; charset=utf-8","ETag":"\"c102a9ea1950097e385efe69d93a642d\"","Cache-Control":"max-age=0, private, must-revalidate","X-Request-Id":"a6a0833a-6da7-41fe-a5c2-a5df52ab5863","X-Runtime":"0.010659","Content-Length":"120"},
+      "response_content_type": "application/xml; charset=utf-8",
+      "curl": null
+}
+  ]
+}

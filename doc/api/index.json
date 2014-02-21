@@ -1,0 +1,114 @@
+{
+  "resources": [
+    {
+      "name": "Device",
+      "examples": [
+        {
+          "description": "Register a new device",
+          "link": "device/register_a_new_device.json",
+          "groups": "all"
+        }
+      ]
+    },
+    {
+      "name": "Files",
+      "examples": [
+        {
+          "description": "Reading a file once",
+          "link": "files/reading_a_file_once.json",
+          "groups": "all"
+        }
+      ]
+    },
+    {
+      "name": "Friends",
+      "examples": [
+        {
+          "description": "Adding a user",
+          "link": "friends/adding_a_user.json",
+          "groups": "all"
+        },
+        {
+          "description": "Finding a match",
+          "link": "friends/finding_a_match.json",
+          "groups": "all"
+        },
+        {
+          "description": "Listing friends",
+          "link": "friends/listing_friends.json",
+          "groups": "all"
+        },
+        {
+          "description": "Listing friends",
+          "link": "friends/listing_friends.json",
+          "groups": "all"
+        },
+        {
+          "description": "Viewing groupies",
+          "link": "friends/viewing_groupies.json",
+          "groups": "all"
+        }
+      ]
+    },
+    {
+      "name": "Media",
+      "examples": [
+        {
+          "description": "Get a list of media to view",
+          "link": "media/get_a_list_of_media_to_view.json",
+          "groups": "all"
+        },
+        {
+          "description": "Uploading a new media file",
+          "link": "media/uploading_a_new_media_file.json",
+          "groups": "all"
+        }
+      ]
+    },
+    {
+      "name": "Root",
+      "examples": [
+        {
+          "description": "Authorized",
+          "link": "root/authorized.json",
+          "groups": "all"
+        },
+        {
+          "description": "Unauthorized",
+          "link": "root/unauthorized.json",
+          "groups": "all"
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "examples": [
+        {
+          "description": "Creating a new user",
+          "link": "users/creating_a_new_user.json",
+          "groups": "all"
+        },
+        {
+          "description": "Sending an invite",
+          "link": "users/sending_an_invite.json",
+          "groups": "all"
+        },
+        {
+          "description": "Signing in",
+          "link": "users/signing_in.json",
+          "groups": "all"
+        },
+        {
+          "description": "Twilio verification",
+          "link": "users/twilio_verification.json",
+          "groups": "all"
+        },
+        {
+          "description": "Viewing verification code to send via SMS",
+          "link": "users/viewing_verification_code_to_send_via_sms.json",
+          "groups": "all"
+        }
+      ]
+    }
+  ]
+}

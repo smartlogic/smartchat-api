@@ -1,0 +1,31 @@
+{
+  "resource": "Friends",
+  "http_method": "GET",
+  "route": "/friends/groupies",
+  "description": "Viewing groupies",
+  "explanation": null,
+  "parameters": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/friends/groupies",
+      "request_body": null,
+      "request_headers": {
+        "Authorization": "Basic ZXJpYzoxQ0xlSTJnNTdGcEpqeEUwOG9KNVJ4alhUbGU1NUNncy8zaCtjNkdo\ndmF6NGV0QVJvdTl5NlJSVERVaUoKbjRNVVJicis2dVdQVVpPQnhLL2VvMVlx\nWFd2UWhudVlmZFRPZHJteGQxQ3poTGJoNG5vcWUyeTA5c1J2ClRMZ3BhZElT\nRjJ1bnA2N0lEM1ZKcVBKSUl2MTUyY01OcEkvSG9FSmZ1UXRBTzRybjY4MXhQ\nenhhY21lWgpoREgyVjVOOUNaVTZKTWVaWVFldlplekNHeGdhZ0I4emxmRUh1\nUDRyZDZUMXRoYWkwUldBaExXNnJVeTIKei95dXphSTI4TTNXTVRueExENjd3\nbkxENHZoL084elpsSmNYZHI2akxrSU42R255WjIrdzY4ejFFUjg5Ck0rbHJl\nQXRaQ3JnUW1oTXkzaERrRkJhdElCODhCWXlyNjRXMGR5MmhCZz09Cg==\n",
+        "Host": "example.org",
+        "Cookie": ""
+      },
+      "request_query_parameters": {
+      },
+      "request_content_type": null,
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "{\"_embedded\":{\"friends\":[{\"_links\":{\"smartchat:add-friend\":{\"name\":\"Add as a friend\",\"href\":\"http://example.org/friends/246/add\"}},\"username\":\"groupie\"}]},\"_links\":{\"curies\":[{\"name\":\"smartchat\",\"href\":\"http://smartchat.smartlogic.io/relations/{rel}\",\"templated\":true}],\"search\":{\"name\":\"Search for friends\",\"href\":\"http://example.org/friends/search{?emails,phone_numbers}\",\"templated\":true}}}",
+      "response_headers": {"X-Frame-Options":"SAMEORIGIN","X-XSS-Protection":"1; mode=block","X-Content-Type-Options":"nosniff","X-UA-Compatible":"chrome=1","Content-Type":"application/json; charset=utf-8","ETag":"\"34a88ffd1e9bf1fa0f749b1f659c21b7\"","Cache-Control":"max-age=0, private, must-revalidate","X-Request-Id":"2c59b289-e364-4002-81de-3e6c29b8071a","X-Runtime":"0.007637","Content-Length":"393"},
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+}
+  ]
+}
