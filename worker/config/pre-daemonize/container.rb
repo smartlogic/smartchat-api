@@ -16,11 +16,11 @@ class AppContainer
     let(:media_uri) do
       case DAEMON_ENV
       when "development"
-        URI::HTTP.build(:scheme => "http", :host => ENV["SMARTCHAT_API_HOST"], :port => 5000, :path => "/files/")
+        URI::HTTP.build(:host => ENV["SMARTCHAT_API_HOST"], :port => 5000, :path => "/files/")
       when "test"
-        URI::HTTP.build(:scheme => "http", :host => "example.com", :path => "/files/")
+        URI::HTTP.build(:host => "example.com", :path => "/files/")
       when "production"
-        URI::HTTP.build(:scheme => "https", :host => "smartchat.smartlogic.io", :path => "/files/")
+        URI::HTTPS.build(:host => "smartchat.smartlogic.io", :path => "/files/")
       end
     end
 
