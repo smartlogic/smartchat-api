@@ -20,7 +20,7 @@ class AppContainer
       when "test"
         URI::HTTP.build(:scheme => "http", :host => "example.com", :path => "/files/")
       when "production"
-        URI::HTTP.build(:scheme => "http", :host => "smartchat.smartlogic.io", :path => "/files/")
+        URI::HTTP.build(:scheme => "https", :host => "smartchat.smartlogic.io", :path => "/files/")
       end
     end
 
