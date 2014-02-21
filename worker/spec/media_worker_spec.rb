@@ -5,6 +5,7 @@ describe MediaWorker do
 
   let(:media_attributes) { {
     "id" => 3,
+    "uuid" => "uuid",
     "user_id" => 2,
     "public_key" => "public_key",
     "created_at" => created_at,
@@ -38,6 +39,7 @@ describe MediaWorker do
 
     expect(notification.lookup("android", "a device id")).to eq({
       "type" => "media",
+      "uuid" => "uuid",
       "file_url" => "file_url",
       "drawing_file_url" => "drawing_url",
       "created_at" => created_at,
@@ -64,6 +66,7 @@ describe MediaWorker do
 
     expect(notification.lookup("android", "a device id")).to eq({
       "type" => "media",
+      "uuid" => "uuid",
       "file_url" => "file_url",
       "created_at" => created_at,
       "creator_id" => 1,

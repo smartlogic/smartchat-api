@@ -5,6 +5,7 @@ describe NotificationService do
     created_at = Time.now
 
     media = {
+      "uuid" => "uuid",
       "poster_id" => 1,
       "poster_username"=> "eric",
       "created_at" => created_at,
@@ -28,6 +29,7 @@ describe NotificationService do
 
     expect(queue).to receive(:send_message).with({
       "queue" => "media",
+      "uuid" => "uuid",
       "user_id" => 2,
       "public_key" => "public_key",
       "created_at" => created_at,

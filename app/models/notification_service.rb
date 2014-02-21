@@ -10,6 +10,7 @@ module NotificationService
 
     container.queue.send_message({
       "queue" => "media",
+      "uuid" => media.fetch("uuid"),
       "user_id" => friend_id,
       "public_key" => user.public_key,
       "created_at" => media.fetch("created_at"),

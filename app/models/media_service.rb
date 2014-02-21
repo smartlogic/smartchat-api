@@ -2,7 +2,9 @@ module MediaService
   DEFAULT_EXPIRE_IN = 10
 
   def create(user, friend_ids, file_path, drawing_path, expire_in = DEFAULT_EXPIRE_IN)
-    Worker.perform_async(user.id, user.username, friend_ids, file_path, drawing_path, expire_in)
+    uuid = SecureRandom.uuid
+    Worker.perform_async(uuid, user.id, user.username, friend_ids, file_path, drawing_path, expire_in)
+    uuid
   end
   module_function :create
 
@@ -11,7 +13,7 @@ module MediaService
 
     sidekiq_options :retry => 5
 
-    def perform(user_id, user_username, friend_ids, file_path, drawing_path, expire_in)
+    def perform(uuid, user_id, user_username, friend_ids, file_path, drawing_path, expire_in)
       friend_ids.each do |friend_id|
         file_key = AppContainer.media_store.store(file_path)
 
@@ -20,6 +22,7 @@ module MediaService
         end
 
         AppContainer.notification_service.notify(friend_id, {
+          "uuid" => uuid,
           "poster_id" => user_id,
           "poster_username" => user_username,
           "file" => file_key,

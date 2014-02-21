@@ -83,7 +83,8 @@ resource "Media" do
             "templated" => true
           }],
         }
-      }.to_json)
+      }.to_json).excluding("uuid")
+      expect(response_body).to have_json_path("_embedded/media/0/uuid")
       expect(status).to eq(200)
     end
   end
@@ -114,7 +115,8 @@ resource "Media" do
             "templated" => true
           }],
         }
-      }.to_json)
+      }.to_json).excluding("uuid")
+      expect(JSON.parse(response_body)["uuid"]).to_not be_empty
       expect(status).to eq(202)
     end
 
@@ -133,7 +135,7 @@ resource "Media" do
               "templated" => true
             }],
           }
-        }.to_json)
+        }.to_json).excluding("uuid")
         expect(status).to eq(202)
       end
     end

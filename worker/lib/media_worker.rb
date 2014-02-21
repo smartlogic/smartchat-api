@@ -2,6 +2,7 @@ require 'openssl'
 
 class MediaWorker
   def perform(media_attributes, container = AppContainer)
+    uuid = media_attributes.fetch("uuid")
     user_id = media_attributes.fetch("user_id")
     created_at = media_attributes.fetch("created_at")
     creator = media_attributes.fetch("creator")
@@ -18,6 +19,7 @@ class MediaWorker
 
     notification = {
       "type" => "media",
+      "uuid" => uuid,
       "creator_id" => creator.fetch("id"),
       "creator_username" => creator.fetch("username"),
       "created_at" => created_at,
