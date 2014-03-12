@@ -75,6 +75,10 @@ class AppContainer
       AndroidNotifier
     end
 
+    let(:ios_notifier) do
+      IosNotifier
+    end
+
     let(:smartchat_encryptor) do
       SmartchatEncryptor
     end
@@ -89,6 +93,12 @@ class AppContainer
 
     let(:notification_service) do
       NotificationService
+    end
+
+    let(:apn_connection) do
+      connection = Houston::Client.new
+      connection.certificate = File.read(ENV["APN_CERTIFICATE"])
+      connection
     end
   end
 end

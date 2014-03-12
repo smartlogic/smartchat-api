@@ -6,5 +6,7 @@ require 'smartchat_encryptor'
 require 's3_media_store'
 require 'media'
 
+require 'ios_notifier'
+
 require 'clean_up_worker'
 require 'send_device_notification_worker'

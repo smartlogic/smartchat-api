@@ -34,6 +34,9 @@ AWS_REGION='us-east-1'
 AWS_SMTP_USERNAME='...'
 AWS_SMTP_PASSWORD='...'
 GCM_API_KEY='...'
+APN_GATEWAY_URI='apn://gateway.push.apple.com:2195'
+APN_FEEDBACK_URI='apn://feedback.push.apple.com:2196'
+APN_CERTIFICATE='...' # Full path to certificate
 TWILIO_ACCOUNT_SID='...'
 TWILIO_VERIFICATION_PHONE_NUMBER='...'
 SIDEKIQ_WEB_PASSWORD='password'
@@ -43,6 +46,9 @@ Most of these are not required in development though. Development only environme
 
 ```bash
 GCM_API_KEY='...' # Required for android push notifications
+APN_GATEWAY_URI='apn://gateway.push.apple.com:2195' # Required for ios push notifications
+APN_FEEDBACK_URI='apn://feedback.push.apple.com:2196' # Required for ios push notifications
+APN_CERTIFICATE='...' # Full path to certificate, required for ios push notifications
 TWILIO_ACCOUNT_SID='...' # Required for twilio interactions
 TWILIO_VERIFICATION_PHONE_NUMBER='...' # Required for verifying SMS
 SMARTCHAT_API_HOST='...'

@@ -8,6 +8,11 @@ module NotificationService
           "device_id" => device["device_id"],
           "message" => notification
         })
+      elsif device["device_type"] == "iOS"
+        container.ios_notifier.notify({
+          "device_id" => device["device_id"],
+          "message" => notification
+        })
       end
     end
   end

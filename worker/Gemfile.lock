@@ -8,6 +8,8 @@ GEM
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
     coderay (1.1.0)
+    commander (4.1.6)
+      highline (~> 1.6.11)
     daemon-kit (0.2.3)
       eventmachine (>= 0.12.10)
       i18n
@@ -19,6 +21,10 @@ GEM
     eventmachine (1.0.3)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
+    highline (1.6.21)
+    houston (2.0.0)
+      commander (~> 4.1)
+      json
     i18n (0.6.9)
     json (1.8.1)
     mail (2.5.4)
@@ -67,6 +73,7 @@ DEPENDENCIES
   daemon-kit
   dotenv
   faraday
+  houston
   json
   mail
   pry
