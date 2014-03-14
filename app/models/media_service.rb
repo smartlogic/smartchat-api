@@ -2,7 +2,10 @@ module MediaService
   DEFAULT_EXPIRE_IN = 10
 
   def create(user, friend_ids, file_path, drawing_path, expire_in = DEFAULT_EXPIRE_IN)
-    uuid = SecureRandom.uuid
+    uuid = Smarch.create({
+      :creator_id => user.id,
+      :friend_ids => friend_ids
+    }).id
     Worker.perform_async(uuid, user.id, user.username, friend_ids, file_path, drawing_path, expire_in)
     uuid
   end

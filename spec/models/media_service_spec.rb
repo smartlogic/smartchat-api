@@ -7,8 +7,6 @@ describe MediaService do
   let(:drawing_path) { Tempfile.new(["drawing", ".jpg"]).path }
 
   it "should create a media file and send a SQS message for each friend" do
-    SecureRandom.stub(:uuid).and_return("uuid")
-
     user = double(:poster, :id => 1, :username => "eric")
 
     friend_service = double(:FriendService)
@@ -18,7 +16,7 @@ describe MediaService do
 
     notification_service = double(:NotificationService)
     expect(notification_service).to receive(:notify).with(2, {
-      "uuid" => "uuid",
+      "uuid" => anything,
       "poster_id" => 1,
       "poster_username" => "eric",
       "file" => "file.png",
@@ -28,7 +26,7 @@ describe MediaService do
       "pending" => false
     })
     expect(notification_service).to receive(:notify).with(3, {
-      "uuid" => "uuid",
+      "uuid" => anything,
       "poster_id" => 1,
       "poster_username" => "eric",
       "file" => "file.png",
@@ -38,7 +36,7 @@ describe MediaService do
       "pending" => false
     })
     expect(notification_service).to receive(:notify).with(4, {
-      "uuid" => "uuid",
+      "uuid" => anything,
       "poster_id" => 1,
       "poster_username" => "eric",
       "file" => "file.png",
@@ -66,5 +64,7 @@ describe MediaService do
 
     expect(File.exists?(file_path)).to be_false
     expect(File.exists?(drawing_path)).to be_false
+
+    expect(Smarch.count).to eq(1)
   end
 end
