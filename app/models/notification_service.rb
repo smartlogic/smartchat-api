@@ -45,4 +45,29 @@ module NotificationService
     }.to_json)
   end
   module_function :friend_added
+
+  def media_viewed(user, smarch_id, container = AppContainer)
+    smarch = Smarch.find(smarch_id)
+    creator = smarch.creator
+
+    return unless creator.device
+
+    devices = []
+    devices << {
+      "device_id" => creator.device_id,
+      "device_type" => creator.device_type
+    }
+
+    container.queue.send_message({
+      "queue" => "send-device-notification",
+      "user_id" => creator.id,
+      "devices" => devices,
+      "message" => {
+        "type" => "media-viewed",
+        "uuid" => smarch.id,
+        "user_id" => user.id,
+      }
+    }.to_json)
+  end
+  module_function :media_viewed
 end

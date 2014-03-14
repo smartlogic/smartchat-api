@@ -1,6 +1,18 @@
 require 'spec_helper'
 
 describe NotificationService do
+  class TestQueue
+    attr_reader :messages
+
+    def initialize
+      @messages = []
+    end
+
+    def send_message(message)
+      @messages << message
+    end
+  end
+
   it "should notify users" do
     created_at = Time.now
 
@@ -74,5 +86,33 @@ describe NotificationService do
     }.to_json)
 
     NotificationService.friend_added(sam, eric, container)
+  end
+
+  it "should notifiy users when a smarch is read" do
+    eric = create_user(:username => "eric", :email => "eric@example.com")
+    sam = create_user(:username => "sam", :email => "sam@example.com")
+
+    sam.create_device(:device_id => "a device id", :device_type => "android")
+
+    smarch = Smarch.create(:creator_id => sam.id, :friend_ids => [eric.id])
+
+    queue = TestQueue.new
+    container = double(:container, :queue => queue)
+
+    NotificationService.media_viewed(eric, smarch.id, container)
+
+    expect(queue.messages.first).to eq({
+      "queue" => "send-device-notification",
+      "user_id" => sam.id,
+      "devices" => [{
+        "device_id" => "a device id",
+        "device_type" => "android"
+      }],
+      "message" => {
+        "type" => "media-viewed",
+        "uuid" => smarch.id,
+        "user_id" => eric.id,
+      }
+    }.to_json)
   end
 end

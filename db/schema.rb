@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20140314183039) do
 
   create_table "smarches", id: :uuid, default: "uuid_generate_v4()", force: true do |t|
     t.json     "document"
+    t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

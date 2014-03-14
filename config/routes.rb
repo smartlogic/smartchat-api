@@ -14,7 +14,11 @@ Smartchat::Application.routes.draw do
     end
   end
 
-  resources :media, :only => [:create, :index], :format => false
+  resources :media, :only => [:create, :index], :format => false do
+    member do
+      post "/" => :viewed
+    end
+  end
 
   resources :users, :only => [:create], :format => false do
     collection do

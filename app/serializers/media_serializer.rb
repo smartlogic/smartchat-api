@@ -18,6 +18,10 @@ class MediaSerializer < ActiveModel::Serializer
   def _links
     hash = super
 
+    hash["edit"] = {
+      "href" => media_url(uuid),
+      "name" => "Mark as viewed"
+    }
     hash["smartchat:files"] = [
       {
         "href" => file_url(@object.file_path),

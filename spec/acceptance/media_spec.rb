@@ -37,7 +37,8 @@ resource "Media" do
         "expire_in" => 15,
         "creator_id" => other_user.id,
         "creator_username" => other_user.username,
-        "created_at" => Time.now
+        "created_at" => Time.now,
+        "uuid" => "1111"
       })
       store.publish(drawing_path, user.id, "folder", "drawing.png", encryptor)
     end
@@ -62,6 +63,10 @@ resource "Media" do
                     "templated" => true
                   }
                 ],
+                "edit" => {
+                  "href" => media_url("1111", :host => host),
+                  "name" => "Mark as viewed"
+                },
                 "smartchat:files" => [
                   {
                     "href" => "http://example.org/files/users/#{user.id}/folder/file.png",
@@ -86,6 +91,21 @@ resource "Media" do
       }.to_json).excluding("uuid")
       expect(response_body).to have_json_path("_embedded/media/0/uuid")
       expect(status).to eq(200)
+    end
+  end
+
+  post "/media/:uuid" do
+    let(:smarch) do
+      Smarch.create({
+        :creator_id => other_user.id,
+        :friend_ids => [user.id]
+      })
+    end
+    let(:uuid) { smarch.id }
+
+    example_request "Marking media as seen" do
+      expect(response_body).to be_empty
+      expect(status).to eq(204)
     end
   end
 

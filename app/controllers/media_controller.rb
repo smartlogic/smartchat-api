@@ -26,6 +26,11 @@ class MediaController < ApplicationController
     render :json => { :uuid => uuid }, :status => 202, :serializer => MediaCreationSerializer
   end
 
+  def viewed
+    AppContainer.notification_service.media_viewed(current_user, params[:id])
+    render :nothing => true, :status => 204
+  end
+
   private
 
   def parse_media_tempfile
