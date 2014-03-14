@@ -53,6 +53,15 @@ namespace :custom do
     run "cd #{release_path}/worker && rbenv local 2.0.0-p247"
   end
 
+  desc "Get APN certificates from S3"
+  task :apn_certs, :roles => :worker do
+    require 'aws-sdk'
+    s3 = AWS::S3.new
+    bucket = s3.buckets["smartchat-config"]
+    object = bucket.objects["APN/smartchat_apn_#{rails_env}.pem"]
+    put object.read, "#{shared_path}/smartchat_apn.pem"
+  end
+
   desc "Get config from S3"
   task :config, :roles => :app do
     require 'aws-sdk'
