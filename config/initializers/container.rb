@@ -10,9 +10,9 @@ class AppContainer
       end
     end
 
-    if Rails.env.development?
+    if Rails.env.development? || Rails.env.all?
       let(:redis) do
-        Redis::Namespace.new("smartchat-development", :redis => Redis.new)
+        Redis::Namespace.new("smartchat-#{Rails.env}", :redis => Redis.new)
       end
     end
 
@@ -22,13 +22,13 @@ class AppContainer
         URI::HTTP.build(:scheme => "http", :host => ENV["SMARTCHAT_API_HOST"], :port => ENV["SMARTCHAT_API_PORT"].to_i, :path => "/files/")
       when "test"
         URI::HTTP.build(:scheme => "http", :host => "example.com", :path => "/files/")
-      when "production"
+      when "production", "all"
         URI::HTTP.build(:scheme => "http", :host => "smartchat.smartlogic.io", :path => "/files/")
       end
     end
 
     let(:media_store) do
-      if Rails.env.development?
+      if Rails.env.development? || Rails.env.all?
         require 'file_media_store'
         path = Pathname.new(Rails.root.join("tmp", "files"))
         FileMediaStore.new(path, media_uri, redis)
@@ -58,7 +58,7 @@ class AppContainer
     end
 
     let(:queue) do
-      if Rails.env.development?
+      if Rails.env.development? || Rails.env.all?
         require 'redis_queue'
         RedisQueue.new(redis)
       else

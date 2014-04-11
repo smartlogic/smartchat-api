@@ -7,7 +7,7 @@ class AppContainer
       end
     end
 
-    if DAEMON_ENV == "development"
+    if ["development", "all"].include?(DAEMON_ENV)
       let(:redis) do
         Redis::Namespace.new("smartchat-development", :redis => Redis.new)
       end
@@ -19,13 +19,13 @@ class AppContainer
         URI::HTTP.build(:host => ENV["SMARTCHAT_API_HOST"], :port => 5000, :path => "/files/")
       when "test"
         URI::HTTP.build(:host => "example.com", :path => "/files/")
-      when "production"
+      when "production", "all"
         URI::HTTPS.build(:host => "smartchat.smartlogic.io", :path => "/files/")
       end
     end
 
     let(:media_store) do
-      if DAEMON_ENV == "development"
+      if ["development", "all"].include?(DAEMON_ENV)
         puts "Using files for media store"
         require 'file_media_store'
         path = Pathname.new(File.expand_path("../../../../tmp/files", __FILE__))
@@ -41,7 +41,7 @@ class AppContainer
     end
 
     let(:queue) do
-      if DAEMON_ENV == "development"
+      if ["development", "all"].include?(DAEMON_ENV)
         puts "Using Redis Queue"
         require 'redis_queue'
         RedisQueue.new(redis)
