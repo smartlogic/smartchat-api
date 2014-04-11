@@ -20,10 +20,13 @@ gem 'mail'
 gem 'safely'
 gem 'values'
 
+group :development, :test, :all do
+  gem 'redis'
+  gem 'redis-namespace'
+end
+
 group :development, :test do
   gem 'rake'
   gem 'rspec'
-  gem 'redis'
-  gem 'redis-namespace'
   gem 'pry'
 end
