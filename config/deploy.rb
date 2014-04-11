@@ -65,6 +65,8 @@ namespace :custom do
   desc "Get config from S3"
   task :config, :roles => :app do
     require 'aws-sdk'
+    require 'dotenv'
+    Dotenv.load
     s3 = AWS::S3.new
     bucket = s3.buckets["smartchat-config"]
     object = bucket.objects["#{rails_env}.env"]
