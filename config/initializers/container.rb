@@ -32,7 +32,7 @@ class AppContainer
     let(:media_store) do
       if Rails.env.development? || Rails.env.all?
         require 'file_media_store'
-        path = Pathname.new(ENV["SMARTCHAT_FILE_PATH")
+        path = Pathname.new(ENV["SMARTCHAT_FILE_PATH"])
         FileMediaStore.new(path, media_uri, redis)
       else
         S3MediaStore.new(s3_private_bucket, s3_published_bucket, media_uri)
