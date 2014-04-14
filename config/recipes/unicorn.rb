@@ -3,11 +3,7 @@ set_default(:unicorn_pid) { "#{current_path}/tmp/pids/unicorn.pid" }
 set_default(:unicorn_config) { "#{shared_path}/config/unicorn.rb" }
 set_default(:unicorn_log) { "#{shared_path}/log/unicorn.log" }
 set_default(:unicorn_workers) {
-  if Rails.env.all?
-    2
-  else
-    5
-  end
+  5
 }
 set_default(:unicorn_timeout, 30)
 
