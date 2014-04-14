@@ -40,6 +40,7 @@ namespace :custom do
   desc "set up database.yml"
   task :setup, :roles => :app do
     template "database.yml.erb", "#{shared_path}/database.yml"
+    run "mkdir -p #{shared_path}/files"
   end
 
   desc "Symlinks to release"

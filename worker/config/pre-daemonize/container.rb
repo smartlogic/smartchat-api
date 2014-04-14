@@ -30,7 +30,7 @@ class AppContainer
       if ["development", "all"].include?(DAEMON_ENV)
         puts "Using files for media store"
         require 'file_media_store'
-        path = Pathname.new(File.expand_path("../../../../tmp/files", __FILE__))
+        path = Pathname.new(ENV["SMARTCHAT_FILE_PATH")
         FileMediaStore.new(path, media_uri, redis)
       else
         puts "Using S3 for media store"
