@@ -1,7 +1,7 @@
 require 'syslog/logger'
 
 Smartchat::Application.configure do
-  config.action_controller.default_url_options = { :host => "smartchat.smartlogic.io" }
+  config.action_controller.default_url_options = { :host => ENV["SMARTCHAT_API_HOST"] }
 
   # Settings specified here will take precedence over those in config/application.rb.
 
