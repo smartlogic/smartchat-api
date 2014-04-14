@@ -220,6 +220,7 @@ DEPENDENCIES
   pry-rails
   raddocs
   rails (= 4.0.2)
+  redis
   redis-namespace
   rspec-rails
   rspec_api_documentation!

@@ -25,9 +25,13 @@ group :development do
   gem 'capistrano', '~> 2.15.5'
 end
 
+group :development, :test, :all do
+  gem 'redis'
+  gem 'redis-namespace'
+end
+
 group :development, :test do
   gem 'pry-rails'
-  gem 'redis-namespace'
   gem 'rspec_api_documentation', :github => 'zipmark/rspec_api_documentation'
   gem 'rspec-rails'
   gem 'thin'
