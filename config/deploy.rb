@@ -49,8 +49,8 @@ namespace :custom do
 
   desc 'Create the .rbenv-version file'
   task :rbenv_version, :roles => :app do
-    run "cd #{release_path} && rbenv local 2.0.0-p247"
-    run "cd #{release_path}/worker && rbenv local 2.0.0-p247"
+    run "cd #{release_path} && rbenv local 2.1.1"
+    run "cd #{release_path}/worker && rbenv local 2.1.1"
   end
 
   desc "Get APN certificates from S3"
