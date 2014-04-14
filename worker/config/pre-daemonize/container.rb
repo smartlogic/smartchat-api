@@ -20,7 +20,7 @@ class AppContainer
       when "test"
         URI::HTTP.build(:host => "example.com", :path => "/files/")
       when "all"
-        URI::HTTP.build(:host => ENV["SMARTCHAT_API_HOST"], :port => ENV["SMARTCHAT_API_PORT"], :path => "/files/")
+        URI::HTTP.build(:host => ENV["SMARTCHAT_API_HOST"], :port => ENV["SMARTCHAT_API_PORT"].to_i, :path => "/files/")
       when "production"
         URI::HTTPS.build(:host => "smartchat.smartlogic.io", :path => "/files/")
       end
