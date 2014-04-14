@@ -9,7 +9,7 @@ class AppContainer
 
     if ["development", "all"].include?(DAEMON_ENV)
       let(:redis) do
-        Redis::Namespace.new("smartchat-development", :redis => Redis.new)
+        Redis::Namespace.new("smartchat-#{Rails.env}", :redis => Redis.new)
       end
     end
 
