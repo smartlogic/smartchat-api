@@ -1,0 +1,8 @@
+<% fetch(:media_workers).times do |i| %>
+  check process media_worker_<%= i %>
+    <% pid_file = "#{fetch(:media_worker_pid)}.#{i}.pid" %>
+    with pidfile <%= pid_file %>
+    start program = "/bin/sh -l -c 'cd <%= current_path %>/worker && PATH=/opt/rbenv/shims:/opt/rbenv/bin:$PATH RBENV_ROOT=/opt/rbenv DAEMON_ENV=<%= fetch(:rails_env) %> bundle exec ./bin/smartchat start --pidfile <%= pid_file %>'" as uid deploy and gid deploy
+    stop program = "/bin/sh -c 'cd <%= current_path %>/worker && PATH=/opt/rbenv/shims:/opt/rbenv/bin:$PATH RBENV_ROOT=/opt/rbenv DAEMON_ENV=<%= fetch(:rails_env) %> bundle exec ./bin/smartchat stop --pidfile <%= pid_file %>'" as uid deploy and gid deploy
+    group worker
+<% end %>

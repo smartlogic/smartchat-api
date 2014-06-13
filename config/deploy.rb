@@ -1,97 +1,39 @@
-require 'bundler/capistrano'
-require 'capistrano/ext/multistage'
-require 'whenever/capistrano'
-
-load 'config/recipes/base'
-load 'config/recipes/nginx'
-load 'config/recipes/unicorn'
-load 'config/recipes/monit'
-load 'config/recipes/media_worker'
-load 'config/recipes/sidekiq'
-
-set :default_environment, {
-  'PATH' => "/opt/rbenv/shims:/opt/rbenv/bin:$PATH",
-  'RBENV_ROOT' => "/opt/rbenv"
-}
-
-set :bundle_flags, "--deployment --quiet --shebang ruby-local-exec"
-
-set :use_sudo, false
-
-set :application, "smartchat"
-set :repository,  "git@github.com:smartlogic/smartchat-api"
+set :application, 'smartchat'
+set :repo_url, 'git@github.com:smartlogic/smartchat-api.git'
 
 set :deploy_to, '/home/deploy/apps/smartchat'
-set :deploy_via, :remote_cache
-set :branch, 'master'
 set :scm, :git
 
-default_run_options[:pty] = true
-ssh_options[:forward_agent] = true
+set :linked_files, %w{config/database.yml}
+set :linked_dirs, %w{bin log files tmp/pids}
 
-set :target_os, :ubuntu
+set :format, :pretty
 
-set :user, "deploy"
+set :rbenv_type, :system
+set :rbenv_ruby, '2.1.1'
+set :rbenv_path, '/opt/rbenv'
 
-set :whenever_command, "bundle exec whenever"
-set :whenever_roles, :scheduler
+set :ssh_options, {
+  forward_agent: true,
+}
 
-namespace :custom do
-  desc "set up database.yml"
-  task :setup, :roles => :app do
-    template "database.yml.erb", "#{shared_path}/database.yml"
-    run "mkdir -p #{shared_path}/files"
+namespace :deploy do
+  desc 'Restart application'
+  task :restart do
+    invoke("unicorn:restart")
+    invoke("workers:restart")
   end
 
-  desc "Symlinks to release"
-  task :symlink, :roles => :app do
-    run "ln -nfs #{shared_path}/database.yml #{release_path}/config"
+  desc 'Setup'
+  task :setup do
+    invoke('deploy:check')
+    invoke('custom:database')
+    invoke('monit:setup')
+    invoke('nginx:setup')
+    invoke('unicorn:setup')
   end
 
-  desc 'Create the .rbenv-version file'
-  task :rbenv_version, :roles => :app do
-    run "cd #{release_path} && rbenv local 2.1.1"
-    run "cd #{release_path}/worker && rbenv local 2.1.1"
-  end
-
-  desc "Get APN certificates from S3"
-  task :apn_certs, :roles => :worker do
-    require 'aws-sdk'
-    s3 = AWS::S3.new
-    bucket = s3.buckets["smartchat-config"]
-    object = bucket.objects["APN/smartchat_apn_#{rails_env}.pem"]
-    put object.read, "#{shared_path}/smartchat_apn.pem"
-  end
-
-  desc "Get config from S3"
-  task :config, :roles => :app do
-    require 'aws-sdk'
-    require 'dotenv'
-    Dotenv.load
-    s3 = AWS::S3.new
-    bucket = s3.buckets["smartchat-config"]
-    object = bucket.objects["#{rails_env}.env"]
-    put object.read, "#{current_path}/.env"
-    put object.read, "#{current_path}/worker/.env"
-  end
+  after :finishing, 'deploy:cleanup'
 end
 
-namespace :workers do
-  desc "bundle workers"
-  task :bundle, :roles => :worker do
-    run "cd #{release_path}/worker && bundle #{bundle_flags} --without development test --path /home/deploy/apps/smartchat/shared/bundle"
-  end
-
-  desc "restart workers"
-  task :restart, :roles => :worker do
-    sudo "monit restart -g worker"
-  end
-end
-
-after "deploy:setup", "custom:setup"
-before 'bundle:install', 'custom:rbenv_version'
-after 'bundle:install', 'workers:bundle'
-after "deploy:update_code", "custom:symlink"
-after "deploy:update", "custom:config"
-after "deploy:update", "deploy:cleanup"
-after "deploy:restart", "workers:restart"
+after "deploy:symlink:release", "custom:config"

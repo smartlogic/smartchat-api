@@ -1,0 +1,39 @@
+# vim: set ft=ruby:
+
+namespace :custom do
+  desc "set up database.yml"
+  task :database do
+    on roles(:app) do
+      template "database.yml.erb", "#{shared_path}/config/database.yml"
+    end
+  end
+
+  desc "Get config from S3"
+  task :config do
+    on roles(:app) do
+      require 'dotenv'
+      Dotenv.load
+      require 'aws-sdk'
+
+      s3 = AWS::S3.new
+      bucket = s3.buckets["smartchat-config"]
+      object = bucket.objects["#{fetch(:rails_env)}.env"]
+      upload! StringIO.new(object.read), "#{current_path}/.env"
+      upload! StringIO.new(object.read), "#{current_path}/worker/.env"
+    end
+  end
+
+  desc "Get APN certificates from S3"
+  task :apn_certs do
+    on roles(:worker) do
+      require 'dotenv'
+      Dotenv.load
+      require 'aws-sdk'
+
+      s3 = AWS::S3.new
+      bucket = s3.buckets["smartchat-config"]
+      object = bucket.objects["APN/smartchat_apn_#{fetch(:rails_env)}.pem"]
+      upload! StringIO.new(object.read), "#{shared_path}/smartchat_apn.pem"
+    end
+  end
+end

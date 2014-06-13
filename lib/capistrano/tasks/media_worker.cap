@@ -1,0 +1,24 @@
+# vim: set ft=ruby:
+
+set :media_worker_pid, proc { "#{shared_path}/tmp/pids/media_worker" }
+set :media_workers, 10
+
+namespace :workers do
+  desc "bundle workers"
+  task :bundle do
+    on roles(:worker) do
+      within("#{release_path}/worker") do
+        execute :bundle, fetch(:bundle_flags), "--without development test --path /home/deploy/apps/smartchat/shared/bundle"
+      end
+    end
+  end
+
+  desc "restart workers"
+  task :restart do
+    on roles(:worker) do
+      execute :sudo, :monit, :restart, "-g worker"
+    end
+  end
+
+  after 'bundler:install', 'workers:bundle'
+end

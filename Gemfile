@@ -22,7 +22,11 @@ end
 
 group :development do
   gem 'foreman'
-  gem 'capistrano', '~> 2.15.5'
+  gem 'capistrano', '~> 3.0.0', :require => false
+  gem 'capistrano-rails',   '~> 1.1', :require => false
+  gem 'capistrano-bundler', '~> 1.1', :require => false
+  gem 'capistrano-rbenv', '~> 2.0', :require => false
+  gem 'net-ssh', '~> 2.7.0'
 end
 
 group :development, :test, :all do

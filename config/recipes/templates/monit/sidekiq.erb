@@ -1,4 +1,0 @@
-check process sidekiq
-  with pidfile <%= shared_path %>/pids/sidekiq.pid
-  start program = "/bin/sh -c 'cd <%= current_path %> && PATH=/opt/rbenv/shims:/opt/rbenv/bin:$PATH RBENV_ROOT=/opt/rbenv RAILS_ENV=<%= rails_env %> RACK_ENV=<%= rails_env %> bundle exec sidekiq -e <%= rails_env %> -C <%= current_path %>/config/sidekiq.yml'" as uid deploy and gid deploy with timeout 90 seconds
-  stop program = "/bin/sh -c 'cd <%= current_path %> && /bin/kill -s TERM $(cat tmp/pids/sidekiq.pid) && rm -f tmp/pids/sidekiq.pid; exit 0;'" as uid deploy and gid deploy with timeout 90 seconds

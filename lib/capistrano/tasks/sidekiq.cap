@@ -1,0 +1,20 @@
+# vim: set ft=ruby:
+
+namespace :sidekiq do
+  %w[start stop restart].each do |command|
+    desc "#{command} sidekiq"
+    task command do
+      on roles(:web) do
+        sudo "monit #{command} sidekiq"
+      end
+    end
+  end
+
+  desc "prepare sidekiq to shutdown"
+  task :quiet do
+    on roles(:web) do
+      execute "cd #{current_path} && test -f tmp/pids/sidekiq.pid && #{fetch(:rbenv_prefix)} bundle exec sidekiqctl quiet tmp/pids/sidekiq.pid || exit 0"
+    end
+  end
+  before "deploy:updating", "sidekiq:quiet"
+end

@@ -1,0 +1,8 @@
+check process <%= fetch(:application) %>_unicorn with pidfile <%= fetch(:unicorn_pid) %>
+  start program = "/etc/init.d/unicorn_<%= fetch(:application) %> start"
+  stop program = "/etc/init.d/unicorn_<%= fetch(:application) %> stop"
+
+  if failed host localhost port 80 protocol http
+    and request '/' with timeout 5 seconds for 2 cycles
+    then restart
+  if 5 restarts within 5 cycles then timeout
